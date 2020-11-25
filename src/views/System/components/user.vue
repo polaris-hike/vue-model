@@ -20,6 +20,19 @@
                 </div>
             </li>
         </ul>
+        <div class="create">
+            + 新建
+        </div>
+        <div class="pagination">
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPage"
+                    :page-size="100"
+                    layout="prev, pager, next, jumper"
+                    :total="1000">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -28,6 +41,7 @@
     name: "user",
     data(){
       return {
+        currentPage:1,
         userList:[
           {
             name:'王伟伟',
@@ -43,12 +57,21 @@
           },
         ]
       }
-    }
+    },
+    methods: {
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      }
+    },
   }
 </script>
 
 <style lang="scss" scoped>
 .user-wrapper {
+    position: relative;
     padding:  8.7vh 5.7vw  3vh 5.8vw;
     >header {
         display: flex;
@@ -134,5 +157,39 @@
             }
         }
     }
+    .create {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4.2vw;
+        height: 1.7vw;
+        position: absolute;
+        top: 1.5vw;
+        left: 1.7vw;
+        font-size: 0.7vw;
+        border: 1px solid red;
+        cursor: pointer;
+    }
+    .pagination {
+        position: absolute;
+        bottom: 3vh;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
+</style>
+<style>
+    .el-pager li {
+        color: #fff;
+        background: unset;
+    }
+    .el-pagination button:disabled {
+        background-color: unset;
+    }
+    .el-pagination .btn-next, .el-pagination .btn-prev {
+        background: unset;
+    }
+    .el-input__inner {
+        background-color: unset;
+    }
 </style>
