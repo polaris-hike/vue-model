@@ -11,7 +11,7 @@
                     v-for="(item,index) in routeLists"
                     :key="index"
                     @click="$router.push(item.path)"
-                    :class="{active:item.path ===$route.path }"
+                    :class="{active:$route.path.indexOf(item.path) !== -1 }"
             >{{item.name}}</li>
         </ul>
         <div class="right">

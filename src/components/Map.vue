@@ -57,7 +57,7 @@
                                 featureType: 'water',
                                 elementType: 'all',
                                 stylers: {
-                                    color: 're'
+                                  color: "#032A40"
                                 }
                             },
                                 {
@@ -172,7 +172,7 @@
                                     featureType: 'building',
                                     elementType: 'all',
                                     stylers: {
-                                        color: 'red'
+                                        color: 'rgb(14,27,48)'
                                     }
                                 },
                                 {

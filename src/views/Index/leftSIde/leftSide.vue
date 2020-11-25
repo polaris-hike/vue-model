@@ -129,7 +129,8 @@
         computed: {
             seamlessOptions() {
                 return {
-                    step: 0.5,
+                    //step: 0.5,
+                    step: 0,
                     limitMoveNum: 5
                 };
             }
@@ -188,6 +189,7 @@
 
         .bottom {
             height: 31.6vh;
+            color: #fff;
 
             h2 {
 
@@ -207,6 +209,8 @@
                     }
                     .list {
                         height: 2.6vh;
+                        font-size: 0.6vw;
+
                         &:nth-child(odd){
                             background-color: red;
                         }

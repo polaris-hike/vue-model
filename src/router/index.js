@@ -31,12 +31,41 @@ const routes = [
   {
     path: '/system',
     name: 'system',
-    component: () => import(/* webpackChunkName: "about" */ '../views/System/System.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/System/System.vue'),
+    redirect:'/system/units',
+    children:[
+      {
+        path: 'units',
+        name: 'units',
+        component:  () => import(/* webpackChunkName: "units" */ '../views/System/components/units.vue'),
+      },
+      {
+        path: 'user',
+        name: 'user',
+        component:  () => import(/* webpackChunkName: "user" */ '../views/System/components/user.vue'),
+      },
+      {
+        path: 'role',
+        name: 'role',
+        component:  () => import(/* webpackChunkName: "role" */ '../views/System/components/role.vue'),
+      },
+      {
+        path: 'dictionary',
+        name: 'dictionary',
+        component:  () => import(/* webpackChunkName: "dictionary" */ '../views/System/components/dictionary.vue'),
+      },
+      {
+        path: 'alarm',
+        name: 'alarm',
+        component:  () => import(/* webpackChunkName: "alarm" */ '../views/System/components/alarm.vue'),
+      },
+    ]
+
   },
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
