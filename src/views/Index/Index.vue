@@ -1,6 +1,5 @@
 <template>
     <div class="index">
-        <Map />
         <leftSide />
         <rightSide/>
     </div>
@@ -9,14 +8,13 @@
 <script>
     import leftSide from './leftSIde/leftSide';
     import rightSide from './rightSide/rightSide';
-    import Map from '../../components/Map';
+
 
     export default {
         name: 'Index',
         components: {
             leftSide,
             rightSide,
-            Map
         },
         data() {
             return {};

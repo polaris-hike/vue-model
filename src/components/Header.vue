@@ -59,6 +59,9 @@
 
 <style lang="scss" scoped>
     header {
+        position: relative;
+        z-index: 2;
+        color: #fff;
         display: flex;
         align-items: center;
         height: 7.1vh;
