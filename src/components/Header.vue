@@ -58,13 +58,18 @@
     header {
         display: flex;
         align-items: center;
+        height: 7.1vh;
+        padding: 0 1.1vw 0 1.3vw;
         .left {
             display: flex;
+            margin-right: 3.6vw;
         }
         .center {
             display: flex;
             align-items: center;
             li {
+                width: 9.5vw;
+                height: 2.2vw;
                 cursor: pointer;
                 &.active {
                     color: red;
@@ -72,6 +77,7 @@
             }
         }
         .right {
+            margin-left: auto;
         }
     }
 </style>
