@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ECharts ref='map' class="map" :options="mapOption" @click="handleMapClick"></ECharts>
+        <ECharts ref='map' class="map" :options="mapOption" @click="handleMapClick" />
     </div>
 
 </template>
@@ -435,7 +435,7 @@
                   featureType: "water",
                   elementType: "all",
                   stylers: {
-                    color: "#032A40"
+                    color: "red"
                   }
                 },
                 {

@@ -145,11 +145,12 @@
         width: 17.2vw;
 
         .top {
+            margin-bottom: 31.5vh;
             ul {
                 li {
                     position: relative;
                     width: 100%;
-                    height: 3.2vw;
+                    height: 5.8vh;
                     display: flex;
                     align-items: center;
                     background-image: url("~@/assets/index/num-bg.png");
@@ -186,7 +187,7 @@
         }
 
         .bottom {
-            height: 17.9vw;
+            height: 31.6vh;
 
             h2 {
 
@@ -198,14 +199,17 @@
                 }
 
                 .list-wrapper {
-                    height: 14.4vw;
+                    height: 25.4vh;
                     overflow: scroll;
 
                     &::-webkit-scrollbar {
                         display: none
                     }
                     .list {
-                        	height: 1.5vw;
+                        height: 2.6vh;
+                        &:nth-child(odd){
+                            background-color: red;
+                        }
                     }
                 }
             }
