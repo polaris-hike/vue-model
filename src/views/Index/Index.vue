@@ -1,31 +1,34 @@
 <template>
     <div class="index">
         <!--<Map />-->
-        <div class="leftSide"></div>
-        <rightSide />
+        <leftSide />
+        <rightSide/>
     </div>
 </template>
 
 <script>
-  import rightSide from "./rightSide/rightSide";
-  import Map from "../../components/Map";
-  export default {
-    name: "Index",
-    components:{
-      rightSide,
-      Map
-    },
-    data(){
-      return {
+    import leftSide from './leftSIde/leftSide';
+    import rightSide from './rightSide/rightSide';
+    import Map from '../../components/Map';
 
-      }
-    }
-  }
+    export default {
+        name: 'Index',
+        components: {
+            leftSide,
+            rightSide,
+            Map
+        },
+        data() {
+            return {};
+        }
+    };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss"
+  scoped>
     .index {
         position: relative;
+
         .leftSide {
 
         }

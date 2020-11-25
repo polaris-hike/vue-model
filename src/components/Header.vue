@@ -17,7 +17,10 @@
         <div class="right">
             <div class="user-img"></div>
             <span class="username">admin</span>
-            <div class="quit-out"></div>
+            <div class="quit-out">
+                <img src="@/assets/header/quit-out.png"
+                  alt="">
+            </div>
         </div>
     </header>
 </template>
@@ -71,13 +74,24 @@
                 width: 9.5vw;
                 height: 2.2vw;
                 cursor: pointer;
+                text-align: center;
+                line-height: 2.2vw;
+                background-image: url("~@/assets/header/route.png");
+                background-size: 100% 100%;
+                color: rgba(255,255,255,.6);
+                font-size: 0.9vw;
                 &.active {
-                    color: red;
+                    background-image: url("~@/assets/header/active-route.png");
+                    color: #fff;
                 }
             }
         }
         .right {
+            display: flex;
             margin-left: auto;
+            .quit-out {
+                margin-left: 1.1vw;
+            }
         }
     }
 </style>
