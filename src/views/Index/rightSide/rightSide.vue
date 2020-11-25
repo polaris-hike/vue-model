@@ -193,6 +193,8 @@
             display: flex;
             flex-direction: column;
             margin-bottom: 1.75vh;
+            background-image: url("~@/assets/index/bg1.png");
+            background-size: 100% 100%;
             > header {
                 height: 2.6vh;
             }

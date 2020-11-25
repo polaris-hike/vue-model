@@ -7,7 +7,7 @@
             <span>联系电话</span>
             <span>操作</span>
         </header>
-        <ul>
+        <ul class="userList-wrapper">
             <li v-for="(item,index) in userList" :key="index">
                 <span>{{item.name}}</span>
                 <span>{{item.email}}</span>
@@ -20,7 +20,7 @@
                 </div>
             </li>
         </ul>
-        <div class="create">
+        <div @click="isCreateShow=true" class="create">
             + 新建
         </div>
         <div class="pagination">
@@ -33,27 +33,61 @@
                     :total="1000">
             </el-pagination>
         </div>
+
+
+        <!-- 新增用户弹窗 -->
+        <el-dialog
+                title="新增用户"
+                :visible.sync="isCreateShow"
+                width="20.6%"
+                custom-class="create-wrapper"
+        >
+            <ul>
+                <li>
+                    <span>用户姓名</span>
+                    <input type="text">
+                </li>
+                <li>
+                    <span>邮箱</span>
+                    <input type="text">
+                </li>
+                <li>
+                    <span>用户角色</span>
+                    <input type="text">
+                </li>
+                <li>
+                    <span>联系电话</span>
+                    <input type="text">
+                </li>
+                <li>
+                    <span>用户状态</span>
+                    <input type="text">
+                </li>
+            </ul>
+            <div class="confirm">确定</div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
   export default {
     name: "user",
-    data(){
+    data() {
       return {
-        currentPage:1,
-        userList:[
+        isCreateShow: false,
+        currentPage: 1,
+        userList: [
           {
-            name:'王伟伟',
-            email:'wangweiwei@165.com',
-            role:'维修人员',
-            phone:1382761829
+            name: '王伟伟',
+            email: 'wangweiwei@165.com',
+            role: '维修人员',
+            phone: 1382761829
           },
           {
-            name:'王伟伟',
-            email:'wangweiwei@165.com',
-            role:'维修人员',
-            phone:1382761829
+            name: '王伟伟',
+            email: 'wangweiwei@165.com',
+            role: '维修人员',
+            phone: 1382761829
           },
         ]
       }
@@ -70,113 +104,136 @@
 </script>
 
 <style lang="scss" scoped>
-.user-wrapper {
-    position: relative;
-    padding:  8.7vh 5.7vw  3vh 5.8vw;
-    >header {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 2.9vh;
-        font-size: 0.9vw;
-        >span {
-            display: inline-block;
-            border-right: 1px solid red;
-            text-align: center;
-            &:nth-child(1){
-                   width: 11vw;
-               }
-            &:nth-child(2){
-                width: 11.9vw;
-            }
-            &:nth-child(3){
-                width: 11.9vw;
-            }
-            &:nth-child(4){
-                width: 11.9vw;
-            }
-            &:nth-child(5){
-                width: 16.1vw;
-            }
-            &:last-child {
-                border: none;
-            }
-        }
-    }
-    ul {
-        font-size: 0.7vw;
-        > li {
+    .user-wrapper {
+        position: relative;
+        padding: 8.7vh 5.7vw 3vh 5.8vw;
+        > header {
             display: flex;
-            align-items: center;
-            height: 4.2vh;
-            &:nth-child(even){
-                background-color: red;
-            }
-            >span {
+            justify-content: space-around;
+            margin-bottom: 2.9vh;
+            font-size: 0.9vw;
+            > span {
                 display: inline-block;
+                border-right: 1px solid red;
                 text-align: center;
-                &:nth-child(1){
+                &:nth-child(1) {
                     width: 11vw;
                 }
-                &:nth-child(2){
+                &:nth-child(2) {
                     width: 11.9vw;
                 }
-                &:nth-child(3){
+                &:nth-child(3) {
                     width: 11.9vw;
                 }
-                &:nth-child(4){
+                &:nth-child(4) {
                     width: 11.9vw;
+                }
+                &:nth-child(5) {
+                    width: 16.1vw;
+                }
+                &:last-child {
+                    border: none;
                 }
             }
-            .operation {
+        }
+        .userList-wrapper {
+            font-size: 0.7vw;
+            > li {
                 display: flex;
-                justify-content: center;
-                width: 16.1vw;
-                .amend {
-                    width: 3.1vw;
-                    height: 1.3vw;
-                    line-height: 1.3vw;
-                    border: 1px solid cornflowerblue;
-                    text-align: center;
-                    margin-right: 0.4vw;
+                align-items: center;
+                height: 4.2vh;
+                &:nth-child(even) {
+                    background-color: red;
                 }
-                .reset {
-                    width: 4.2vw;
-                    height: 1.3vw;
-                    line-height: 1.3vw;
-                    border: 1px solid cornflowerblue;
+                > span {
+                    display: inline-block;
                     text-align: center;
-                    margin-right: 0.4vw;
+                    &:nth-child(1) {
+                        width: 11vw;
+                    }
+                    &:nth-child(2) {
+                        width: 11.9vw;
+                    }
+                    &:nth-child(3) {
+                        width: 11.9vw;
+                    }
+                    &:nth-child(4) {
+                        width: 11.9vw;
+                    }
                 }
-                .freeze {
-                    width: 3.1vw;
-                    height: 1.3vw;
-                    line-height: 1.3vw;
-                    border: 1px solid cornflowerblue;
+                .operation {
+                    display: flex;
+                    justify-content: center;
+                    width: 16.1vw;
+                    .amend {
+                        width: 3.1vw;
+                        height: 1.3vw;
+                        line-height: 1.3vw;
+                        border: 1px solid cornflowerblue;
+                        text-align: center;
+                        margin-right: 0.4vw;
+                    }
+                    .reset {
+                        width: 4.2vw;
+                        height: 1.3vw;
+                        line-height: 1.3vw;
+                        border: 1px solid cornflowerblue;
+                        text-align: center;
+                        margin-right: 0.4vw;
+                    }
+                    .freeze {
+                        width: 3.1vw;
+                        height: 1.3vw;
+                        line-height: 1.3vw;
+                        border: 1px solid cornflowerblue;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        .create {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 4.2vw;
+            height: 1.7vw;
+            position: absolute;
+            top: 1.5vw;
+            left: 1.7vw;
+            font-size: 0.7vw;
+            border: 1px solid red;
+            cursor: pointer;
+        }
+        .pagination {
+            position: absolute;
+            bottom: 3vh;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .create-wrapper {
+            .el-dialog__body {
+                ul {
+                    li {
+                        display: flex;
+                        flex-direction: column;
+                        margin-bottom: 1vw;
+                        span {
+                            margin-bottom: 0.4vw;
+                        }
+                    }
+                }
+                .confirm {
+                    width: 4.7vw;
+                    height: 1.7vw;
+                    margin: 0 auto;
+                    border: 1px solid red;
                     text-align: center;
+                    line-height: 1.7vw;
+                    cursor: pointer;
                 }
             }
         }
     }
-    .create {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 4.2vw;
-        height: 1.7vw;
-        position: absolute;
-        top: 1.5vw;
-        left: 1.7vw;
-        font-size: 0.7vw;
-        border: 1px solid red;
-        cursor: pointer;
-    }
-    .pagination {
-        position: absolute;
-        bottom: 3vh;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
 </style>
 <style>
     .el-pager li {

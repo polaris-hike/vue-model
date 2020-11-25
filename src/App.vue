@@ -37,8 +37,7 @@
     width: 100vw;
     height: 100vh;
     .main-view {
-        position: relative;
-        z-index: 1;
+
         color: #fff;
     }
 }

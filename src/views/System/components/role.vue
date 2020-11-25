@@ -16,7 +16,7 @@
                 </div>
             </li>
         </ul>
-        <div class="create">
+        <div  class="create">
             + 新建
         </div>
         <div class="pagination">
@@ -35,65 +35,66 @@
 <script>
   export default {
     name: "role",
-    data(){
+    data() {
       return {
-        currentPage:1,
-        userList:[
+        isCreateShow:false,
+        currentPage: 1,
+        userList: [
           {
-            id:1558621,
-            name:'维修人员',
+            id: 1558621,
+            name: '维修人员',
           },
           {
-            id:4511143,
-            name:'维修人员',
+            id: 4511143,
+            name: '维修人员',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           },
           {
-            id:'',
-            name:'',
+            id: '',
+            name: '',
           }
         ]
       }
@@ -112,23 +113,23 @@
 <style lang="scss" scoped>
     .user-wrapper {
         position: relative;
-        padding:  8.7vh 5.7vw  3vh 5.8vw;
-        >header {
+        padding: 8.7vh 5.7vw 3vh 5.8vw;
+        > header {
             display: flex;
             justify-content: space-around;
             margin-bottom: 2.9vh;
             font-size: 0.9vw;
-            >span {
+            > span {
                 display: inline-block;
                 border-right: 1px solid red;
                 text-align: center;
-                &:nth-child(1){
+                &:nth-child(1) {
                     width: 20.3vw;
                 }
-                &:nth-child(2){
+                &:nth-child(2) {
                     width: 20.5vw;
                 }
-                &:nth-child(3){
+                &:nth-child(3) {
                     width: 22.2vw;
                 }
                 &:last-child {
@@ -142,16 +143,16 @@
                 display: flex;
                 align-items: center;
                 height: 4.2vh;
-                &:nth-child(even){
+                &:nth-child(even) {
                     background-color: red;
                 }
-                >span {
+                > span {
                     display: inline-block;
                     text-align: center;
-                    &:nth-child(1){
+                    &:nth-child(1) {
                         width: 20.3vw;
                     }
-                    &:nth-child(2){
+                    &:nth-child(2) {
                         width: 20.5vw;
                     }
                 }

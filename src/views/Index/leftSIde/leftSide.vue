@@ -190,6 +190,8 @@
         .bottom {
             height: 31.6vh;
             color: #fff;
+            background-image: url("~@/assets/index/bg2.png");
+            background-size: 100% 100%;
 
             h2 {
 

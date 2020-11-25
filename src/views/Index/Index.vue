@@ -9,7 +9,6 @@
     import leftSide from './leftSIde/leftSide';
     import rightSide from './rightSide/rightSide';
 
-
     export default {
         name: 'Index',
         components: {
@@ -26,7 +25,7 @@
   scoped>
     .index {
         position: relative;
-
+         z-index: 1;
         .leftSide {
 
         }

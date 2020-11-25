@@ -1,7 +1,7 @@
 <template>
     <header>
-        <div class="left">
-            <div class="logo">
+        <div class="left" @click="$router.push('/')">
+            <div class="logo" >
                 <img src="" alt="">
             </div>
             <span>智能消火栓平台</span>
