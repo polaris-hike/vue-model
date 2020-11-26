@@ -2,10 +2,10 @@
     <div class="alarm-wrapper">
         <header>
             <div class="left">
-                <div class="small">+ 新建</div>
+                <div class="small" @click="isCreateShow=true">+ 新建</div>
                 <div class="small">导出</div>
                 <div class="small">导入</div>
-                <div class="small">休眠周期设置</div>
+                <div class="small" @click="isSleepShow=true">休眠周期设置</div>
                 <div class="big">压力采集周期设置</div>
                 <div class="big">压力报警上限设置</div>
                 <div class="big">压力报警下限设置</div>
@@ -81,6 +81,51 @@
                     :total="1000">
             </el-pagination>
         </div>
+
+        <!-- 休眠周期设置 -->
+        <el-dialog
+                title="休眠周期设置"
+                :visible.sync="isSleepShow"
+                width="40.1%"
+                custom-class="sleep-wrapper"
+        >
+            <div class="username">
+                <span>休眠周期</span>
+                <input type="text" placeholder="请输入内容">
+            </div>
+            <div class="permission-wrapper">
+                <span>消防栓</span>
+                <el-transfer v-model="value" :data="data"></el-transfer>
+            </div>
+            <div class="confirm">确定</div>
+        </el-dialog>
+        <!-- 新建设置 -->
+        <el-dialog
+                title="新建"
+                :visible.sync="isCreateShow"
+                width="37.78%"
+                custom-class="create-wrapper"
+        >
+            <ul>
+                <li v-for="(item,index) in createList" :key="index">
+                    <span>{{item.name}}</span>
+                    <input type="text" v-model="item.value" placeholder="请输入内容">
+                </li>
+            </ul>
+            <div class="confirm">确定</div>
+        </el-dialog>
+        <!-- 导入 -->
+        <el-dialog
+                title="导入"
+                :visible.sync="isImportShow"
+                width="37.78%"
+                custom-class="create-wrapper"
+        >
+           <main>
+               <input type="file">
+           </main>
+            <div class="confirm">确定</div>
+        </el-dialog>
     </div>
 </template>
 
@@ -88,7 +133,61 @@
   export default {
     name: 'Device',
     data() {
+      const generateData = _ => {
+        const data = [];
+        for (let i = 1; i <= 15; i++) {
+          data.push({
+            key: i,
+            label: `备选项 ${ i }`,
+            disabled: i % 4 === 0
+          });
+        }
+        return data;
+      };
       return {
+        data: generateData(),
+        value: [1, 4],
+        createList:[
+          {
+            name:'挂牌编号',
+            value:''
+          },
+          {
+            name:'SN码',
+            value:''
+          },
+          {
+            name:'状态',
+            value:''
+          },
+          {
+            name:'省份',
+            value:''
+          },
+          {
+            name:'城市',
+            value:''
+          },
+          {
+            name:'区域',
+            value:''
+          },
+          {
+            name:'联系人',
+            value:''
+          },
+          {
+            name:'责任人',
+            value:''
+          },
+          {
+            name:'联系方式',
+            value:''
+          }
+        ],
+        isImportShow:false,
+        isCreateShow:false,
+        isSleepShow:false,
         alarmList: [
           {
             id: 11877495581,
@@ -130,8 +229,7 @@
   };
 </script>
 
-<style lang="scss"
-       scoped>
+<style lang="scss" scoped>
     .alarm-wrapper {
         position: relative;
         padding: 3.2vh 2.4vw 0 2.4vw;
@@ -294,6 +392,60 @@
             bottom: 3vh;
             left: 50%;
             transform: translateX(-50%);
+        }
+        .sleep-wrapper {
+            .el-dialog__body {
+                .username {
+                    display: flex;
+                    flex-direction: column;
+                    input {
+                        width: 14.8vw;
+                        height: 2.4vh;
+                    }
+                }
+                .permission-wrapper {
+                    margin-bottom: 2.3vh;
+                }
+                .confirm {
+                    width: 4.7vw;
+                    height: 1.7vw;
+                    margin: 0 auto;
+                    border: 1px solid red;
+                    text-align: center;
+                    line-height: 1.7vw;
+                    cursor: pointer;
+                }
+            }
+        }
+        .create-wrapper {
+            .el-dialog__body {
+                ul {
+                    display: flex;
+                    flex-wrap: wrap;
+                    font-size: 0.7vw;
+                    margin-bottom: 1.8vh;
+                    > li {
+                        display: flex;
+                        flex-direction: column;
+                        margin-right: 2.3vw;
+                        margin-bottom: 1.2vh;
+                        input {
+                            width: 14.8vw;
+                            height: 2.1vw;
+                            margin-top: 0.5vh;
+                        }
+                    }
+                }
+                .confirm {
+                    width: 4.7vw;
+                    height: 1.7vw;
+                    margin-left: 5.1vw;
+                    border: 1px solid red;
+                    text-align: center;
+                    line-height: 1.7vw;
+                    cursor: pointer;
+                }
+            }
         }
     }
 </style>

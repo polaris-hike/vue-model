@@ -16,7 +16,7 @@
                 </div>
             </li>
         </ul>
-        <div  class="create">
+        <div  class="create" @click="isCreateShow = true">
             + 新建
         </div>
         <div class="pagination">
@@ -29,14 +29,46 @@
                     :total="1000">
             </el-pagination>
         </div>
+
+        <!-- 新增角色弹窗 -->
+        <el-dialog
+                title="新增角色"
+                :visible.sync="isCreateShow"
+                width="40.1%"
+                custom-class="create-wrapper"
+        >
+            <div class="username">
+                <span>用户姓名</span>
+                <input type="text" placeholder="请输入内容">
+            </div>
+            <div class="permission-wrapper">
+                <span>权限</span>
+                <el-transfer v-model="value" :data="data"></el-transfer>
+            </div>
+            <div class="confirm">确定</div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
   export default {
+
     name: "role",
     data() {
+      const generateData = _ => {
+        const data = [];
+        for (let i = 1; i <= 15; i++) {
+          data.push({
+            key: i,
+            label: `备选项 ${ i }`,
+            disabled: i % 4 === 0
+          });
+        }
+        return data;
+      };
       return {
+        data: generateData(),
+        value: [1, 4],
         isCreateShow:false,
         currentPage: 1,
         userList: [
@@ -204,6 +236,30 @@
             bottom: 3vh;
             left: 50%;
             transform: translateX(-50%);
+        }
+        .create-wrapper {
+            .el-dialog__body {
+                .username {
+                    display: flex;
+                    flex-direction: column;
+                    input {
+                        width: 14.8vw;
+                        height: 2.4vh;
+                    }
+                }
+                .permission-wrapper {
+                    margin-bottom: 2.3vh;
+                }
+                .confirm {
+                    width: 4.7vw;
+                    height: 1.7vw;
+                    margin: 0 auto;
+                    border: 1px solid red;
+                    text-align: center;
+                    line-height: 1.7vw;
+                    cursor: pointer;
+                }
+            }
         }
     }
 </style>
