@@ -12,8 +12,8 @@
             </div>
             <div class="right">
                 <input class="search"
-                  type="text"
-                  plceholder="请输入关键字">
+                       type="text"
+                       plceholder="请输入关键字">
                 <div class="confirm">确认</div>
             </div>
         </header>
@@ -25,22 +25,22 @@
                 <div class="state">
                     <div class="top">状态</div>
                     <div class="bottom">
-                        <span>停用</span>
-                        <span>正常</span>
-                        <span>撞到</span>
-                        <span>非法用水</span>
-                        <span>水压异常</span>
-                        <span>电压异常</span>
-                        <span>事件时间</span>
+                        <span  style="width: 3.3vw">停用</span>
+                        <span  style="width: 3vw">正常</span>
+                        <span  style="width: 3vw">撞到</span>
+                        <span style="width: 4.8vw">非法用水</span>
+                        <span style="width: 4.8vw">水压异常</span>
+                        <span style="width: 4.8vw">电压异常</span>
+                        <span style="width: 4.8vw">事件时间</span>
                     </div>
                 </div>
                 <div class="water-gage">
                     <div class="top">水压</div>
                     <div class="bottom">
-                        <span>休眠周期</span>
-                        <span>压力采集周期</span>
-                        <span>压力报警上限</span>
-                        <span>压力报警下限</span>
+                        <span style="width: 4.7vw">休眠周期</span>
+                        <span  style="width: 5.4vw">压力采集周期</span>
+                        <span style="width: 5.1vw">压力报警上限</span>
+                        <span style="width: 5.5vw">压力报警下限</span>
                     </div>
                 </div>
                 <span class="people">负责人</span>
@@ -48,11 +48,22 @@
             </header>
             <ul class="alarmList-wrapper">
                 <li v-for="(item,index) in alarmList"
-                  :key="index">
+                    :key="index">
                     <span>{{item.id}}</span>
                     <span>{{item.sn}}</span>
                     <span>{{item.address}}</span>
-                    <span>{{item.people}}</span>
+                    <span style="width: 3.3vw">{{item.stopUse}}</span>
+                    <span style="width: 3vw">{{item.normal}}</span>
+                    <span style="width: 3vw">{{item.knockDown}}</span>
+                    <span style="width: 4.8vw">{{item.illegalWaterUse}}</span>
+                    <span style="width: 4.8vw">{{item.abnormalWaterPressure}}</span>
+                    <span style="width: 4.8vw">{{item.abnormalVoltage}}</span>
+                    <span style="width: 4.8vw">{{item.eventTime}}</span>
+                    <span style="width: 4.7vw">{{item.sleepCircle}}</span>
+                    <span style="width: 5.4vw">{{item.pressureCollectionCycle}}</span>
+                    <span style="width: 5.1vw">{{item.maxPressureAlarm}}</span>
+                    <span style="width: 5.5vw">{{item.minPressureAlarm}}</span>
+                    <span style="width:6.8vw">{{item.people}}</span>
                     <div class="operation">
                         <div class="notice">一键通知</div>
                         <div class="sign">标记为已处理</div>
@@ -62,83 +73,97 @@
         </main>
         <div class="pagination">
             <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page.sync="currentPage"
-              :page-size="100"
-              layout="prev, pager, next, jumper"
-              :total="1000">
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPage"
+                    :page-size="100"
+                    layout="prev, pager, next, jumper"
+                    :total="1000">
             </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'Device',
-        data() {
-            return {
-                alarmList: [
-                    {
-                        id: 11877495581,
-                        sn: 'WG54991',
-                        address: '高新技术产业园区南区科苑南路综合服务楼',
-                        people: '王维维',
-                    },
-                    {
-                        id: 11877495581,
-                        sn: 'WG54991',
-                        address: '高新技术产业园区南区科苑南路综合服务楼',
-                        people: '王维维',
-                    },
-                ]
-            };
-        }
-    };
+  export default {
+    name: 'Device',
+    data() {
+      return {
+        alarmList: [
+          {
+            id: 11877495581,
+            sn: 'WG54991',
+            address: '高新技术产业园区南区科苑南路综合服务楼',
+            stopUse: 1,
+            normal: 1,
+            knockDown: 1,
+            illegalWaterUse: 1,
+            abnormalWaterPressure: 1,
+            abnormalVoltage: 1,
+            eventTime: '11/08 12：55',
+            sleepCircle: '10.00MPa',
+            pressureCollectionCycle: '10.00MPa',
+            maxPressureAlarm: '11/08 12：55',
+            minPressureAlarm: '11/08 12：55',
+            people: '王维维',
+          },
+          {
+            id: 11877495581,
+            sn: 'WG54991',
+            address: '高新技术产业园区南区科苑南路综合服务楼',
+            stopUse: 1,
+            normal: 1,
+            knockDown: 1,
+            illegalWaterUse: 1,
+            abnormalWaterPressure: 1,
+            abnormalVoltage: 1,
+            eventTime: '11/08 12：55',
+            sleepCircle: '10.00MPa',
+            pressureCollectionCycle: '10.00MPa',
+            maxPressureAlarm: '11/08 12：55',
+            minPressureAlarm: '11/08 12：55',
+            people: '王维维',
+          },
+        ]
+      };
+    }
+  };
 </script>
 
 <style lang="scss"
-  scoped>
+       scoped>
     .alarm-wrapper {
         position: relative;
         padding: 3.2vh 2.4vw 0 2.4vw;
         height: 92.9vh;
-
         > header {
             display: flex;
             justify-content: space-between;
             margin-bottom: 4.1vh;
             font-size: 0.7vw;
-
             .left {
                 display: flex;
-
                 > div {
                     height: 3.7vh;
                     line-height: 3.7vh;
                     text-align: center;
                     border: 1px solid red;
-                    margin-right: 0.4vw ;
+                    margin-right: 0.4vw;
                 }
-
                 .small {
                     width: 6.5vw;
                 }
-
                 .big {
                     width: 8.3vw;
                 }
             }
-
             .right {
                 display: flex;
-
                 .search {
                     margin-right: 0.8vw;
                     color: black;
                     height: 3.7vh;
                 }
-
                 .confirm {
                     width: 5.9vw;
                     height: 3.7vh;
@@ -150,14 +175,11 @@
                 }
             }
         }
-
         main {
-
             > header {
                 display: flex;
                 font-size: 0.9vw;
                 .state {
-                    width: 29.1vw;
                     border-right: 1px solid red;
                     .top {
                         text-align: center;
@@ -166,11 +188,10 @@
                     .bottom {
                         display: flex;
                         justify-content: space-between;
-                        >span {
+                        > span {
                             text-align: center;
                             border-right: 1px solid red;
                             display: inline-block;
-                            width: 100%;
                             &:last-child {
                                 border: none;
                             }
@@ -178,7 +199,6 @@
                     }
                 }
                 .water-gage {
-                    width: 20.7vw;
                     border-right: 1px solid red;
                     .top {
                         text-align: center;
@@ -188,11 +208,10 @@
                         display: flex;
                         justify-content: space-between;
                         font-size: 0.7vw;
-                        >span {
+                        > span {
                             text-align: center;
                             border-right: 1px solid red;
                             display: inline-block;
-                            width: 100%;
                             &:last-child {
                                 border: none;
                             }
@@ -203,19 +222,15 @@
                     display: inline-block;
                     border-right: 1px solid red;
                     text-align: center;
-
                     &:last-child {
                         border: none;
                     }
-
                     &:nth-child(1) {
                         width: 6.6vw;
                     }
-
                     &:nth-child(2) {
-                        width:6.6vw;
+                        width: 6.6vw;
                     }
-
                     &:nth-child(3) {
                         width: 14.8vw;
                     }
@@ -225,65 +240,35 @@
                     &.operation {
                         width: 10.4vw;
                     }
-
                 }
             }
-
             .alarmList-wrapper {
                 font-size: 0.7vw;
-
                 > li {
                     display: flex;
                     align-items: center;
                     height: 4.2vh;
-
                     &:nth-child(even) {
                         background-color: red;
                     }
-
                     span {
                         display: inline-block;
                         text-align: center;
-
                         &:nth-child(1) {
-                            width: 5.4vw;
+                            width: 6.6vw;
                         }
-
                         &:nth-child(2) {
-                            width: 8.4vw;
+                            width: 6.6vw;
                         }
-
                         &:nth-child(3) {
-                            width: 9vw;
-                        }
-
-                        &:nth-child(4) {
-                            width: 9vw;
-                        }
-
-                        &:nth-child(5) {
-                            width: 17.3vw;
-                        }
-
-                        &:nth-child(6) {
-                            width: 7.9vw;
-                        }
-
-                        &:nth-child(7) {
-                            width: 9.5vw;
-                        }
-
-                        &:nth-child(8) {
-                            width: 11.1vw;
+                            width: 14.8vw;
                         }
                     }
-
                     .operation {
                         display: flex;
                         justify-content: center;
-                        width: 17.3vw;
+                        //width: 17.3vw;
                         font-size: 0.6vw;
-
                         .notice {
                             width: 4.2vw;
                             height: 1.3vw;
@@ -292,7 +277,6 @@
                             text-align: center;
                             margin-right: 0.4vw;
                         }
-
                         .sign {
                             width: 5.8vw;
                             height: 1.3vw;
@@ -301,12 +285,10 @@
                             text-align: center;
                             margin-right: 0.4vw;
                         }
-
                     }
                 }
             }
         }
-
         .pagination {
             position: absolute;
             bottom: 3vh;
@@ -320,15 +302,12 @@
         color: #fff;
         background: unset;
     }
-
     .el-pagination button:disabled {
         background-color: unset;
     }
-
     .el-pagination .btn-next, .el-pagination .btn-prev {
         background: unset;
     }
-
     .el-input__inner {
         background-color: unset;
     }
