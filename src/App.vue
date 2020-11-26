@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <Header/>
+        <Header v-show="$route.path !== '/login'"/>
         <Map v-show="$route.path === '/index'"/>
         <router-view class="main-view"/>
     </div>
@@ -37,7 +37,6 @@
     width: 100vw;
     height: 100vh;
     .main-view {
-
         color: #fff;
     }
 }

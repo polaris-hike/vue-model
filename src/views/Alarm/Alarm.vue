@@ -1,11 +1,11 @@
 <template>
     <div class="alarm-wrapper">
         <header>
-            <input type="text" plceholder="省份">
-            <input type="text" plceholder="城市">
-            <input type="text" plceholder="区域">
-            <input type="text" plceholder="状态">
-            <input class="search" type="text" plceholder="请输入关键字">
+            <input type="text" placeholder="省份">
+            <input type="text" placeholder="城市">
+            <input type="text" placeholder="区域">
+            <input type="text" placeholder="状态">
+            <input class="search" type="text" placeholder="请输入关键字">
             <div class="confirm">确认</div>
         </header>
         <main>

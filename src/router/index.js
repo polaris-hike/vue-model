@@ -9,6 +9,11 @@ const routes = [
     redirect:'/index'
   },
   {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login/Login.vue')
+  },
+  {
     path: '/index',
     name: 'index',
     component: () => import(/* webpackChunkName: "about" */ '../views/Index/Index.vue')

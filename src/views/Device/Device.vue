@@ -13,7 +13,7 @@
             <div class="right">
                 <input class="search"
                        type="text"
-                       plceholder="请输入关键字">
+                       placeholder="请输入关键字">
                 <div class="confirm">确认</div>
             </div>
         </header>
