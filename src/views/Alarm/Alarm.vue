@@ -83,8 +83,7 @@
 <style lang="scss" scoped>
 .alarm-wrapper {
     position: relative;
-    padding-left: 2.4vw;
-    padding-top: 3.2vh;
+    padding: 3.2vh 2.4vw 0 2.4vw;
     height:92.9vh;
     >header {
         display: flex;

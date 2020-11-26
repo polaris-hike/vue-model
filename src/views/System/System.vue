@@ -43,7 +43,7 @@
           {
             name:'报警设置',
             icon:'',
-            path:'/system/alarm'
+            path:'/system/alarmSetting'
           },
         ]
       }
@@ -79,7 +79,7 @@
     }
     .right {
         width: 74.7vw;
-        height: 46.7vw;
+        height: 82.4vh;
         border: 1px solid red;
         margin-left: 1.1vw;
     }

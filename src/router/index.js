@@ -14,8 +14,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Index/Index.vue')
   },
   {
-    path: '/alarm',
-    name: 'alarm',
+    path: '/alarmManage',
+    name: 'alarmManage',
     component: () => import(/* webpackChunkName: "Alarm" */ '../views/Alarm/Alarm.vue')
   },
   {
@@ -55,8 +55,8 @@ const routes = [
         component:  () => import(/* webpackChunkName: "dictionary" */ '../views/System/components/dictionary.vue'),
       },
       {
-        path: 'alarm',
-        name: 'alarm',
+        path: 'alarmSetting',
+        name: 'alarmSetting',
         component:  () => import(/* webpackChunkName: "alarm" */ '../views/System/components/alarm.vue'),
       },
     ]

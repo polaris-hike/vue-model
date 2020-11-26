@@ -41,7 +41,7 @@
           },
           {
             name: '报警管理',
-            path: '/alarm'
+            path: '/alarmManage'
           },
           {
             name: '设备管理',
