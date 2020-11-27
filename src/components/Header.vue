@@ -17,7 +17,7 @@
         <div class="right">
             <div class="user-img"></div>
             <span class="username">admin</span>
-            <div class="quit-out">
+            <div class="quit-out" @click="quitOut">
                 <img src="@/assets/header/quit-out.png"
                   alt="">
             </div>
@@ -52,6 +52,11 @@
             path: '/system'
           },
         ]
+      }
+    },
+    methods:{
+      quitOut(){
+        this.$router.push('/login')
       }
     }
   }
@@ -93,6 +98,7 @@
             display: flex;
             margin-left: auto;
             .quit-out {
+                cursor: pointer;
                 margin-left: 1.1vw;
             }
         }

@@ -236,7 +236,7 @@
                     align-items: center;
                     height: 4.2vh;
                     &:nth-child(even) {
-                        background-color: red;
+                        background-color: #29393e;
                     }
                     span {
                         display: inline-block;

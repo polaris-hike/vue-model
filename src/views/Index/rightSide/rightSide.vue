@@ -182,6 +182,9 @@
 
 <style lang="scss"
        scoped>
+
+
+
     .rightSide {
         position: absolute;
         right: 1.1vw;
@@ -197,6 +200,9 @@
             background-size: 100% 100%;
             > header {
                 height: 2.6vh;
+                line-height: 2.6vh;
+                font-size: 0.7vw;
+                padding-left: 0.7vw;
             }
             .pie-wrapper {
                 display: flex;
@@ -217,6 +223,19 @@
                 flex: 1;
             }
             .warning-wrapper {
+                header {
+                    padding-left: 1.5vw;
+                    font-size: 0.6vw;
+                    span {
+                        margin-right: 1vw;
+                        &:nth-child(3){
+                            margin-right:3.8vw;
+                        }
+                        &:last-child {
+                            margin: 0;
+                        }
+                    }
+                }
                 .list-wrapper {
                     height: 15.7vh;
                     overflow: scroll;
@@ -224,8 +243,27 @@
                         display: none
                     }
                     .list {
+                        display: flex;
+                        align-items: center;
                         height: 2.6vh;
                         font-size: 0.6vw;
+                        padding-left: 1.4vw;
+                        span{
+                            &:nth-child(1){
+                                margin-right: 1.3vw;
+                            }
+                            &:nth-child(2){
+                                margin-right: 1.3vw;
+                            }
+                            &:nth-child(3){
+                                display: inline-block;
+                                width: 4.5vw;
+                                overflow: hidden;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                                margin-right: 0.6vw;
+                            }
+                        }
                         &:nth-child(odd) {
                             background-color: red;
                         }
@@ -238,6 +276,7 @@
                 flex-direction: column;
                 justify-content: space-around;
                 font-size: 0.5vw;
+                padding-left: 1.6vw;
                 > li {
                     display: flex;
                     align-items: center;

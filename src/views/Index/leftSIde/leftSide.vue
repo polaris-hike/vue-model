@@ -31,7 +31,7 @@
                             <span>{{list.desc}}</span>
                             <span>{{list.time}}</span>
                             <span v-if="list.state ===1">未处理</span>
-                            <span v-if="list.state ===1">已处理</span>
+                            <span v-if="list.state ===2">已处理</span>
                         </div>
                     </vueSeamless>
 
@@ -140,6 +140,31 @@
 
 <style lang="scss"
   scoped>
+    @media screen and (min-width:1500px){
+        .left-wrapper {
+            .bottom {
+                .warning-wrapper {
+                    .list-wrapper {
+                        .list {
+                            justify-content: unset!important;
+                            span {
+                                &:nth-child(1){
+                                    margin-right: 1.3vw;
+                                }
+                                &:nth-child(2){
+                                    margin-right: 1vw;
+                                }
+                                &:nth-child(3){
+                                    margin-right: 1.1vw;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
     .left-wrapper {
         position: absolute;
         left: 0.8vw;
@@ -194,12 +219,21 @@
             background-size: 100% 100%;
 
             h2 {
-
+                font-size: 0.7vw;
+                font-weight: normal;
+                margin-left: 0.9vw;
             }
 
             .warning-wrapper {
                 header {
-
+                    font-size: 0.6vw;
+                    color: rgba(255,255,255,0.6);
+                    padding-left: 1.5vw;
+                    margin-top: 1.7vh;
+                    margin-bottom: 0.6vh;
+                    span {
+                        margin-right: 1vw;
+                    }
                 }
 
                 .list-wrapper {
@@ -210,12 +244,17 @@
                         display: none
                     }
                     .list {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
                         height: 2.6vh;
                         font-size: 0.6vw;
+                        padding-left: 1.5vw;
 
                         &:nth-child(odd){
                             background-color: red;
                         }
+
                     }
                 }
             }

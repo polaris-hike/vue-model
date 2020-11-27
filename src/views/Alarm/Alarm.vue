@@ -153,7 +153,7 @@
                 align-items: center;
                 height: 4.2vh;
                 &:nth-child(even) {
-                    background-color: red;
+                    background-color: #29393e;
                 }
                 span {
                     display: inline-block;
@@ -192,15 +192,15 @@
                         width: 4.2vw;
                         height: 1.3vw;
                         line-height: 1.3vw;
-                        border: 1px solid cornflowerblue;
                         text-align: center;
                         margin-right: 0.4vw;
+                        background-color: #00a5a5;
                     }
                     .sign {
                         width: 5.8vw;
                         height: 1.3vw;
                         line-height: 1.3vw;
-                        border: 1px solid cornflowerblue;
+                        background-color: #0071a3;
                         text-align: center;
                         margin-right: 0.4vw;
                     }
