@@ -6,8 +6,15 @@
                 <span>智能消火栓平台</span>
             </header>
             <main>
-                <input type="text" placeholder="邮箱" v-model="email">
-                <input type="text" placeholder="密码" v-model="password">
+                <div class="email">
+                    <i class="icon-search"></i>
+                    <input type="text" placeholder="邮箱" v-model="email">
+
+                </div>
+                <div class="password">
+                    <i class="icon-search"></i>
+                    <input type="text" placeholder="密码" v-model="password">
+                </div>
                 <div class="login-btn" @click="handleLogin">登录</div>
             </main>
         </div>
@@ -17,14 +24,14 @@
 <script>
   export default {
     name: "login",
-    data(){
+    data() {
       return {
-        email:"",
-        password:""
+        email: "",
+        password: ""
       }
     },
-    methods:{
-      handleLogin(){
+    methods: {
+      handleLogin() {
 
       }
     }
@@ -32,51 +39,88 @@
 </script>
 
 <style lang="scss" scoped>
-.login-wrapper {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    .center-box {
-        width: 55.6vw;
-        height: 55.5vh;
-        position: absolute;
-        left: 22.2vw;
-        top: 22.1vh;
-        border: 1px solid red;
-        padding-left: 8.1vw;
-        padding-top: 6.5vh;
-        header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8.1vh;
-            .logo {
-                width: 4.1vw;
-                height: 2.9vw;
-                border: 1px solid red;
-                margin-right: 0.9vw;
+    .login-wrapper {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-image: url("~@/assets/login/page-bg.png");
+        background-size: 100% 100%;
+        .center-box {
+            width: 55.6vw;
+            height: 55.5vh;
+            position: absolute;
+            left: 22.2vw;
+            top: 22.1vh;
+            padding-left: 8.1vw;
+            padding-top: 6.5vh;
+            background-image: url("~@/assets/login/box-bg.png");
+            background-size: 100% 100%;
+            header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 8.1vh;
+                .logo {
+                    width: 4.1vw;
+                    height: 2.9vw;
+                    border: 1px solid red;
+                    margin-right: 0.9vw;
+                }
+                span {
+                    font-size: 1.7vw;
+                }
             }
-            span {
-                font-size: 1.7vw;
-            }
-        }
-        main {
-            display: flex;
-            flex-direction: column;
-            input {
-                width: 15.8vw;
-                height: 3.6vh;
-                margin-bottom: 2.7vh;
-            }
-            .login-btn {
-                width: 15.8vw;
-                height: 3.6vh;
-                text-align: center;
-                line-height: 3.6vh;
-                border: 1px solid red;
-                font-size: 0.7vw;
+            main {
+                display: flex;
+                flex-direction: column;
+                .email {
+                    position: relative;
+                    width: 15.8vw;
+                    height: 3.6vh;
+                    margin-bottom: 2.7vh;
+
+                    i {
+                        position: absolute;
+                        left: 0.6vw;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 0.8vw;
+                        height: 0.7vw;
+                        background-image: url("~@/assets/login/email.png");
+                        background-size: 100% 100%;
+                    }
+                }
+                .password {
+                    position: relative;
+                    width: 15.8vw;
+                    height: 3.6vh;
+                    margin-bottom: 2.7vh;
+
+                    i {
+                        position: absolute;
+                        left: 0.6vw;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 0.8vw;
+                        height: 0.7vw;
+                        background-image: url("~@/assets/login/password.png");
+                        background-size: 100% 100%;
+                    }
+                }
+                input {
+                    width: 100%;
+                    height: 100%;
+                    padding-left: 2vw;
+                }
+                .login-btn {
+                    width: 15.8vw;
+                    height: 4vh;
+                    text-align: center;
+                    line-height: 3.6vh;
+                    border: 1px solid red;
+                    font-size: 0.7vw;
+                }
             }
         }
     }
-}
 </style>
