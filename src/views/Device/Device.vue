@@ -11,9 +11,10 @@
                 <div class="big">压力报警下限设置</div>
             </div>
             <div class="right">
-                <input class="search"
-                       type="text"
-                       placeholder="请输入关键字">
+                <div class="input-wrapper">
+                    <i class="search-icon"></i>
+                    <input class="search" type="text" placeholder="请输入关键字">
+                </div>
                 <div class="confirm">确认</div>
             </div>
         </header>
@@ -245,7 +246,9 @@
                     height: 3.7vh;
                     line-height: 3.7vh;
                     text-align: center;
-                    border: 1px solid red;
+                    background-color: #122a38;
+                    border: 1px solid #1b647b;
+                    border-radius:0.2vw;
                     margin-right: 0.4vw;
                 }
                 .small {
@@ -257,17 +260,38 @@
             }
             .right {
                 display: flex;
-                .search {
-                    margin-right: 0.8vw;
-                    color: black;
+                .input-wrapper {
+                    position: relative;
+                    width: 12.4vw;
                     height: 3.7vh;
+                    margin-right: 0.8vw;
+                    input {
+                        color: #b3b3b3;
+                        background-color: #0f1f24;
+                        padding-left: 0.7vw;
+                        border: none;
+                        outline: none;
+                        width: 100%;
+                        height: 3.7vh;
+                    }
+                    .search-icon {
+                        position: absolute;
+                        background-image: url("~@/assets/alarm/search.png");
+                        background-size: 100% 100%;
+                        right: 0.5vw;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 0.9vw;
+                        height: 0.9vw;
+                    }
                 }
                 .confirm {
                     width: 5.9vw;
-                    height: 3.7vh;
+                    height: 2.1vw;
                     line-height: 2.1vw;
                     text-align: center;
-                    border: 1px solid red;
+                    background-color: #1e4b6d;
+                    border: 1px solid #17fff3;
                     font-size: 0.7vw;
                     cursor: pointer;
                 }
@@ -278,17 +302,17 @@
                 display: flex;
                 font-size: 0.9vw;
                 .state {
-                    border-right: 1px solid red;
+                    border-right: 1px solid #303f42;
                     .top {
                         text-align: center;
-                        border-bottom: 1px solid red;
+                        border-bottom: 1px solid #303f42;
                     }
                     .bottom {
                         display: flex;
                         justify-content: space-between;
                         > span {
                             text-align: center;
-                            border-right: 1px solid red;
+                            border-right: 1px solid #303f42;
                             display: inline-block;
                             &:last-child {
                                 border: none;
@@ -297,10 +321,10 @@
                     }
                 }
                 .water-gage {
-                    border-right: 1px solid red;
+                    border-right: 1px solid #303f42;
                     .top {
                         text-align: center;
-                        border-bottom: 1px solid red;
+                        border-bottom: 1px solid #303f42;
                     }
                     .bottom {
                         display: flex;
@@ -308,7 +332,7 @@
                         font-size: 0.7vw;
                         > span {
                             text-align: center;
-                            border-right: 1px solid red;
+                            border-right: 1px solid #303f42;
                             display: inline-block;
                             &:last-child {
                                 border: none;
@@ -318,7 +342,7 @@
                 }
                 > span {
                     display: inline-block;
-                    border-right: 1px solid red;
+                    border-right: 1px solid #303f42;
                     text-align: center;
                     &:last-child {
                         border: none;
@@ -449,18 +473,5 @@
         }
     }
 </style>
-<style>
-    .el-pager li {
-        color: #fff;
-        background: unset;
-    }
-    .el-pagination button:disabled {
-        background-color: unset;
-    }
-    .el-pagination .btn-next, .el-pagination .btn-prev {
-        background: unset;
-    }
-    .el-input__inner {
-        background-color: unset;
-    }
+<style src="../../assets/style/element.css">
 </style>

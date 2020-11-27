@@ -74,6 +74,7 @@
         .left {
             display: flex;
             margin-right: 3.6vw;
+            cursor: pointer;
         }
         .center {
             display: flex;

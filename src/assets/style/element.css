@@ -1,0 +1,15 @@
+
+.el-pager li {
+  color: #fff;
+  background: unset;
+}
+.el-pagination button:disabled {
+  background-color: unset;
+}
+.el-pagination .btn-next, .el-pagination .btn-prev {
+  background: unset;
+}
+.el-input__inner {
+  background-color: #0a253a;
+  border: 1px solid #1e6f85;
+}

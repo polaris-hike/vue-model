@@ -64,14 +64,20 @@
         &.left {
             ul {
                 > li {
+                    display: flex;
+                    align-items: center;
                     width: 12.4vw;
                     height: 3vw;
                     margin-bottom: 1vw;
                     cursor: pointer;
                     font-size: 0.7vw;
-                    border: 1px solid red;
+                    background-color: #0e252a;
+                    border: 1px solid #096f74;
+                    color: #8b9ea5;
+                    padding-left: 2.8vw;
                     &.active {
-                        color: red;
+                        border: 1px solid #05949a;
+                        color: #40edff;
                     }
                 }
             }
@@ -80,8 +86,10 @@
     .right {
         width: 74.7vw;
         height: 82.4vh;
-        border: 1px solid red;
+        border: 1px solid #428184;
         margin-left: 1.1vw;
     }
 }
+</style>
+<style src="../../assets/style/element.css">
 </style>

@@ -1,21 +1,16 @@
 <template>
     <div class="alarm-wrapper">
         <header>
-            <div class="left">
-                <div class="small">+ 新建</div>
-                <div class="small">导出</div>
-                <div class="small">导入</div>
-                <div class="small">休眠周期设置</div>
-                <div class="big">压力采集周期设置</div>
-                <div class="big">压力报警上限设置</div>
-                <div class="big">压力报警下限设置</div>
+            <input type="text" placeholder="省份">
+            <input type="text" placeholder="城市">
+            <input type="text" placeholder="区域">
+            <input type="text" placeholder="状态">
+            <input type="text" placeholder="日期">
+            <div class="input-wrapper">
+                <i class="search-icon"></i>
+                <input class="search" type="text" placeholder="请输入关键字">
             </div>
-            <div class="right">
-                <input class="search"
-                       type="text"
-                       placeholder="请输入关键字">
-                <div class="confirm">确认</div>
-            </div>
+            <div class="confirm">确认</div>
         </header>
         <main>
             <header>
@@ -131,41 +126,54 @@
         height: 92.9vh;
         > header {
             display: flex;
-            justify-content: space-between;
             margin-bottom: 4.1vh;
-            font-size: 0.7vw;
-            .left {
-                display: flex;
-                > div {
-                    height: 3.7vh;
-                    line-height: 3.7vh;
-                    text-align: center;
-                    border: 1px solid red;
-                    margin-right: 0.4vw;
-                }
-                .small {
-                    width: 6.5vw;
-                }
-                .big {
-                    width: 8.3vw;
+            input {
+                width: 10.6vw;
+                margin-right: 0.8vw;
+                color: #b3b3b3;
+                background-color: #0f1f24;
+                padding-left: 0.7vw;
+                border: 1px solid #0c474c;
+                outline: none;
+                &.search {
+                    width: 12.4vw;
+                    &::after {
+                        content: "";
+                        display: block;
+                        width: 1vw;
+                        height: 1vw;
+                        background-color: red;
+                    }
                 }
             }
-            .right {
-                display: flex;
-                .search {
-                    margin-right: 0.8vw;
-                    color: black;
-                    height: 3.7vh;
+            .input-wrapper {
+                position: relative;
+                width: 12.4vw;
+                height: 3.7vh;
+                margin-right: 0.8vw;
+                input {
+                    height: 100%;
                 }
-                .confirm {
-                    width: 5.9vw;
-                    height: 3.7vh;
-                    line-height: 2.1vw;
-                    text-align: center;
-                    border: 1px solid red;
-                    font-size: 0.7vw;
-                    cursor: pointer;
+                .search-icon {
+                    position: absolute;
+                    background-image: url("~@/assets/alarm/search.png");
+                    background-size: 100% 100%;
+                    right: 0.5vw;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 0.9vw;
+                    height: 0.9vw;
                 }
+            }
+            .confirm {
+                width: 5.9vw;
+                height: 2.1vw;
+                line-height: 2.1vw;
+                text-align: center;
+                background-color: #1e4b6d;
+                border: 1px solid #17fff3;
+                font-size: 0.7vw;
+                cursor: pointer;
             }
         }
         main {
@@ -173,17 +181,17 @@
                 display: flex;
                 font-size: 0.9vw;
                 .state {
-                    border-right: 1px solid red;
+                    border-right: 1px solid #303f42;
                     .top {
                         text-align: center;
-                        border-bottom: 1px solid red;
+                        border-bottom: 1px solid #303f42;
                     }
                     .bottom {
                         display: flex;
                         justify-content: space-between;
                         > span {
                             text-align: center;
-                            border-right: 1px solid red;
+                            border-right: 1px solid #303f42;
                             display: inline-block;
                             &:last-child {
                                 border: none;
@@ -192,10 +200,10 @@
                     }
                 }
                 .water-gage {
-                    border-right: 1px solid red;
+                    border-right: 1px solid #303f42;
                     .top {
                         text-align: center;
-                        border-bottom: 1px solid red;
+                        border-bottom: 1px solid #303f42;
                     }
                     .bottom {
                         display: flex;
@@ -203,7 +211,7 @@
                         font-size: 0.7vw;
                         > span {
                             text-align: center;
-                            border-right: 1px solid red;
+                            border-right: 1px solid #303f42;
                             display: inline-block;
                             &:last-child {
                                 border: none;
@@ -213,7 +221,7 @@
                 }
                 > span {
                     display: inline-block;
-                    border-right: 1px solid red;
+                    border-right: 1px solid #303f42;
                     text-align: center;
                     &:last-child {
                         border: none;
@@ -262,18 +270,5 @@
         }
     }
 </style>
-<style>
-    .el-pager li {
-        color: #fff;
-        background: unset;
-    }
-    .el-pagination button:disabled {
-        background-color: unset;
-    }
-    .el-pagination .btn-next, .el-pagination .btn-prev {
-        background: unset;
-    }
-    .el-input__inner {
-        background-color: unset;
-    }
+<style src="../../assets/style/element.css">
 </style>

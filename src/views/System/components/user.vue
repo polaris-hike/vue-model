@@ -114,7 +114,7 @@
             font-size: 0.9vw;
             > span {
                 display: inline-block;
-                border-right: 1px solid red;
+                border-right: 1px solid #303f42;
                 text-align: center;
                 &:nth-child(1) {
                     width: 11vw;
@@ -201,7 +201,7 @@
             top: 1.5vw;
             left: 1.7vw;
             font-size: 0.7vw;
-            border: 1px solid red;
+            background-color: #25a9cc;
             cursor: pointer;
         }
         .pagination {

@@ -3,19 +3,19 @@
         <ul>
             <li>
                 <span>水压报警上限</span>
-                <input type="text">
+                <input type="text" placeholder="请输入内容">
             </li>
             <li>
                 <span>流量报警上限</span>
-                <input type="text">
+                <input type="text" placeholder="请输入内容">
             </li>
             <li>
                 <span>电量报警下限</span>
-                <input type="text">
+                <input type="text" placeholder="请输入内容">
             </li>
             <li>
                 <span>流量报警下限</span>
-                <input type="text">
+                <input type="text" placeholder="请输入内容">
             </li>
             <li>
                 <span>报警通知相关责任人</span>
@@ -63,6 +63,12 @@
             input {
                 width: 12.4vw;
                 height: 2vw;
+                color: #b3b3b3;
+                font-size: 0.7vw;
+                background-color: #0e2328;
+                padding-left: 0.7vw;
+                border: 1px solid #0c474c;
+                outline: none;
             }
         }
     }
@@ -73,8 +79,8 @@
         height: 2.3vw;
         line-height: 2.3vw;
         text-align: center;
-        border-radius: 5px;
-        border: 1px solid red;
+        background-color: #1e496d;
+        border-radius: 0.1vw;
         font-size: 0.9vw;
         cursor: pointer;
     }
