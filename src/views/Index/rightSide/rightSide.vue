@@ -265,7 +265,7 @@
                             }
                         }
                         &:nth-child(odd) {
-                            background-color: red;
+                            background-color: #2f444a;
                         }
                     }
                 }

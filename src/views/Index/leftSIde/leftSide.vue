@@ -252,7 +252,7 @@
                         padding-left: 1.5vw;
 
                         &:nth-child(odd){
-                            background-color: red;
+                            background-color: #2f444a;
                         }
 
                     }
