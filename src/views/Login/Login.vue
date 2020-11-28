@@ -1,39 +1,50 @@
 <template>
-    <div class="login-wrapper">
-        <div class="center-box">
-            <header>
-                <div class="logo"></div>
-                <span>智能消火栓平台</span>
-            </header>
-            <main>
-                <div class="email">
-                    <i class="icon-search"></i>
-                    <input type="text" placeholder="邮箱" v-model="email">
+    <div>
+        <div class="login-wrapper" v-if="!isMobile">
+            <div class="center-box">
+                <header>
+                    <div class="logo"></div>
+                    <span>智能消火栓平台</span>
+                </header>
+                <main>
+                    <div class="email">
+                        <i class="icon-search"></i>
+                        <input type="text" placeholder="邮箱" v-model="email">
 
-                </div>
-                <div class="password">
-                    <i class="icon-search"></i>
-                    <input type="text" placeholder="密码" v-model="password">
-                </div>
-                <div class="login-btn" @click="handleLogin">登录</div>
-            </main>
+                    </div>
+                    <div class="password">
+                        <i class="icon-search"></i>
+                        <input type="text" placeholder="密码" v-model="password">
+                    </div>
+                    <div class="login-btn" @click="handleLogin">登录</div>
+                </main>
+            </div>
         </div>
+        <Login v-else/>
     </div>
 </template>
 
 <script>
+    import Login from "./mobile/Login";
   export default {
     name: "login",
     data() {
       return {
+        isMobile:false,
         email: "",
         password: ""
       }
+    },
+    components:{
+      Login
     },
     methods: {
       handleLogin() {
 
       }
+    },
+    mounted() {
+      this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
     }
   }
 </script>
