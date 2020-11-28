@@ -2,7 +2,7 @@
     <div>
             <ECharts ref='map'
               class="map"
-              :options="mapOption"></ECharts>
+              :options="mapOption" />
         <div class="box"
           v-show="boxShow">
             <header>
@@ -57,14 +57,14 @@
                                 featureType: 'water',
                                 elementType: 'all',
                                 stylers: {
-                                  color: "#032A40"
+                                  color: "#113549"
                                 }
                             },
                                 {
                                     featureType: 'land',
                                     elementType: 'all',
                                     stylers: {
-                                        color: '#03070A'
+                                        color: '#091220'
                                     }
                                 },
                                 {
@@ -72,7 +72,6 @@
                                     elementType: 'geometry',
                                     stylers: {
                                         color: '#029fd4',
-
                                     }
                                 },
                                 {
@@ -108,14 +107,14 @@
                                     featureType: 'arterial',
                                     elementType: 'geometry',
                                     stylers: {
-                                        color: '#004981'
+                                        color: '#12223d'
                                     }
                                 },
                                 {
                                     featureType: 'arterial',
                                     elementType: 'geometry.fill',
                                     stylers: {
-                                        color: '#00508b'
+                                        color: '#12223d'
                                     }
                                 },
                                 {
@@ -172,14 +171,14 @@
                                     featureType: 'building',
                                     elementType: 'all',
                                     stylers: {
-                                        color: 'rgb(14,27,48)'
+                                        color: '#0e1b30'
                                     }
                                 },
                                 {
                                     featureType: 'label',
                                     elementType: 'all',
                                     stylers: {
-                                        visibility: 'off'
+                                        color: '#585f5e'
                                     }
                                 }
                             ]
