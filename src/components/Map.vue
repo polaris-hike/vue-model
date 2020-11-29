@@ -25,6 +25,7 @@
     import ECharts from 'vue-echarts';
     import 'echarts/lib/chart/effectScatter';
     import 'echarts/extension/bmap/bmap.js';
+    import {convertData,data} from "./mapPoint";
 
     export default {
         name: 'Map',
@@ -49,7 +50,7 @@
                         show: false
                     },
                     bmap: {
-                        center: [114.015947, 22.647],
+                        center: [114.07,22.62],
                         zoom: 12,
                         roam: true,
                         mapStyle: {
@@ -155,7 +156,7 @@
                                 },
                                 {
                                     featureType: 'arterial',
-                                    elementType: 'labels',
+                                    elementType: 'geometry',
                                     stylers: {
                                         visibility: 'off'
                                     }
@@ -176,15 +177,46 @@
                                 },
                                 {
                                     featureType: 'label',
-                                    elementType: 'all',
+                                  elementType: 'labels.text.color',
                                     stylers: {
-                                        color: '#585f5e'
+                                      color: '#585f5e'
                                     }
                                 }
                             ]
                         }
                     },
-                    series: []
+                    series: [
+                      {
+                        name: 'Top 5',
+                        type: 'effectScatter',
+                        coordinateSystem: 'bmap',
+                        data: convertData(data.sort(function (a, b) {
+                          return b.value - a.value;
+                        }).slice(0, 6)),
+                        encode: {
+                          value: 2
+                        },
+                        symbolSize: function (val) {
+                          return val[2] / 10;
+                        },
+                        showEffectOn: 'render',
+                        rippleEffect: {
+                          brushType: 'stroke'
+                        },
+                        hoverAnimation: true,
+                        label: {
+                          formatter: '{b}',
+                          position: 'right',
+                          show: true
+                        },
+                        itemStyle: {
+                          color: '#26a591',
+                          shadowBlur: 10,
+                          shadowColor: '#333'
+                        },
+                        zlevel: 1
+                      },
+                    ]
                 },
                 bigPoint: [],
                 boxInfo: {
