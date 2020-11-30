@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+//const Authorization =localStorage.getItem('token')
 const Authorization =localStorage.getItem('token')
 //axios.defaults.baseURL = '127.0.0.1:2002';
 const http=axios.create({

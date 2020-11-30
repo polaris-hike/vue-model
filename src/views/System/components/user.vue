@@ -98,8 +98,16 @@
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+      },
+      getUserData(){
+        this.$get('/api/v1/user').then(res=>{
+          console.log(res);
+        })
       }
     },
+    mounted() {
+      this.getUserData()
+    }
   }
 </script>
 
