@@ -56,6 +56,7 @@
     },
     methods:{
       quitOut(){
+        localStorage.removeItem('token')
         this.$router.push('/login')
       }
     }

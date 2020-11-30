@@ -9,14 +9,14 @@
                 <main>
                     <div class="email">
                         <i class="icon-search"></i>
-                        <input type="text" placeholder="邮箱" v-model="email">
+                        <input type="text" placeholder="邮箱" v-model="email" @keyup.enter="handleLogin">
 
                     </div>
                     <div class="password">
                         <i class="icon-search"></i>
-                        <input type="text" placeholder="密码" v-model="password">
+                        <input type="text" placeholder="密码" v-model="password" @keyup.enter="handleLogin">
                     </div>
-                    <div class="login-btn" @click="handleLogin">登录</div>
+                    <div class="login-btn" @click="handleLogin" >登录</div>
                 </main>
             </div>
         </div>
@@ -40,7 +40,16 @@
     },
     methods: {
       handleLogin() {
-
+        console.log(1);
+        this.$post('/api/v1/login',{
+          username:this.email,
+          password: this.password
+        }).then(res=>{
+          if(res.code === 200){
+            localStorage.setItem('token',res.data.token)
+            this.$router.push('/')
+          }
+        })
       }
     },
     created() {
@@ -130,6 +139,7 @@
                     line-height: 3.6vh;
                     border: 1px solid red;
                     font-size: 0.7vw;
+                    cursor: pointer;
                 }
             }
         }
