@@ -1,280 +1,293 @@
 <template>
-    <div class="user-wrapper">
-        <header>
-            <span>角色编号</span>
-            <span>角色名称</span>
-            <span>操作</span>
-        </header>
-        <ul>
-            <li v-for="(item,index) in userList" :key="index">
-                <span>{{item.id}}</span>
-                <span>{{item.name}}</span>
-                <div class="operation" v-show="item.id && item.name">
-                    <div class="amend">修改</div>
-                    <div class="reset">重置密码</div>
-                    <div class="freeze">冻结</div>
-                </div>
-            </li>
-        </ul>
-        <div  class="create" @click="isCreateShow = true">
-            + 新建
+  <div class="user-wrapper">
+    <header>
+      <span>角色编号</span>
+      <span>角色名称</span>
+      <span>操作</span>
+    </header>
+    <ul>
+      <li v-for="(item, index) in userList" :key="index">
+        <span>{{ item.id }}</span>
+        <span>{{ item.name }}</span>
+        <div class="operation" v-show="item.id && item.name">
+          <div class="amend">修改</div>
+          <div class="freeze" @click="deleteRole(item.id)">删除</div>
         </div>
-        <div class="pagination">
-            <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page.sync="currentPage"
-                    :page-size="100"
-                    layout="prev, pager, next, jumper"
-                    :total="1000">
-            </el-pagination>
-        </div>
-
-        <!-- 新增角色弹窗 -->
-        <el-dialog
-                title="新增角色"
-                :visible.sync="isCreateShow"
-                width="40.1%"
-                custom-class="create-wrapper"
-        >
-            <div class="username">
-                <span>用户姓名</span>
-                <input type="text" placeholder="请输入内容">
-            </div>
-            <div class="permission-wrapper">
-                <span>权限</span>
-                <el-transfer v-model="value" :data="data"></el-transfer>
-            </div>
-            <div class="confirm">确定</div>
-        </el-dialog>
+      </li>
+    </ul>
+    <div class="create" @click="isCreateShow = true">+ 新建</div>
+    <div class="pagination">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="100"
+        layout="prev, pager, next, jumper"
+        :total="1000"
+      >
+      </el-pagination>
     </div>
+
+    <!-- 新增角色弹窗 -->
+    <el-dialog
+      title="新增角色"
+      :visible.sync="isCreateShow"
+      width="40.1%"
+      custom-class="create-wrapper"
+    >
+      <div class="username">
+        <span>用户姓名</span>
+        <input type="text" placeholder="请输入内容" />
+      </div>
+      <div class="permission-wrapper">
+        <span>权限</span>
+        <el-transfer v-model="value" :data="data"></el-transfer>
+      </div>
+      <div class="confirm">确定</div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
-  export default {
-
-    name: "role",
-    data() {
-      const generateData = _ => {
-        const data = [];
-        for (let i = 1; i <= 15; i++) {
-          data.push({
-            key: i,
-            label: `备选项 ${ i }`,
-            disabled: i % 4 === 0
-          });
-        }
-        return data;
-      };
-      return {
-        data: generateData(),
-        value: [1, 4],
-        isCreateShow:false,
-        currentPage: 1,
-        userList: [
-          {
-            id: 1558621,
-            name: '维修人员',
-          },
-          {
-            id: 4511143,
-            name: '维修人员',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          },
-          {
-            id: '',
-            name: '',
-          }
-        ]
+export default {
+  name: "role",
+  data() {
+    const generateData = (_) => {
+      const data = [];
+      for (let i = 1; i <= 15; i++) {
+        data.push({
+          key: i,
+          label: `备选项 ${i}`,
+          disabled: i % 4 === 0,
+        });
       }
+      return data;
+    };
+    return {
+      data: generateData(),
+      value: [1, 4],
+      isCreateShow: false,
+      currentPage: 1,
+      userList: [
+        {
+          id: 1558621,
+          name: "维修人员",
+        },
+        {
+          id: 4511143,
+          name: "维修人员",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+        {
+          id: "",
+          name: "",
+        },
+      ],
+    };
+  },
+  methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
     },
-    methods: {
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      }
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
     },
-  }
+    getRoleData() {
+      this.$get("/api/v1/rolesList").then((res) => {
+        console.log(res);
+      });
+    },
+    deleteRole(id) {
+      this.$del("/api/v1/roles", {
+        id,
+      }).then((res) => {
+        console.log(res);
+      });
+    },
+  },
+  mounted() {
+    this.getRoleData();
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    .user-wrapper {
-        position: relative;
-        padding: 8.7vh 5.7vw 3vh 5.8vw;
-        > header {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 2.9vh;
-            font-size: 0.9vw;
-            > span {
-                display: inline-block;
-                border-right: 1px solid #303f42;
-                text-align: center;
-                &:nth-child(1) {
-                    width: 20.3vw;
-                }
-                &:nth-child(2) {
-                    width: 20.5vw;
-                }
-                &:nth-child(3) {
-                    width: 22.2vw;
-                }
-                &:last-child {
-                    border: none;
-                }
-            }
-        }
-        ul {
-            font-size: 0.7vw;
-            > li {
-                display: flex;
-                align-items: center;
-                height: 4.2vh;
-                &:nth-child(even) {
-                    background-color: #29393e;
-                }
-                > span {
-                    display: inline-block;
-                    text-align: center;
-                    &:nth-child(1) {
-                        width: 20.3vw;
-                    }
-                    &:nth-child(2) {
-                        width: 20.5vw;
-                    }
-                }
-                .operation {
-                    display: flex;
-                    justify-content: center;
-                    width: 22.2vw;
-                    .amend {
-                        width: 3.1vw;
-                        height: 1.3vw;
-                        line-height: 1.3vw;
-                        background-color: #00a5a5;
-                        text-align: center;
-                        margin-right: 0.4vw;
-                    }
-                    .reset {
-                        width: 4.2vw;
-                        height: 1.3vw;
-                        line-height: 1.3vw;
-                        background-color: #d8a932;
-                        text-align: center;
-                        margin-right: 0.4vw;
-                    }
-                    .freeze {
-                        width: 3.1vw;
-                        height: 1.3vw;
-                        line-height: 1.3vw;
-                        background-color: #707070;
-                        text-align: center;
-                    }
-                }
-            }
-        }
-        .create {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 4.2vw;
-            height: 1.7vw;
-            position: absolute;
-            top: 1.5vw;
-            left: 1.7vw;
-            font-size: 0.7vw;
-            background-color: #25a9cc;
-            cursor: pointer;
-        }
-        .pagination {
-            position: absolute;
-            bottom: 3vh;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .create-wrapper {
-            .el-dialog__body {
-                .username {
-                    display: flex;
-                    flex-direction: column;
-                    input {
-                        width: 14.8vw;
-                        height: 2.4vh;
-                    }
-                }
-                .permission-wrapper {
-                    margin-bottom: 2.3vh;
-                }
-                .confirm {
-                    width: 4.7vw;
-                    height: 1.7vw;
-                    margin: 0 auto;
-                    border: 1px solid red;
-                    text-align: center;
-                    line-height: 1.7vw;
-                    cursor: pointer;
-                }
-            }
-        }
+.user-wrapper {
+  position: relative;
+  padding: 8.7vh 5.7vw 3vh 5.8vw;
+  > header {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2.9vh;
+    font-size: 0.9vw;
+    > span {
+      display: inline-block;
+      border-right: 1px solid #303f42;
+      text-align: center;
+      &:nth-child(1) {
+        width: 20.3vw;
+      }
+      &:nth-child(2) {
+        width: 20.5vw;
+      }
+      &:nth-child(3) {
+        width: 22.2vw;
+      }
+      &:last-child {
+        border: none;
+      }
     }
+  }
+  ul {
+    font-size: 0.7vw;
+    > li {
+      display: flex;
+      align-items: center;
+      height: 4.2vh;
+      &:nth-child(even) {
+        background-color: #29393e;
+      }
+      > span {
+        display: inline-block;
+        text-align: center;
+        &:nth-child(1) {
+          width: 20.3vw;
+        }
+        &:nth-child(2) {
+          width: 20.5vw;
+        }
+      }
+      .operation {
+        display: flex;
+        justify-content: center;
+        width: 22.2vw;
+        .amend {
+          width: 3.1vw;
+          height: 1.3vw;
+          line-height: 1.3vw;
+          background-color: #00a5a5;
+          text-align: center;
+          margin-right: 0.4vw;
+        }
+        .reset {
+          width: 4.2vw;
+          height: 1.3vw;
+          line-height: 1.3vw;
+          background-color: #d8a932;
+          text-align: center;
+          margin-right: 0.4vw;
+        }
+        .freeze {
+          width: 3.1vw;
+          height: 1.3vw;
+          line-height: 1.3vw;
+          background-color: #707070;
+          text-align: center;
+        }
+      }
+    }
+  }
+  .create {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.2vw;
+    height: 1.7vw;
+    position: absolute;
+    top: 1.5vw;
+    left: 1.7vw;
+    font-size: 0.7vw;
+    background-color: #25a9cc;
+    cursor: pointer;
+  }
+  .pagination {
+    position: absolute;
+    bottom: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .create-wrapper {
+    .el-dialog__body {
+      .username {
+        display: flex;
+        flex-direction: column;
+        input {
+          width: 14.8vw;
+          height: 2.4vh;
+        }
+      }
+      .permission-wrapper {
+        margin-bottom: 2.3vh;
+      }
+      .confirm {
+        width: 4.7vw;
+        height: 1.7vw;
+        margin: 0 auto;
+        border: 1px solid red;
+        text-align: center;
+        line-height: 1.7vw;
+        cursor: pointer;
+      }
+    }
+  }
+}
 </style>
 <style>
-    .el-pager li {
-        color: #fff;
-        background: unset;
-    }
-    .el-pagination button:disabled {
-        background-color: unset;
-    }
-    .el-pagination .btn-next, .el-pagination .btn-prev {
-        background: unset;
-    }
-    .el-input__inner {
-        background-color: unset;
-    }
+.el-pager li {
+  color: #fff;
+  background: unset;
+}
+.el-pagination button:disabled {
+  background-color: unset;
+}
+.el-pagination .btn-next,
+.el-pagination .btn-prev {
+  background: unset;
+}
+.el-input__inner {
+  background-color: unset;
+}
 </style>

@@ -1,14 +1,14 @@
 import axios from 'axios'
 
 //const Authorization =localStorage.getItem('token')
-const Authorization =localStorage.getItem('token')
+const Authorization = localStorage.getItem('token')
 //axios.defaults.baseURL = '127.0.0.1:2002';
-const http=axios.create({
-  headers:{
+const http = axios.create({
+  headers: {
     Authorization,
   },
-  timeout:180000,
-  baseURL:'http://dev.szhikj.com:8989',
+  timeout: 180000,
+  baseURL: 'http://testa.shenim.cn',
 });
 
 http.interceptors.response.use(
@@ -36,7 +36,7 @@ http.interceptors.response.use(
  * @returns {Promise}
  */
 
-export function get(url, params = {},addTimeStamp) {
+export function get(url, params = {}, addTimeStamp) {
   return new Promise((resolve, reject) => {
     http.get(url, {
       params: {
@@ -112,7 +112,7 @@ export function put(url, data = {}) {
  * @returns {Promise}
  */
 
-export function del(url, data = {data: {}}) {
+export function del(url, data = { data: {} }) {
   return new Promise((resolve, reject) => {
     http.delete(url, { data })
       .then(response => {
