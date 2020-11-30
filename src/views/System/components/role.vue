@@ -6,11 +6,11 @@
       <span>操作</span>
     </header>
     <ul>
-      <li v-for="(item, index) in userList" :key="index">
+      <li v-for="(item, index) in roleList" :key="index">
         <span>{{ item.id }}</span>
         <span>{{ item.name }}</span>
         <div class="operation" v-show="item.id && item.name">
-          <div class="amend">修改</div>
+          <div class="amend" @click="handleModifyClick(item.id)">修改</div>
           <div class="freeze" @click="deleteRole(item.id)">删除</div>
         </div>
       </li>
@@ -68,64 +68,7 @@ export default {
       value: [1, 4],
       isCreateShow: false,
       currentPage: 1,
-      userList: [
-        {
-          id: 1558621,
-          name: "维修人员",
-        },
-        {
-          id: 4511143,
-          name: "维修人员",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-        {
-          id: "",
-          name: "",
-        },
-      ],
+      roleList: [],
     };
   },
   methods: {
@@ -135,9 +78,19 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
+    handleModifyClick(roles_id) {
+      this.getPermission(roles_id);
+    },
+    getPermission(roles_id) {
+      this.$get("/api/v1/permission", {
+        roles_id,
+      }).then((res) => {
+        this.roleList = res.data;
+      });
+    },
     getRoleData() {
       this.$get("/api/v1/rolesList").then((res) => {
-        console.log(res);
+        this.roleList = res.data;
       });
     },
     deleteRole(id) {
