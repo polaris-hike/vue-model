@@ -1,4 +1,6 @@
-
+.el-dialog {
+  background: #192a37;
+}
 .el-pager li {
   color: #fff;
   background: unset;
@@ -12,4 +14,50 @@
 .el-input__inner {
   background-color: #0a253a;
   border: 1px solid #1e6f85;
+}
+.el-pagination__editor {
+  margin: 0 0.4vw;
+}
+
+
+
+.el-transfer .el-transfer-panel {
+  background: #16323e;
+  border: 1px solid #0c474c;
+}
+.el-transfer-panel .el-transfer-panel__header {
+  background: #16323e;
+}
+
+.el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label {
+  font-size: 0.7vw;
+  color: #fff;
+}
+.el-checkbox__inner {
+  background-color: #0a283e;
+  border: 1px solid #2589a0;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #0a283e;
+}
+.el-checkbox__inner::after {
+  border: 1px solid #00ffff;
+  border-left: 0;
+  border-top: 0;
+}
+.el-transfer-panel__item.el-checkbox {
+  color: #fff;
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: #fff;
+}
+.el-transfer__button {
+  border-radius: 0.5vw;
+  background-color: #25a9cc;
+}
+.el-transfer__button i,
+.el-transfer__but {
+  color: #192a37;
 }

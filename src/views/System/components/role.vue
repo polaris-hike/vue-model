@@ -15,15 +15,14 @@
         </div>
       </li>
     </ul>
-    <div class="create" @click="isCreateShow = true">+ 新建</div>
+    <div class="create" @click="handleCreateClick">+ 新建</div>
     <div class="pagination">
       <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
-        :page-size="100"
+        :page-size="pageSize"
         layout="prev, pager, next, jumper"
-        :total="1000"
+        :total="total"
       >
       </el-pagination>
     </div>
@@ -33,17 +32,18 @@
       title="新增角色"
       :visible.sync="isCreateShow"
       width="40.1%"
+      :close-on-click-modal="false"
       custom-class="create-wrapper"
     >
       <div class="username">
         <span>用户姓名</span>
-        <input type="text" placeholder="请输入内容" />
+        <input type="text" placeholder="请输入内容" v-model.trim="username" />
       </div>
       <div class="permission-wrapper">
         <span>权限</span>
         <el-transfer v-model="value" :data="data"></el-transfer>
       </div>
-      <div class="confirm">确定</div>
+      <div class="confirm" @click="createRole">确定</div>
     </el-dialog>
   </div>
 </template>
@@ -52,31 +52,34 @@
 export default {
   name: "role",
   data() {
-    const generateData = (_) => {
-      const data = [];
-      for (let i = 1; i <= 15; i++) {
-        data.push({
-          key: i,
-          label: `备选项 ${i}`,
-          disabled: i % 4 === 0,
-        });
-      }
-      return data;
-    };
     return {
-      data: generateData(),
-      value: [1, 4],
+      pageSize: 15,
+      total: 0,
+      currentPage: 1,
+      username: "",
+      data: [],
+      value: [],
       isCreateShow: false,
       currentPage: 1,
       roleList: [],
     };
   },
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    handleCreateClick() {
+      this.isCreateShow = true;
+      this.getPermission();
+    },
+    createRole() {
+      this.$post("/api/v1/roles", {
+        name: this.username,
+        permissions: this.value,
+      }).then((res) => {
+        console.log(res);
+        this.getRoleData();
+      });
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.getRoleData(val);
     },
     handleModifyClick(roles_id) {
       this.getPermission(roles_id);
@@ -85,11 +88,20 @@ export default {
       this.$get("/api/v1/permission", {
         roles_id,
       }).then((res) => {
-        this.roleList = res.data;
+        console.log(res);
+        res.data.left.forEach((item) => {
+          item.label = item.name;
+          item.key = item.id;
+        });
+        this.data = res.data.left;
       });
     },
-    getRoleData() {
-      this.$get("/api/v1/rolesList").then((res) => {
+    getRoleData(page) {
+      let url = "/api/v1/rolesList";
+      if (page) {
+        url = url + `?page=${page}`;
+      }
+      this.$get(url).then((res) => {
         this.roleList = res.data;
       });
     },
@@ -177,7 +189,7 @@ export default {
           width: 3.1vw;
           height: 1.3vw;
           line-height: 1.3vw;
-          background-color: #707070;
+          background-color: #d84e4e;
           text-align: center;
         }
       }
@@ -219,7 +231,8 @@ export default {
         width: 4.7vw;
         height: 1.7vw;
         margin: 0 auto;
-        border: 1px solid red;
+        background: #1e4d70;
+        border-radius: 0.1vw;
         text-align: center;
         line-height: 1.7vw;
         cursor: pointer;
@@ -229,18 +242,30 @@ export default {
 }
 </style>
 <style>
-.el-pager li {
+.el-dialog .el-dialog__body {
+  padding-top: 0;
   color: #fff;
-  background: unset;
+  font-size: 0.7vw;
 }
-.el-pagination button:disabled {
-  background-color: unset;
+.el-dialog .el-dialog__body .username {
+  margin-bottom: 1.2vh;
 }
-.el-pagination .btn-next,
-.el-pagination .btn-prev {
-  background: unset;
+.el-dialog .el-dialog__body .username input {
+  width: 14.8vw;
+  height: 2.4vh;
+  color: #b3b3b3;
+  font-size: 0.7vw;
+  background-color: #0e2328;
+  padding-left: 0.7vw;
+  border: 1px solid #0c474c;
+  outline: none;
 }
-.el-input__inner {
-  background-color: unset;
+
+.el-dialog .el-dialog__header .el-dialog__title {
+  color: #fff;
+  font-size: 0.9vw;
 }
+</style>
+
+<style src="../../../assets/style/element.css">
 </style>

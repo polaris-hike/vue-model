@@ -49,29 +49,34 @@ export default {
   },
   methods: {
     handleLogin() {
-      if(!this.email){
-        this.$message.error('请输入邮箱')
-        return
+      if (!this.email) {
+        this.$message.error("请输入邮箱");
+        return;
       }
-      if(!this.password){
-        this.$message.error('请输入密码')
-        return
+      if (!this.password) {
+        this.$message.error("请输入密码");
+        return;
       }
       this.$post("/api/v1/login", {
         email: this.email,
         password: this.password,
-      }).then(res => {
-        if (res.code === 200) {
-          localStorage.setItem("token", res.data.token);
-          this.$router.push("/");
-        }else{
-          this.$message.error('账号密码错误')
-        }
-      },err=>{
-        this.$message.error('账号密码错误')
-      }).catch(err=>{
-        this.$message.error('账号密码错误')
       })
+        .then(
+          (res) => {
+            if (res.code === 200) {
+              localStorage.setItem("token", res.data.token);
+              this.$router.push("/");
+            } else {
+              this.$message.error("账号密码错误");
+            }
+          },
+          (err) => {
+            this.$message.error("账号密码错误");
+          }
+        )
+        .catch((err) => {
+          this.$message.error("账号密码错误");
+        });
     },
   },
   created() {
@@ -155,13 +160,17 @@ export default {
         width: 100%;
         height: 100%;
         padding-left: 2vw;
+        background-color: rgba(9, 43, 56, 0.6);
+        border: 1px solid #035873;
+        outline: none;
+        color: #fff;
       }
       .login-btn {
         width: 15.8vw;
         height: 4vh;
         text-align: center;
         line-height: 3.6vh;
-        border: 1px solid red;
+        background-color: #1d5273;
         font-size: 0.7vw;
         cursor: pointer;
       }

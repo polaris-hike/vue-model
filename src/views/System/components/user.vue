@@ -25,7 +25,6 @@
     <div @click="isCreateShow = true" class="create">+ 新建</div>
     <div class="pagination">
       <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
         :page-size="pageSize"
@@ -91,11 +90,8 @@ export default {
     };
   },
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.getUserData(val);
     },
     handleModifyClick(data) {
       this.isModify = true;
@@ -119,19 +115,21 @@ export default {
         }).then((res) => {
           this.clearInput();
           this.getUserData();
-          console.log(res);
         });
       } else {
         this.changeUserInfo();
       }
     },
-    getUserData() {
-      this.$get("/api/v1/user").then((res) => {
+    getUserData(page) {
+      let url = "/api/v1/user";
+      if (page) {
+        url = url + `?page=${page}`;
+      }
+      this.$get(url).then((res) => {
         this.userList = res.data;
         this.total = res.meta.total;
         this.currentPage = res.meta.current_page;
         this.pageSize = res.meta.per_page;
-        console.log(res);
       });
     },
     clearInput() {
@@ -325,9 +323,6 @@ export default {
 }
 </style>
 <style>
-.el-dialog {
-  background: #192a37;
-}
 .el-dialog .el-dialog__header .el-dialog__title {
   color: #fff;
   font-size: 0.9vw;
@@ -337,6 +332,16 @@ export default {
   font-size: 0.7vw;
   padding-left: 2.7vw;
 }
+.el-pagination .btn-next,
+.el-pagination .btn-prev {
+  color: #00ffff;
+}
+/* .el-pagination button:hover {
+  color: inherit;
+} */
+.el-pagination__jump {
+  color: #fff;
+}
 .el-dialog .el-dialog__body ul li input {
   width: 14.8vw;
   height: 2.4vh;
@@ -345,19 +350,5 @@ export default {
   background: #172f3b;
   border: 1px solid #134a55;
   outline: none;
-}
-.el-pager li {
-  color: #fff;
-  background: unset;
-}
-.el-pagination button:disabled {
-  background-color: unset;
-}
-.el-pagination .btn-next,
-.el-pagination .btn-prev {
-  background: unset;
-}
-.el-input__inner {
-  background-color: unset;
 }
 </style>
