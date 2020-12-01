@@ -12,7 +12,7 @@
             <input
               type="text"
               placeholder="邮箱"
-              v-model="email"
+              v-model.trim="email"
               @keyup.enter="handleLogin"
             />
           </div>
@@ -21,7 +21,7 @@
             <input
               type="password"
               placeholder="密码"
-              v-model="password"
+              v-model.trim="password"
               @keyup.enter="handleLogin"
             />
           </div>
@@ -49,16 +49,29 @@ export default {
   },
   methods: {
     handleLogin() {
-      console.log(1);
+      if(!this.email){
+        this.$message.error('请输入邮箱')
+        return
+      }
+      if(!this.password){
+        this.$message.error('请输入密码')
+        return
+      }
       this.$post("/api/v1/login", {
         email: this.email,
         password: this.password,
-      }).then((res) => {
+      }).then(res => {
         if (res.code === 200) {
           localStorage.setItem("token", res.data.token);
           this.$router.push("/");
+        }else{
+          this.$message.error('账号密码错误')
         }
-      });
+      },err=>{
+        this.$message.error('账号密码错误')
+      }).catch(err=>{
+        this.$message.error('账号密码错误')
+      })
     },
   },
   created() {

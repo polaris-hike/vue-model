@@ -1,15 +1,20 @@
 import axios from 'axios'
 
-//const Authorization =localStorage.getItem('token')
 const Authorization = localStorage.getItem('token')
-//axios.defaults.baseURL = '127.0.0.1:2002';
 const http = axios.create({
-  headers: {
-    Authorization,
-  },
   timeout: 180000,
   baseURL: 'http://testa.shenim.cn',
 });
+http.interceptors.request.use(
+  config => {
+    if (localStorage.getItem('token')) {
+      config.headers.Authorization = localStorage.getItem('token');
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  });
 
 http.interceptors.response.use(
   response => {
