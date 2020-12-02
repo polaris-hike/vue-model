@@ -22,7 +22,7 @@
         </div>
       </li>
     </ul>
-    <div @click="isCreateShow = true" class="create">+ 新建</div>
+    <div @click="handleCreateClick" class="create">+ 新建</div>
     <div class="pagination">
       <el-pagination
         @current-change="handleCurrentChange"
@@ -36,11 +36,12 @@
 
     <!-- 新增用户弹窗 -->
     <el-dialog
-      title="新增用户"
+      :title="title"
       :visible.sync="isCreateShow"
       :close-on-click-modal="false"
       width="20.6%"
       custom-class="create-wrapper"
+      @close="handClose"
     >
       <ul>
         <li>
@@ -53,7 +54,15 @@
         </li>
         <li>
           <span>用户角色</span>
-          <input type="text" v-model="role" placeholder="请输入内容" />
+          <el-select v-model="role" placeholder="请输入内容">
+            <el-option
+              v-for="item in roleList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
         </li>
         <li>
           <span>联系电话</span>
@@ -74,12 +83,14 @@ export default {
   name: "user",
   data() {
     return {
+      title: "新增用户",
       pageSize: 15,
       total: 0,
       currentPage: 1,
       name: "",
       email: "",
       role: "",
+      roleList: [],
       phone: "",
       status: "",
       currentUserId: "",
@@ -90,10 +101,23 @@ export default {
     };
   },
   methods: {
+    handleCreateClick() {
+      this.isCreateShow = true;
+      this.getRole();
+    },
+    getRole() {
+      this.$get("/api/v1/roles").then((res) => {
+        this.roleList = res.data;
+      });
+    },
+    handClose() {
+      this.clearInput();
+    },
     handleCurrentChange(val) {
       this.getUserData(val);
     },
     handleModifyClick(data) {
+      this.title = "修改用户";
       this.isModify = true;
       this.isCreateShow = true;
       this.name = data.name;
@@ -113,7 +137,7 @@ export default {
           role_id: this.role,
           status: this.status,
         }).then((res) => {
-          this.clearInput();
+          this.isCreateShow = false;
           this.getUserData();
         });
       } else {
@@ -139,6 +163,7 @@ export default {
       this.email = "";
       this.role = "";
       this.status = "";
+      this.title = "新增用户";
     },
     changeUserInfo() {
       this.$put("/api/v1/user", {
@@ -150,7 +175,6 @@ export default {
         status: this.status,
       }).then((res) => {
         this.isModify = false;
-        this.clearInput();
         this.getUserData();
         console.log(res);
       });

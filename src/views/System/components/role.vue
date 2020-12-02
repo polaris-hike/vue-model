@@ -10,7 +10,7 @@
         <span>{{ item.id }}</span>
         <span>{{ item.name }}</span>
         <div class="operation" v-show="item.id && item.name">
-          <div class="amend" @click="handleModifyClick(item.id)">修改</div>
+          <div class="amend" @click="handleModifyClick(item)">修改</div>
           <div class="freeze" @click="deleteRole(item.id)">删除</div>
         </div>
       </li>
@@ -29,11 +29,12 @@
 
     <!-- 新增角色弹窗 -->
     <el-dialog
-      title="新增角色"
+      :title="title"
       :visible.sync="isCreateShow"
       width="40.1%"
       :close-on-click-modal="false"
       custom-class="create-wrapper"
+      @close="handClose"
     >
       <div class="username">
         <span>用户姓名</span>
@@ -53,47 +54,107 @@ export default {
   name: "role",
   data() {
     return {
+      title: "新增角色",
       pageSize: 15,
       total: 0,
+      currentRoleId: -1,
       currentPage: 1,
       username: "",
       data: [],
       value: [],
       isCreateShow: false,
-      currentPage: 1,
       roleList: [],
+      isModify: false,
+      canSendDeleteData: true,
+      canSendCreateData: true,
+      canSendModifyData: true,
     };
   },
   methods: {
+    handClose() {
+      this.username = "";
+      this.title = "新增角色";
+    },
     handleCreateClick() {
       this.isCreateShow = true;
       this.getPermission();
     },
     createRole() {
-      this.$post("/api/v1/roles", {
-        name: this.username,
-        permissions: this.value,
-      }).then((res) => {
-        console.log(res);
-        this.getRoleData();
-      });
+      if (!this.username) {
+        this.$message.error("请输入用户姓名");
+      }
+      if (this.isModify) {
+        if (!this.canSendModifyData) return;
+        this.canSendModifyData = false;
+        this.modifyRole();
+      } else {
+        if (!this.canSendCreateData) return;
+        this.canSendCreateData = false;
+        this.$post("/api/v1/roles", {
+          name: this.username,
+          permissions: this.value,
+        })
+          .then((res) => {
+            this.canSendCreateData = true;
+            this.isCreateShow = false;
+            if (res.code === 200) {
+              console.log(1);
+              this.getRoleData();
+            } else {
+              console.log(2);
+              this.$message.error(res.message);
+            }
+          })
+          .catch((err) => {
+            console.log(3);
+            this.$message.error(err);
+            this.canSendCreateData = true;
+            console.log(err);
+          });
+      }
     },
     handleCurrentChange(val) {
       this.getRoleData(val);
     },
-    handleModifyClick(roles_id) {
-      this.getPermission(roles_id);
+    handleModifyClick(item) {
+      this.title = "修改角色";
+      this.username = item.name;
+      this.currentRoleId = item.id;
+      this.isModify = true;
+      this.isCreateShow = true;
+      this.getPermission(item.id);
+    },
+    modifyRole() {
+      this.$put("/api/v1/roles", {
+        name: this.username,
+        permissions: this.value,
+        id: this.currentRoleId,
+      })
+        .then((res) => {
+          this.canSendModifyData = true;
+          this.isModify = false;
+          this.getRoleData();
+        })
+        .catch((err) => {
+          this.canSendModifyData = true;
+          console.log(err);
+        });
     },
     getPermission(roles_id) {
       this.$get("/api/v1/permission", {
         roles_id,
       }).then((res) => {
-        console.log(res);
         res.data.left.forEach((item) => {
           item.label = item.name;
           item.key = item.id;
         });
         this.data = res.data.left;
+        if (res.data.right.length !== 0) {
+          const value = res.data.right.map((i) => i.id);
+          this.value = value;
+        } else {
+          this.value = [];
+        }
       });
     },
     getRoleData(page) {
@@ -106,11 +167,19 @@ export default {
       });
     },
     deleteRole(id) {
+      if (!this.canSendDeleteData) return;
+      this.canSendDeleteData = false;
       this.$del("/api/v1/roles", {
         id,
-      }).then((res) => {
-        console.log(res);
-      });
+      })
+        .then((res) => {
+          this.getRoleData();
+          this.canSendDeleteData = true;
+        })
+        .catch((err) => {
+          this.canSendDeleteData = true;
+          console.log(err);
+        });
     },
   },
   mounted() {

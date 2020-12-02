@@ -87,6 +87,14 @@ export default {
     handleCurrentChange(val) {
       console.log(val);
     },
+    getAlarmListData() {
+      this.$get("/api/v1/alarmSystem").then((res) => {
+        this.alarmList = res.data;
+      });
+    },
+  },
+  mounted() {
+    // this.getAlarmListData();
   },
 };
 </script>
