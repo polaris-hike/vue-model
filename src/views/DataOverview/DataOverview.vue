@@ -20,13 +20,13 @@
         <div class="state">
           <div class="top">状态</div>
           <div class="bottom">
-            <span style="width: 3.3vw">停用</span>
-            <span style="width: 3vw">正常</span>
-            <span style="width: 3vw">撞到</span>
-            <span style="width: 4.8vw">非法用水</span>
-            <span style="width: 4.8vw">水压异常</span>
-            <span style="width: 4.8vw">电压异常</span>
-            <span style="width: 4.8vw">事件时间</span>
+            <span>停用</span>
+            <span>正常</span>
+            <span>撞到</span>
+            <span>非法用水</span>
+            <span>水压异常</span>
+            <span>电压异常</span>
+            <span>事件时间</span>
           </div>
         </div>
         <div class="water-gage">
@@ -35,23 +35,23 @@
             <span style="width: 4.7vw">水压(Mpa)</span>
             <span style="width: 5.4vw">采集时间</span>
             <span style="width: 5.1vw">接受时间</span>
-            <span style="width: 5.5vw">维护人员</span>
           </div>
         </div>
+        <span style="width: 5.5vw">维护人员</span>
       </header>
       <ul class="alarmList-wrapper">
         <li v-for="(item, index) in alarmList" :key="index">
           <span>{{ item.id }}</span>
           <span>{{ item.sn }}</span>
           <span>{{ item.address }}</span>
-          <span style="width: 3.3vw">{{ item.stopUse }}</span>
-          <span style="width: 3vw">{{ item.normal }}</span>
-          <span style="width: 3vw">{{ item.knockDown }}</span>
-          <span style="width: 4.8vw">{{ item.illegalWaterUse }}</span>
-          <span style="width: 4.8vw">{{ item.abnormalWaterPressure }}</span>
-          <span style="width: 4.8vw">{{ item.abnormalVoltage }}</span>
-          <span style="width: 4.8vw">{{ item.eventTime }}</span>
-          <span style="width: 4.7vw">{{ item.sleepCircle }}</span>
+          <span style="width: 6.2vw">{{ item.stopUse }}</span>
+          <span style="width: 6.2vw">{{ item.normal }}</span>
+          <span style="width: 6.2vw">{{ item.knockDown }}</span>
+          <span style="width: 6.2vw">{{ item.illegalWaterUse }}</span>
+          <span style="width: 6.2vw">{{ item.abnormalWaterPressure }}</span>
+          <span style="width: 6.2vw">{{ item.abnormalVoltage }}</span>
+          <span style="width: 6.2vw">{{ item.eventTime }}</span>
+          <span style="width: 5.7vw">{{ item.sleepCircle }}</span>
           <span style="width: 5.4vw">{{ item.pressureCollectionCycle }}</span>
           <span style="width: 5.1vw">{{ item.maxPressureAlarm }}</span>
           <span style="width: 5.5vw">{{ item.people }}</span>
@@ -137,6 +137,7 @@ export default {
     input {
       width: 10.6vw;
       margin-right: 0.8vw;
+      height: 3.7vh;
       color: #b3b3b3;
       background-color: #0f1f24;
       padding-left: 0.7vw;
@@ -187,19 +188,27 @@ export default {
     > header {
       display: flex;
       font-size: 0.9vw;
+      height: 7.5vh;
       .state {
+        width: 43.2vw;
         border-right: 1px solid #303f42;
+        padding: 0 0.7vw;
         .top {
           text-align: center;
           border-bottom: 1px solid #303f42;
+          height: 50%;
         }
         .bottom {
           display: flex;
           justify-content: space-between;
+          height: 50%;
           > span {
             text-align: center;
             border-right: 1px solid #303f42;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
             &:last-child {
               border: none;
             }
@@ -208,18 +217,23 @@ export default {
       }
       .water-gage {
         border-right: 1px solid #303f42;
+        padding: 0 0.7vw;
         .top {
           text-align: center;
           border-bottom: 1px solid #303f42;
+          height: 50%;
         }
         .bottom {
           display: flex;
           justify-content: space-between;
-          font-size: 0.7vw;
+          font-size: 0.9vw;
+          height: 50%;
           > span {
             text-align: center;
             border-right: 1px solid #303f42;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             &:last-child {
               border: none;
             }
@@ -227,9 +241,11 @@ export default {
         }
       }
       > span {
-        display: inline-block;
         border-right: 1px solid #303f42;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:last-child {
           border: none;
         }

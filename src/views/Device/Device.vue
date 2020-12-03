@@ -1,7 +1,7 @@
 <template>
   <div class="alarm-wrapper">
     <header>
-      <div class="left">
+      <div class="top">
         <div class="small" @click="isCreateShow = true">+ 新建</div>
         <div class="small">导出</div>
         <div class="small">导入</div>
@@ -10,13 +10,21 @@
         <div class="big">压力报警上限设置</div>
         <div class="big">压力报警下限设置</div>
       </div>
-      <div class="right">
-        <div class="input-wrapper">
-          <i class="search-icon"></i>
-          <input class="search" type="text" placeholder="请输入关键字" />
+      <div class="bottom">
+        <div class="left">
+          <input type="text" placeholder="省份" />
+          <input type="text" placeholder="城市" />
+          <input type="text" placeholder="区域" />
         </div>
-        <div class="confirm">确认</div>
+        <div class="right">
+          <div class="input-wrapper">
+            <i class="search-icon"></i>
+            <input class="search" type="text" placeholder="请输入关键字" />
+          </div>
+          <div class="confirm">确认</div>
+        </div>
       </div>
+
     </header>
     <main>
       <header>
@@ -287,11 +295,12 @@ export default {
   height: 92.9vh;
   > header {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 4.1vh;
+    flex-direction: column;
+    margin-bottom: 2.4vh;
     font-size: 0.7vw;
-    .left {
+    .top{
       display: flex;
+      margin-bottom: 1.6vh;
       > div {
         height: 3.7vh;
         line-height: 3.7vh;
@@ -308,63 +317,95 @@ export default {
         width: 8.3vw;
       }
     }
-    .right {
+    .bottom {
       display: flex;
-      .input-wrapper {
-        position: relative;
-        width: 12.4vw;
-        height: 3.7vh;
-        margin-right: 0.8vw;
+      justify-content: space-between;
+      .left {
         input {
-          color: #b3b3b3;
+          width: 10.6vw;
+          margin-right: 0.8vw;
+          height: 3.6vh;
           background-color: #0f1f24;
           padding-left: 0.7vw;
-          border: none;
+          border: 1px solid #0c474c;
           outline: none;
-          width: 100%;
-          height: 3.7vh;
-        }
-        .search-icon {
-          position: absolute;
-          background-image: url("~@/assets/alarm/search.png");
-          background-size: 100% 100%;
-          right: 0.5vw;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 0.9vw;
-          height: 0.9vw;
+          color: #fff;
+          &.search {
+            width: 12.4vw;
+            &::after {
+              content: "";
+              display: block;
+              width: 1vw;
+              height: 1vw;
+              background-color: red;
+            }
+          }
         }
       }
-      .confirm {
-        width: 5.9vw;
-        height: 3.7vh;
-        line-height: 3.7vh;
-        text-align: center;
-        background-color: #1e4b6d;
-        border: 1px solid #17fff3;
-        font-size: 0.7vw;
-        cursor: pointer;
+      .right {
+        display: flex;
+        .input-wrapper {
+          position: relative;
+          width: 12.4vw;
+          height: 3.7vh;
+          margin-right: 0.8vw;
+          input {
+            color: #b3b3b3;
+            background-color: #0f1f24;
+            padding-left: 0.7vw;
+            border: none;
+            outline: none;
+            width: 100%;
+            height: 3.7vh;
+          }
+          .search-icon {
+            position: absolute;
+            background-image: url("~@/assets/alarm/search.png");
+            background-size: 100% 100%;
+            right: 0.5vw;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0.9vw;
+            height: 0.9vw;
+          }
+        }
+        .confirm {
+          width: 5.9vw;
+          height: 3.7vh;
+          line-height: 3.7vh;
+          text-align: center;
+          background-color: #1e4b6d;
+          border: 1px solid #17fff3;
+          font-size: 0.7vw;
+          cursor: pointer;
+        }
       }
     }
+
   }
   main {
     > header {
       display: flex;
       font-size: 0.9vw;
+      height: 7.5vh;
       .state {
         border-right: 1px solid #303f42;
         .top {
           text-align: center;
           border-bottom: 1px solid #303f42;
+          height: 50%;
         }
         .bottom {
           display: flex;
           justify-content: space-between;
           font-size: 0.7vw;
+          height: 50%;
           > span {
             text-align: center;
             border-right: 1px solid #303f42;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             &:last-child {
               border: none;
             }
@@ -376,15 +417,19 @@ export default {
         .top {
           text-align: center;
           border-bottom: 1px solid #303f42;
+          height: 50%;
         }
         .bottom {
           display: flex;
           justify-content: space-between;
+          height: 50%;
           font-size: 0.7vw;
           > span {
             text-align: center;
             border-right: 1px solid #303f42;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             &:last-child {
               border: none;
             }
@@ -392,9 +437,11 @@ export default {
         }
       }
       > span {
-        display: inline-block;
         border-right: 1px solid #303f42;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:last-child {
           border: none;
         }
