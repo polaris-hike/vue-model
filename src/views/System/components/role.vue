@@ -164,6 +164,9 @@ export default {
       }
       this.$get(url).then((res) => {
         this.roleList = res.data;
+        this.total = res.meta.total;
+        this.currentPage = res.meta.current_page;
+        this.pageSize = res.meta.per_page;
       });
     },
     deleteRole(id) {
