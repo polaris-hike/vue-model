@@ -111,6 +111,7 @@ export default {
       width: 10.6vw;
       margin-right: 0.8vw;
       color: #b3b3b3;
+      height: 3.7vh;
       background-color: #0f1f24;
       padding-left: 0.7vw;
       border: 1px solid #0c474c;

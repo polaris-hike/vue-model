@@ -1,7 +1,7 @@
 <template>
     <header>
         <div class="left" @click="$router.push('/')">
-            <div class="logo" >
+            <div class="logo">
                 <img src="" alt="">
             </div>
             <span>智能消火栓平台</span>
@@ -12,14 +12,15 @@
                     :key="index"
                     @click="$router.push(item.path)"
                     :class="{active:$route.path.indexOf(item.path) !== -1 }"
-            >{{item.name}}</li>
+            >{{item.name}}
+            </li>
         </ul>
         <div class="right">
             <div class="user-img"></div>
-            <span class="username">admin</span>
+            <span v-if="userInfo.name" class="username">{{userInfo.name}}</span>
             <div class="quit-out" @click="quitOut">
                 <img src="@/assets/header/quit-out.png"
-                  alt="">
+                     alt="">
             </div>
         </div>
     </header>
@@ -27,9 +28,10 @@
 
 <script>
   export default {
-    name: "Header",
+    name: 'Header',
     data() {
       return {
+        userInfo: {},
         routeLists: [
           {
             name: '首页',
@@ -52,15 +54,33 @@
             path: '/system'
           },
         ]
+      };
+    },
+    methods: {
+      quitOut() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userInfo');
+        this.$router.push('/login');
+      },
+      getUserInfo(){
+        if(JSON.parse(localStorage.getItem('userInfo'))){
+          this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        }
       }
     },
-    methods:{
-      quitOut(){
-        localStorage.removeItem('token')
-        this.$router.push('/login')
+    mounted() {
+      this.getUserInfo()
+    },
+    watch:{
+      '$route':{
+        handler(){
+          if(!this.userInfo.name){
+            this.getUserInfo()
+          }
+        }
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -88,7 +108,7 @@
                 line-height: 2.2vw;
                 background-image: url("~@/assets/header/route.png");
                 background-size: 100% 100%;
-                color: rgba(255,255,255,.6);
+                color: rgba(255, 255, 255, .6);
                 font-size: 0.9vw;
                 &.active {
                     background-image: url("~@/assets/header/active-route.png");

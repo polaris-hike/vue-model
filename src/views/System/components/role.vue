@@ -238,19 +238,14 @@ export default {
         display: flex;
         justify-content: center;
         width: 22.2vw;
+        >div {
+          cursor: pointer;
+        }
         .amend {
           width: 3.1vw;
           height: 1.3vw;
           line-height: 1.3vw;
           background-color: #00a5a5;
-          text-align: center;
-          margin-right: 0.4vw;
-        }
-        .reset {
-          width: 4.2vw;
-          height: 1.3vw;
-          line-height: 1.3vw;
-          background-color: #d8a932;
           text-align: center;
           margin-right: 0.4vw;
         }

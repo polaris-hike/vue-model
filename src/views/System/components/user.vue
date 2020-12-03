@@ -275,6 +275,9 @@ export default {
         display: flex;
         justify-content: center;
         width: 16.1vw;
+        >div {
+          cursor: pointer;
+        }
         .amend {
           width: 3.1vw;
           height: 1.3vw;
