@@ -1,5 +1,10 @@
 .el-dialog {
   background: #192a37;
+  color: #fff;
+}
+.el-dialog .el-dialog__header .el-dialog__title {
+  color: #fff;
+  font-size: 0.9vw;
 }
 .el-pager li {
   color: #fff;
@@ -20,9 +25,25 @@
 }
 
 
-
+.el-dialog .el-dialog__body .username {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2vh;
+}
+.el-dialog .el-dialog__body .username input {
+  width: 14.8vw;
+  height: 3.7vh;
+  color: #b3b3b3;
+  font-size: 0.7vw;
+  background-color: #0e2328;
+  padding-left: 0.7vw;
+  border: 1px solid #0c474c;
+  outline: none;
+  margin-top: 0.7vh;
+}
 .el-transfer .el-transfer-panel {
   background: #16323e;
+  width: 14.8vw;
   border: 1px solid #0c474c;
 }
 .el-transfer-panel .el-transfer-panel__header {

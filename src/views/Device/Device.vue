@@ -426,14 +426,6 @@ export default {
   }
   .sleep-wrapper {
     .el-dialog__body {
-      .username {
-        display: flex;
-        flex-direction: column;
-        input {
-          width: 14.8vw;
-          height: 2.4vh;
-        }
-      }
       .permission-wrapper {
         margin-bottom: 2.3vh;
       }
@@ -441,7 +433,9 @@ export default {
         width: 4.7vw;
         height: 1.7vw;
         margin: 0 auto;
-        border: 1px solid red;
+        background: #1e4d70;
+        color: #fff;
+        border-radius: 0.1vw;
         text-align: center;
         line-height: 1.7vw;
         cursor: pointer;
@@ -458,20 +452,30 @@ export default {
         > li {
           display: flex;
           flex-direction: column;
-          margin-right: 2.3vw;
+          margin-right: 2vw;
           margin-bottom: 1.2vh;
+          span {
+            color: #fff;
+          }
           input {
-            width: 14.8vw;
-            height: 2.1vw;
             margin-top: 0.5vh;
+            width: 14.8vw;
+            height: 3.7vh;
+            padding-left: 0.6vw;
+            color: #fff;
+            background: #172f3b;
+            border: 1px solid #134a55;
+            outline: none;
           }
         }
       }
       .confirm {
         width: 4.7vw;
         height: 1.7vw;
-        margin-left: 5.1vw;
-        border: 1px solid red;
+        margin: 0 auto;
+        background: #1e4d70;
+        border-radius: 0.1vw;
+        color: #fff;
         text-align: center;
         line-height: 1.7vw;
         cursor: pointer;

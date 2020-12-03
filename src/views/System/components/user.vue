@@ -334,6 +334,17 @@ export default {
           span {
             margin-bottom: 0.4vw;
           }
+
+          input {
+            width: 14.8vw;
+            height: 3.7vh;
+            padding-left: 0.6vw;
+            color: #fff;
+            background: #172f3b;
+            border: 1px solid #134a55;
+            outline: none;
+
+          }
         }
       }
       .confirm {
@@ -358,10 +369,6 @@ export default {
     display: flex;
     align-items: center;
   }
-.el-dialog .el-dialog__header .el-dialog__title {
-  color: #fff;
-  font-size: 0.9vw;
-}
 .el-dialog .el-dialog__body {
   color: #fff;
   font-size: 0.7vw;
@@ -377,13 +384,8 @@ export default {
 .el-pagination__jump {
   color: #fff;
 }
-.el-dialog .el-dialog__body ul li input {
-  width: 14.8vw;
-  height: 2.4vh;
-  padding-left: 0.6vw;
-  color: #fff;
-  background: #172f3b;
-  border: 1px solid #134a55;
-  outline: none;
-}
+  .el-dialog__body .el-input__inner {
+    background: #172f3b;
+    border: 1px solid #134a55;
+  }
 </style>

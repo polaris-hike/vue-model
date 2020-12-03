@@ -280,14 +280,6 @@ export default {
   }
   .create-wrapper {
     .el-dialog__body {
-      .username {
-        display: flex;
-        flex-direction: column;
-        input {
-          width: 14.8vw;
-          height: 2.4vh;
-        }
-      }
       .permission-wrapper {
         margin-bottom: 2.3vh;
       }
@@ -311,24 +303,7 @@ export default {
   color: #fff;
   font-size: 0.7vw;
 }
-.el-dialog .el-dialog__body .username {
-  margin-bottom: 1.2vh;
-}
-.el-dialog .el-dialog__body .username input {
-  width: 14.8vw;
-  height: 2.4vh;
-  color: #b3b3b3;
-  font-size: 0.7vw;
-  background-color: #0e2328;
-  padding-left: 0.7vw;
-  border: 1px solid #0c474c;
-  outline: none;
-}
 
-.el-dialog .el-dialog__header .el-dialog__title {
-  color: #fff;
-  font-size: 0.9vw;
-}
 </style>
 
 <style src="../../../assets/style/element.css">
