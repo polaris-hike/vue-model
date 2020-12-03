@@ -327,6 +327,7 @@ export default {
           display: flex;
           flex-direction: column;
           margin-bottom: 1vw;
+          width: 14.8vw;
           span {
             margin-bottom: 0.4vw;
           }
@@ -347,6 +348,13 @@ export default {
 }
 </style>
 <style>
+  .el-select-dropdown {
+    background-color: #11171c;
+  }
+  .el-input__suffix {
+    display: flex;
+    align-items: center;
+  }
 .el-dialog .el-dialog__header .el-dialog__title {
   color: #fff;
   font-size: 0.9vw;
