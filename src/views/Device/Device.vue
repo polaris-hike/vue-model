@@ -24,7 +24,6 @@
           <div class="confirm">确认</div>
         </div>
       </div>
-
     </header>
     <main>
       <header>
@@ -116,7 +115,11 @@
       <ul>
         <li v-for="(item, index) in createList" :key="index">
           <span>{{ item.name }}</span>
-          <input type="text" v-model.trim="item.value" placeholder="请输入内容" />
+          <input
+            type="text"
+            v-model.trim="item.value"
+            placeholder="请输入内容"
+          />
         </li>
       </ul>
       <div class="confirm" @click="addDevice">确定</div>
@@ -152,8 +155,8 @@ export default {
       return data;
     };
     return {
-      canAdd:true,
-      isModify:false,
+      canAdd: true,
+      isModify: false,
       pageSize: 15,
       total: 0,
       currentPage: 1,
@@ -239,51 +242,65 @@ export default {
     };
   },
   methods: {
-    handleModifyClick(item){
+    handleModifyClick(item) {
       this.isModify = true;
-      this.isCreateShow = true
+      this.isCreateShow = true;
     },
-    modifyDevice(){
-      this.$put('/api/v1/equipment',{
-        listing_number:this.createList[0].value,
-        sn:this.createList[1].value,
-        status:this.createList[2].value,
-        province:this.createList[3].value,
-        city:this.createList[4].value,
-        area:this.createList[5].value,
-        responsible:this.createList[6].value,
-        longitude:this.createList[7].value,
-        latitude:this.createList[8].value,
-      }).then(res=>{
-      }).catch(err=>{
+    modifyDevice() {
+      this.$put("/api/v1/equipment", {
+        listing_number: this.createList[0].value,
+        sn: this.createList[1].value,
+        status: this.createList[2].value,
+        province: this.createList[3].value,
+        city: this.createList[4].value,
+        area: this.createList[5].value,
+        responsible: this.createList[6].value,
+        longitude: this.createList[7].value,
+        latitude: this.createList[8].value,
       })
+        .then((res) => {})
+        .catch((err) => {});
     },
     handleCurrentChange(val) {
-      console.log(val);
+      this.getDeviceList(val);
     },
-    addDevice(){
-      if(this.isModify){
-        this.modifyDevice()
-      }else{
-        if(!this.canAdd) return
-        this.canAdd = false
-        this.$post('/api/v1/equipment',{
-          listing_number:this.createList[0].value,
-          sn:this.createList[1].value,
-          status:this.createList[2].value,
-          province:this.createList[3].value,
-          city:this.createList[4].value,
-          area:this.createList[5].value,
-          responsible:this.createList[6].value,
-          longitude:this.createList[7].value,
-          latitude:this.createList[8].value,
-        }).then(res=>{
-          this.canAdd = true
-        }).catch(err=>{
-          this.canAdd = true
+    addDevice() {
+      if (this.isModify) {
+        this.modifyDevice();
+      } else {
+        if (!this.canAdd) return;
+        this.canAdd = false;
+        this.$post("/api/v1/equipment", {
+          listing_number: this.createList[0].value,
+          sn: this.createList[1].value,
+          status: this.createList[2].value,
+          province: this.createList[3].value,
+          city: this.createList[4].value,
+          area: this.createList[5].value,
+          responsible: this.createList[6].value,
+          longitude: this.createList[7].value,
+          latitude: this.createList[8].value,
         })
+          .then((res) => {
+            this.canAdd = true;
+          })
+          .catch((err) => {
+            this.canAdd = true;
+          });
       }
-    }
+    },
+    getDeviceList(page) {
+      let url = "/api/v1/equipment";
+      if (page) {
+        url = url + `?page=${page}`;
+      }
+      this.$get(url).then((res) => {
+        this.alarmList = res.data;
+      });
+    },
+  },
+  mounted() {
+    this.getDeviceList();
   },
 };
 </script>
@@ -298,7 +315,7 @@ export default {
     flex-direction: column;
     margin-bottom: 2.4vh;
     font-size: 0.7vw;
-    .top{
+    .top {
       display: flex;
       margin-bottom: 1.6vh;
       > div {
@@ -381,7 +398,6 @@ export default {
         }
       }
     }
-
   }
   main {
     > header {
@@ -499,7 +515,6 @@ export default {
             text-align: center;
             border-radius: 0.1vw;
           }
-
         }
       }
     }
@@ -572,7 +587,6 @@ export default {
 }
 </style>
 <style>
-
 </style>
 <style src="../../assets/style/element.css">
 </style>
