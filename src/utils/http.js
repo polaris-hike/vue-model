@@ -1,6 +1,5 @@
 import axios from 'axios'
-
-const Authorization = localStorage.getItem('token')
+import router from '../router';
 const http = axios.create({
   timeout: 180000,
   baseURL: 'http://testa.shenim.cn',
@@ -18,19 +17,12 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   response => {
-    /* if (response.data.code == '200007' || response.data.code == '200008') {
-       let ssoUrl = store.getters['config/ssoUrl'];
-       Vue.prototype.tips.show([
-         '登录状态失效，请重新登录',
-         false,
-         2000
-       ]);
-       window.location.href = ssoUrl + window.location.href;
-     }*/
     return response;
-
   },
   error => {
+    if(JSON.stringify(error).indexOf('423') > 0){
+      router.push("/login")
+    }
     return Promise.reject(error);
   });
 

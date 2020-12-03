@@ -65,8 +65,7 @@
           <span style="width: 5.5vw">{{ item.minPressureAlarm }}</span>
           <span style="width: 6.8vw">{{ item.people }}</span>
           <div class="operation">
-            <div class="notice">一键通知</div>
-            <div class="sign">标记为已处理</div>
+            <div class="modify" @click="handleModifyClick">修改</div>
           </div>
         </li>
       </ul>
@@ -109,10 +108,10 @@
       <ul>
         <li v-for="(item, index) in createList" :key="index">
           <span>{{ item.name }}</span>
-          <input type="text" v-model="item.value" placeholder="请输入内容" />
+          <input type="text" v-model.trim="item.value" placeholder="请输入内容" />
         </li>
       </ul>
-      <div class="confirm">确定</div>
+      <div class="confirm" @click="addDevice">确定</div>
     </el-dialog>
     <!-- 导入 -->
     <el-dialog
@@ -145,6 +144,8 @@ export default {
       return data;
     };
     return {
+      canAdd:true,
+      isModify:false,
       pageSize: 15,
       total: 0,
       currentPage: 1,
@@ -176,15 +177,15 @@ export default {
           value: "",
         },
         {
-          name: "联系人",
-          value: "",
-        },
-        {
           name: "责任人",
           value: "",
         },
         {
-          name: "联系方式",
+          name: "经度",
+          value: "",
+        },
+        {
+          name: "维度",
           value: "",
         },
       ],
@@ -230,9 +231,51 @@ export default {
     };
   },
   methods: {
+    handleModifyClick(item){
+      this.isModify = true;
+      this.isCreateShow = true
+    },
+    modifyDevice(){
+      this.$put('/api/v1/equipment',{
+        listing_number:this.createList[0].value,
+        sn:this.createList[1].value,
+        status:this.createList[2].value,
+        province:this.createList[3].value,
+        city:this.createList[4].value,
+        area:this.createList[5].value,
+        responsible:this.createList[6].value,
+        longitude:this.createList[7].value,
+        latitude:this.createList[8].value,
+      }).then(res=>{
+      }).catch(err=>{
+      })
+    },
     handleCurrentChange(val) {
       console.log(val);
     },
+    addDevice(){
+      if(this.isModify){
+        this.modifyDevice()
+      }else{
+        if(!this.canAdd) return
+        this.canAdd = false
+        this.$post('/api/v1/equipment',{
+          listing_number:this.createList[0].value,
+          sn:this.createList[1].value,
+          status:this.createList[2].value,
+          province:this.createList[3].value,
+          city:this.createList[4].value,
+          area:this.createList[5].value,
+          responsible:this.createList[6].value,
+          longitude:this.createList[7].value,
+          latitude:this.createList[8].value,
+        }).then(res=>{
+          this.canAdd = true
+        }).catch(err=>{
+          this.canAdd = true
+        })
+      }
+    }
   },
 };
 </script>
@@ -294,8 +337,8 @@ export default {
       }
       .confirm {
         width: 5.9vw;
-        height: 2.1vw;
-        line-height: 2.1vw;
+        height: 3.7vh;
+        line-height: 3.7vh;
         text-align: center;
         background-color: #1e4b6d;
         border: 1px solid #17fff3;
@@ -317,6 +360,7 @@ export default {
         .bottom {
           display: flex;
           justify-content: space-between;
+          font-size: 0.7vw;
           > span {
             text-align: center;
             border-right: 1px solid #303f42;
@@ -395,25 +439,20 @@ export default {
         }
         .operation {
           display: flex;
+          align-items: center;
           justify-content: center;
-          //width: 17.3vw;
+          width: 10.4vw;
           font-size: 0.6vw;
-          .notice {
-            width: 4.2vw;
+          .modify {
+            cursor: pointer;
+            width: 4.5vw;
             height: 1.3vw;
             line-height: 1.3vw;
             background-color: #00a5a5;
             text-align: center;
-            margin-right: 0.4vw;
+            border-radius: 0.1vw;
           }
-          .sign {
-            width: 5.8vw;
-            height: 1.3vw;
-            line-height: 1.3vw;
-            background-color: #0071a3;
-            text-align: center;
-            margin-right: 0.4vw;
-          }
+
         }
       }
     }
@@ -426,18 +465,19 @@ export default {
   }
   .sleep-wrapper {
     .el-dialog__body {
+      padding-top: 0;
       .permission-wrapper {
         margin-bottom: 2.3vh;
       }
       .confirm {
         width: 4.7vw;
-        height: 1.7vw;
+        height: 3.7vh;
         margin: 0 auto;
         background: #1e4d70;
         color: #fff;
         border-radius: 0.1vw;
         text-align: center;
-        line-height: 1.7vw;
+        line-height: 3.7vh;
         cursor: pointer;
       }
     }
@@ -471,18 +511,21 @@ export default {
       }
       .confirm {
         width: 4.7vw;
-        height: 1.7vw;
+        height: 3.7vh;
         margin: 0 auto;
         background: #1e4d70;
         border-radius: 0.1vw;
         color: #fff;
         text-align: center;
-        line-height: 1.7vw;
+        line-height: 3.7vh;
         cursor: pointer;
       }
     }
   }
 }
+</style>
+<style>
+
 </style>
 <style src="../../assets/style/element.css">
 </style>
