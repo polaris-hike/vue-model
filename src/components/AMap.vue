@@ -1,23 +1,40 @@
 <template>
-  <!-- <div id="echarts-amap"> -->
-  <v-chart
+  <div id="echarts-amap">
+    <!--   <v-chart
     style="width: 100vw; height: 100vh"
-    class="chart"
+    class="map"
     autoresize
     ref="instance"
     :options="options"
-  ></v-chart>
-  <!--  </div> -->
+  ></v-chart> -->
+  </div>
 </template>
 
 <script>
 import echarts from "echarts";
-
+import "echarts/lib/chart/effectScatter";
 import vECharts from "vue-echarts";
 import "echarts-extension-amap";
 
 import { convertData, data } from "./mapPoint";
-
+const shenzhen = [
+  {
+    name: "宝安区",
+    value: [113.890267, 22.557764, 270],
+  },
+  {
+    name: "龙岗区",
+    value: [114.24771, 22.71986, 270],
+  },
+  {
+    name: "南山区",
+    value: [113.93029, 22.53291, 270],
+  },
+  {
+    name: "福田区",
+    value: [114.05571, 22.52245, 270],
+  },
+];
 export default {
   components: {
     "v-chart": vECharts,
@@ -28,9 +45,8 @@ export default {
         amap: {
           viewMode: "3D",
 
-          center: [108.39, 39.9],
-
-          zoom: 4,
+          center: [114.05571, 22.52245],
+          zoom: 12,
 
           resizeEnable: true,
 
@@ -47,11 +63,11 @@ export default {
         series: [
           {
             name: "PM2.5",
-            type: "scatter",
+            type: "effectScatter",
 
             coordinateSystem: "amap",
 
-            data: convertData(data),
+            data: shenzhen,
             symbolSize: function (val) {
               return val[2] / 10;
             },
@@ -61,7 +77,7 @@ export default {
             label: {
               formatter: "{b}",
               position: "right",
-              show: false,
+              show: true,
             },
             itemStyle: {
               color: "#00c1de",
@@ -72,61 +88,37 @@ export default {
               },
             },
           },
-          {
-            name: "Top 5",
-            type: "effectScatter",
-            coordinateSystem: "amap",
-            data: convertData(
-              data
-                .sort(function (a, b) {
-                  return b.value - a.value;
-                })
-                .slice(0, 6)
-            ),
-            symbolSize: function (val) {
-              return val[2] / 10;
-            },
-            encode: {
-              value: 2,
-            },
-            showEffectOn: "render",
-            rippleEffect: {
-              brushType: "stroke",
-            },
-            hoverAnimation: true,
-            label: {
-              formatter: "{b}",
-              position: "right",
-              show: true,
-            },
-            itemStyle: {
-              color: "#fff",
-              shadowBlur: 10,
-              shadowColor: "#333",
-            },
-            zlevel: 1,
-          },
         ],
       },
     };
   },
   mounted() {
-    /*  var chart = echarts.init(document.getElementById("echarts-amap"));
-            chart.setOption(this.options);
-            // get amap instance
-            var amap = chart.getModel().getComponent("amap").getAMap();
-            // operations below are the same as amap
-            amap.addControl(new AMap.Scale());
-            amap.addControl(new AMap.ToolBar()); */
+    setTimeout(() => {
+      this.initMap();
+    });
+  },
+  methods: {
+    handleMapClick(e) {},
+    initMap() {
+      var chart = echarts.init(document.getElementById("echarts-amap"));
+      chart.setOption(this.options);
+      // get amap instance
+      var amap = chart.getModel().getComponent("amap").getAMap();
+      // operations below are the same as amap
+      /*   amap.addControl(new AMap.Scale()); */
+      /*   amap.addControl(new AMap.ToolBar());  */
+    },
   },
 };
 </script>
 
 <style>
+.map,
 #echarts-amap {
-  position: fixed !important;
+  position: absolute;
+  top: 0;
+  z-index: 1;
   width: 100vw;
   height: 100vh;
-  z-index: 1;
 }
 </style>
