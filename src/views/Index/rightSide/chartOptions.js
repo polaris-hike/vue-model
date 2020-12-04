@@ -19,7 +19,7 @@ const  lineOptions ={
     },
     type: 'category',
       boundaryGap: false,
-      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+      data: ['11月28日', '11月29日', '11月30日', '12月1日', '12月2日', '12月3日', '12月4日']
   },
   yAxis: {
     axisLine:{

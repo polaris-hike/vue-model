@@ -19,7 +19,7 @@
                 <header>
                     <span>挂牌编号</span>
                     <span>报警描述</span>
-                    <span>报警时间</span>
+                    <span>报警时间</span>					<span>状态</span>
                 </header>
                 <div class="list-wrapper">
                     <vueSeamless :data="warningList"
@@ -126,12 +126,12 @@
         components: {
             vueSeamless
         },
-        computed: {
+        computed: {			vhToPx() {				return this.$store.getters["vhToPx"];			},
             seamlessOptions() {
                 return {
                     //step: 0.5,
-                    step: 0,
-                    limitMoveNum: 5
+                    // step: 0,
+                    // limitMoveNum: 5					singleHeight: ~~(this.vhToPx(2.6)),					limitMoveNum: 4,					waitTime: 3500
                 };
             }
         },
@@ -205,8 +205,8 @@
                         position: absolute;
                         left: 8.9vw;
                         color: #fff;
-                        font-size: 1.9vw;
-                        font-weight: DINEngschrift;
+                        font-size: 1.5vw;						font-family: SBOld;
+                        // font-w: DINEngschrift;
                     }
                 }
             }

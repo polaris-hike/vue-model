@@ -16,7 +16,7 @@
             </li>
         </ul>
         <div class="right">
-            <div class="user-img"></div>
+            <div class="user-img">				<img src=""/>			</div>
             <span v-if="userInfo.name" class="username">{{userInfo.name}}</span>
             <div class="quit-out" @click="quitOut">
                 <img src="@/assets/header/quit-out.png"
@@ -90,12 +90,12 @@
         color: #fff;
         display: flex;
         align-items: center;
-        height: 7.1vh;
+        height: 7.1vh;		margin-bottom:2vh;
         padding: 0 1.1vw 0 1.3vw;
         .left {
             display: flex;
             margin-right: 3.6vw;
-            cursor: pointer;
+            cursor: pointer;			span{				font-family: SBOld;				font-size:1.3vw;			}
         }
         .center {
             display: flex;
@@ -121,7 +121,7 @@
             margin-left: auto;
             .quit-out {
                 cursor: pointer;
-                margin-left: 1.1vw;
+                margin-left: 1.1vw;				width:0.6vw;				height:0.7vw;
             }
         }
     }

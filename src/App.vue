@@ -7,7 +7,8 @@
 </template>
 <script>
 import Header from "./components/Header";
-import Map from "./components/Map";
+import Map from "./components/Map";import "@/assets/common/css/reset.css"; //初始化样式
+import "@/assets/common/css/common.css";import "@/assets/common/font/font.css";
 
 export default {
   name: "app",
@@ -28,7 +29,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss">html {	-webkit-font-smoothing: antialiased;	font-family: SR, Georgia, serif;	overflow: hidden;}
 * {
   padding: 0;
   margin: 0;
