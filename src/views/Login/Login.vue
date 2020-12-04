@@ -3,7 +3,9 @@
     <div class="login-wrapper" v-if="!isMobile">
       <div class="center-box">
         <header>
-          <div class="logo"></div>
+          <div class="logo">
+            <img src="@/assets/index/logo.png" alt="" />
+          </div>
           <span>智能消火栓平台</span>
         </header>
         <main>
@@ -65,7 +67,10 @@ export default {
           (res) => {
             if (res.code === 200) {
               localStorage.setItem("token", res.data.token);
-              localStorage.setItem('userInfo',JSON.stringify(res.data.userInfo))
+              localStorage.setItem(
+                "userInfo",
+                JSON.stringify(res.data.userInfo)
+              );
               this.$router.push("/");
             } else {
               this.$message.error("账号密码错误");
@@ -113,7 +118,6 @@ export default {
       .logo {
         width: 4.1vw;
         height: 2.9vw;
-        border: 1px solid red;
         margin-right: 0.9vw;
       }
       span {

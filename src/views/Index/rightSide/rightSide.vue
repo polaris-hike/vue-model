@@ -145,19 +145,19 @@ export default {
       ],
       peopleList: [
         {
-          img: "",
+          img: require("@/assets/index/people.png"),
           name: "王长春",
           address: "福田区XX路150号西XXXXX",
           phone: 13826621882,
         },
         {
-          img: "",
+          img: require("@/assets/index/people.png"),
           name: "王长春",
           address: "福田区XX路150号西XXXXX",
           phone: 13826621882,
         },
         {
-          img: "",
+          img: require("@/assets/index/people.png"),
           name: "王长春",
           address: "福田区XX路150号西XXXXX",
           phone: 13826621882,
@@ -320,8 +320,11 @@ export default {
         .img {
           width: 2.3vw;
           height: 2.3vw;
-          border: 1px solid red;
           margin-right: 1.1vw;
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
         .people-info {
           display: flex;
