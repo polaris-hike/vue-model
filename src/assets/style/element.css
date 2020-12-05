@@ -17,9 +17,18 @@
   background: unset;
 }
 .el-input__inner {
-  background-color: #0a253a;
+  background: #172f3b;
   border: 1px solid #1e6f85;
+  height: 3.7vh;
 }
+.el-select-dropdown {
+  background-color: #11171c;
+}
+.el-input__suffix {
+  display: flex;
+  align-items: center;
+}
+
 .el-pagination__editor {
   margin: 0 0.4vw;
 }

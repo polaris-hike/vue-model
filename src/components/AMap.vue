@@ -130,7 +130,7 @@
                                 show: true,
                             },
                             itemStyle: {
-                                color: "#00c1de",
+                                color: "#25a48e",
                             },
                             emphasis: {
                                 label: {
@@ -152,8 +152,9 @@
         },
         methods: {
             handleMapClick(zoom, center) {
+                console.log('zoom');
+                console.log(zoom);
                 this.options.amap.zoom = zoom
-                console.log(center);
                 this.options.amap.center = [center.lng, center.lat]
                 if (zoom >= 15) {
                     this.options.series[0].data = secondPoint;

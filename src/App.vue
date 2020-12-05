@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header v-show="$route.path !== '/login' && !isMobile" />
-    <Map v-show="$route.path === '/index'" />
+    <Map v-if="$route.path === '/index'" />
     <router-view class="main-view" />
   </div>
 </template>

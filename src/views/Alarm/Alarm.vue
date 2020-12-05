@@ -1,10 +1,11 @@
 <template>
   <div class="alarm-wrapper">
     <header>
-      <input type="text" placeholder="省份" v-model="province"/>
+      <chinaArea />
+      <!--<input type="text" placeholder="省份" v-model="province"/>
       <input type="text" placeholder="城市" v-model="city" />
       <input type="text" placeholder="区域" v-model="area" />
-      <input type="text" placeholder="状态" v-model="status" />
+      <input type="text" placeholder="状态" v-model="status" />-->
       <div class="input-wrapper">
         <i class="search-icon"></i>
         <input class="search" type="text" v-model="search" placeholder="请输入关键字" />
@@ -55,6 +56,7 @@
 </template>
 
 <script>
+  import chinaArea from "../../components/chinaArea";
 export default {
   name: "Alarm",
   data() {
@@ -69,6 +71,9 @@ export default {
       currentPage: 1,
       alarmList: [],
     };
+  },
+  components:{
+    chinaArea
   },
   methods: {
     handleSearchClick(){
@@ -109,6 +114,18 @@ export default {
   > header {
     display: flex;
     margin-bottom: 4.1vh;
+    .el-select {
+      width: 10.6vw;
+      margin-right: 0.8vw;
+      ::v-deep.el-input__inner{
+        background-color: #0f1f24;
+        height: 3.7vh;
+        border-radius: 0;
+      }
+      ::v-deep .el-select__caret{
+        color: #01eff0;
+      }
+    }
     input {
       width: 10.6vw;
       margin-right: 0.8vw;
@@ -116,7 +133,7 @@ export default {
       height: 3.7vh;
       background-color: #0f1f24;
       padding-left: 0.7vw;
-      border: 1px solid #0c474c;
+      border: 1px solid #1e6f85;
       outline: none;
       &.search {
         width: 12.4vw;

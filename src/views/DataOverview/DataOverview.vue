@@ -1,10 +1,7 @@
 <template>
   <div class="alarm-wrapper">
     <header>
-      <input type="text" placeholder="省份" />
-      <input type="text" placeholder="城市" />
-      <input type="text" placeholder="区域" />
-      <input type="text" placeholder="状态" />
+      <chinaArea />
       <input type="text" placeholder="日期" />
       <div class="input-wrapper">
         <i class="search-icon"></i>
@@ -72,6 +69,7 @@
 </template>
 
 <script>
+  import chinaArea from "../../components/chinaArea";
 export default {
   name: "DataOverview",
   data() {
@@ -117,6 +115,9 @@ export default {
       ],
     };
   },
+  components:{
+    chinaArea
+  },
   methods: {
     handleCurrentChange(val) {
       console.log(val);
@@ -141,7 +142,7 @@ export default {
       color: #b3b3b3;
       background-color: #0f1f24;
       padding-left: 0.7vw;
-      border: 1px solid #0c474c;
+      border: 1px solid #1e6f85;
       outline: none;
       &.search {
         width: 12.4vw;
