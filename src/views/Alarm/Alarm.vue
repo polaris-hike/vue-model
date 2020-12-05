@@ -26,12 +26,13 @@
       <ul class="alarmList-wrapper">
         <li v-for="(item, index) in alarmList" :key="index">
           <span>xxx</span>
-          <span>{{ item.id }}</span>
+          <span>{{ item.listing_number }}</span>
           <span>{{ item.sn }}</span>
-          <span>{{ item.desc }}</span>
+          <span>{{ item.describe }}</span>
           <span>{{ item.address }}</span>
-          <span>{{ item.state }}</span>
-          <span>{{ item.people }}</span>
+          <span v-if="item.status === 0" class="unHandle"><i></i> 未处理</span>
+          <span v-if="item.status === 1" class="handle"><i></i>已处理</span>
+          <span>{{ item.name }}</span>
           <span>{{ item.phone }}</span>
           <div class="operation">
             <div class="notice">一键通知</div>
@@ -61,40 +62,25 @@ export default {
       pageSize: 15,
       total: 0,
       currentPage: 1,
-      alarmList: [
-        {
-          id: 11877495581,
-          sn: "WG54991",
-          desc: "水压异常",
-          address: "高新技术产业园区南区科苑南路综合服务楼",
-          state: 1,
-          people: "王维维",
-          phone: 1382761829,
-        },
-        {
-          id: 11877495581,
-          sn: "WG54991",
-          desc: "水压异常",
-          address: "高新技术产业园区南区科苑南路综合服务楼",
-          state: 1,
-          people: "王维维",
-          phone: 1382761829,
-        },
-      ],
+      alarmList: [],
     };
   },
   methods: {
     handleCurrentChange(val) {
-      console.log(val);
+      this.getAlarmListData(val);
     },
-    getAlarmListData() {
-      this.$get("/api/v1/alarmSystem").then((res) => {
+    getAlarmListData(page) {
+      let url = "/api/v1/callThePolice";
+      if (page) {
+        url = url + `?page=${page}`;
+      }
+      this.$get(url).then((res) => {
         this.alarmList = res.data;
       });
     },
   },
   mounted() {
-    // this.getAlarmListData();
+     this.getAlarmListData();
   },
 };
 </script>
@@ -208,6 +194,30 @@ export default {
         span {
           display: inline-block;
           text-align: center;
+          &.unHandle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ef4343;
+            i {
+              width: 0.4vw;
+              height: 0.4vw;
+              background:  #ef4343;
+              margin-right: 0.6vw;
+            }
+          }
+          &.handle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #22b573;
+            i {
+              width: 0.4vw;
+              height: 0.4vw;
+              background:  #ef4343;
+              margin-right: 0.6vw;
+            }
+          }
           &:nth-child(1) {
             width: 5.4vw;
           }
