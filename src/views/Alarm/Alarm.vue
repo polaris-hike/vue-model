@@ -247,7 +247,7 @@ export default {
             i {
               width: 0.4vw;
               height: 0.4vw;
-              background:  #ef4343;
+              background:  #22b573;
               margin-right: 0.6vw;
             }
           }
