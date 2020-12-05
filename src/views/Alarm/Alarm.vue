@@ -1,15 +1,15 @@
 <template>
   <div class="alarm-wrapper">
     <header>
-      <input type="text" placeholder="省份" />
-      <input type="text" placeholder="城市" />
-      <input type="text" placeholder="区域" />
-      <input type="text" placeholder="状态" />
+      <input type="text" placeholder="省份" v-model="province"/>
+      <input type="text" placeholder="城市" v-model="city" />
+      <input type="text" placeholder="区域" v-model="area" />
+      <input type="text" placeholder="状态" v-model="status" />
       <div class="input-wrapper">
         <i class="search-icon"></i>
-        <input class="search" type="text" placeholder="请输入关键字" />
+        <input class="search" type="text" v-model="search" placeholder="请输入关键字" />
       </div>
-      <div class="confirm">确认</div>
+      <div class="confirm" @click="handleSearchClick">确认</div>
     </header>
     <main>
       <header>
@@ -59,6 +59,11 @@ export default {
   name: "Alarm",
   data() {
     return {
+      search:"",
+      province:"",
+      city:"",
+      area:"",
+      status:"",
       pageSize: 15,
       total: 0,
       currentPage: 1,
@@ -66,6 +71,17 @@ export default {
     };
   },
   methods: {
+    handleSearchClick(){
+      this.$get("/api/v1/callThePolice",{
+        search:this.search,
+        province:this.province,
+        city:this.city,
+        area:this.area,
+        status:this.status,
+      }).then((res) => {
+        this.alarmList = res.data;
+      });
+    },
     handleCurrentChange(val) {
       this.getAlarmListData(val);
     },

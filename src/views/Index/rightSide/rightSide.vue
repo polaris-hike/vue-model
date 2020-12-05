@@ -26,7 +26,7 @@
       <VEcharts :options="lineOptions" />
     </div>
     <div class="chart-wrapper">
-      <header>故障列表</header>
+      <header>离线列表</header>
       <div class="warning-wrapper">
         <header>
           <span>挂牌编号</span>
@@ -166,10 +166,14 @@ export default {
     };
   },
   computed: {
+    vhToPx() {
+      return this.$store.getters["vhToPx"];
+    },
     seamlessOptions() {
       return {
-        step: 0.5,
-        limitMoveNum: 5,
+        singleHeight: ~~(this.vhToPx(2.6)),
+        limitMoveNum: 4,
+        waitTime: 3500
       };
     },
   },

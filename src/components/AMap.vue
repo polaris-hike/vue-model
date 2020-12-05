@@ -115,7 +115,7 @@ export default {
 <style>
 .map,
 #echarts-amap {
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 1;
   width: 100vw;

@@ -119,6 +119,10 @@ export default {
         width: 4.1vw;
         height: 2.9vw;
         margin-right: 0.9vw;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
       span {
         font-size: 1.7vw;
