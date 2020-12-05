@@ -230,3 +230,11 @@
         }
     }
 </style>
+<style>
+    .amap-logo {
+        display: none!important;
+    }
+    .amap-copyright {
+        display: none!important;
+    }
+</style>
