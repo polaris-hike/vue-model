@@ -370,10 +370,8 @@
             },
             uploadFile(){
                 const formData = new FormData();
-                formData.append('file', document.querySelector('input[type=file]').files[0].name)
-                this.$post('/api/v1/equipmentImport',{
-                    file: document.querySelector('input[type=file]').files[0].name
-                }).then(res=>{
+                formData.append('file', document.querySelector('input[type=file]').files[0])
+                this.$post('/api/v1/equipmentImport',formData).then(res=>{
 
                 })
                 console.log(document.querySelector('input[type=file]').files[0]);

@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { get, post, del, put } from './utils/http';
+
+import VueTouch from 'vue-touch'
+
+Vue.use(VueTouch, {name: 'v-touch'})
 /*import VueAMap from 'vue-amap';
 Vue.use(VueAMap);*/
 import {

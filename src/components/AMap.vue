@@ -152,8 +152,6 @@
         },
         methods: {
             handleMapClick(zoom, center) {
-                console.log('zoom');
-                console.log(zoom);
                 this.options.amap.zoom = zoom
                 this.options.amap.center = [center.lng, center.lat]
                 if (zoom >= 15) {

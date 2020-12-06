@@ -8,94 +8,97 @@
             </div>
             <div class="right"></div>
         </header>
-        <main :style="{bottom:bottom+'vh'}" @click="handleLineClick">
-            <div class="line" @click="handleLineClick"></div>
-            <section class="top">
-                <ul>
-                    <li v-for="(item,index) in numList"
-                        :key="index">
-                        <div class="logo">
-                            <img :src="item.img"
-                                 alt="">
-                        </div>
-                        <span class="name">{{item.name}}</span>
-                        <span class="value">{{item.num}}</span>
-                    </li>
-                </ul>
-            </section>
-            <section class="chart-wrapper">
-                <header>报警占比分析</header>
-                <div class="pie-wrapper">
-                    <customizedPie
-                            class="pie"
-                            :options="pieOption">
-                        <template v-slot:label="labelData">
+        <v-touch  @swipeup="swipeup" @swipedown="swipedown">
+            <main :style="{bottom:bottom+'vh'}" @click="handleLineClick">
+                <div class="line" @click="handleLineClick"></div>
+                <section class="top">
+                    <ul>
+                        <li v-for="(item,index) in numList"
+                            :key="index">
+                            <div class="logo">
+                                <img :src="item.img"
+                                     alt="">
+                            </div>
+                            <span class="name">{{item.name}}</span>
+                            <span class="value">{{item.num}}</span>
+                        </li>
+                    </ul>
+                </section>
+                <section class="chart-wrapper">
+                    <header>报警占比分析</header>
+                    <div class="pie-wrapper">
+                        <customizedPie
+                                class="pie"
+                                :options="pieOption">
+                            <template v-slot:label="labelData">
                          <span class="label allCenter2">
                             <span class="percent DM">{{labelData.labelPercent}}</span>
                             <span class="labelName">{{labelData.labelName}}</span>
                         </span>
-                        </template>
-                    </customizedPie>
-                    <div class="legend">
-                        <div class="list" v-for="(item,index) in legendList" :key="index">
-                            <div class="square"></div>
-                            <span class="name">{{item.name}}</span>
-                            <span class="percent">{{item.percent}}</span>
-                            <span class="value">{{item.value}}</span>
+                            </template>
+                        </customizedPie>
+                        <div class="legend">
+                            <div class="list" v-for="(item,index) in legendList" :key="index">
+                                <div class="square"></div>
+                                <span class="name">{{item.name}}</span>
+                                <span class="percent">{{item.percent}}</span>
+                                <span class="value">{{item.value}}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section class="bottom">
-                <h2>实时报警</h2>
-                <div class="warning-wrapper">
-                    <header>
-                        <span>挂牌编号</span>
-                        <span>报警描述</span>
-                        <span>报警时间</span>
-                    </header>
-                    <div class="list-wrapper">
-                        <vueSeamless :data="warningList"
-                                     :class-option="seamlessOptions">
-                            <div class="list"
-                                 v-for="(list,index) in warningList"
-                                 :key="index">
-                                <span>{{list.id}}</span>
-                                <span>{{list.desc}}</span>
-                                <span>{{list.time}}</span>
-                                <span v-if="list.state ===1">未处理</span>
-                                <span v-if="list.state ===2">已处理</span>
-                            </div>
-                        </vueSeamless>
+                </section>
+                <section class="bottom">
+                    <h2>实时报警</h2>
+                    <div class="warning-wrapper">
+                        <header>
+                            <span>挂牌编号</span>
+                            <span>报警描述</span>
+                            <span>报警时间</span>
+                        </header>
+                        <div class="list-wrapper">
+                            <vueSeamless :data="warningList"
+                                         :class-option="seamlessOptions">
+                                <div class="list"
+                                     v-for="(list,index) in warningList"
+                                     :key="index">
+                                    <span>{{list.id}}</span>
+                                    <span>{{list.desc}}</span>
+                                    <span>{{list.time}}</span>
+                                    <span v-if="list.state ===1">未处理</span>
+                                    <span v-if="list.state ===2">已处理</span>
+                                </div>
+                            </vueSeamless>
 
+                        </div>
                     </div>
-                </div>
-            </section>
-            <section class="warning">
-                <header>故障列表</header>
-                <div class="warning-wrapper">
-                    <header>
-                        <span>挂牌编号</span>
-                        <span>报警描述</span>
-                        <span>地址</span>
-                        <span>联系人</span>
-                    </header>
-                    <div class="list-wrapper">
-                        <vueSeamless :class-option="seamlessOptions"
-                                     :data="warningList">
-                            <div :key="index"
-                                 class="list"
-                                 v-for="(list,index) in errorList">
-                                <span>{{list.id}}</span>
-                                <span>{{list.desc}}</span>
-                                <span>{{list.address}}</span>
-                                <span>{{list.contact}}</span>
-                            </div>
-                        </vueSeamless>
+                </section>
+                <section class="warning">
+                    <header>故障列表</header>
+                    <div class="warning-wrapper">
+                        <header>
+                            <span>挂牌编号</span>
+                            <span>报警描述</span>
+                            <span>地址</span>
+                            <span>联系人</span>
+                        </header>
+                        <div class="list-wrapper">
+                            <vueSeamless :class-option="seamlessOptions"
+                                         :data="warningList">
+                                <div :key="index"
+                                     class="list"
+                                     v-for="(list,index) in errorList">
+                                    <span>{{list.id}}</span>
+                                    <span>{{list.desc}}</span>
+                                    <span>{{list.address}}</span>
+                                    <span>{{list.contact}}</span>
+                                </div>
+                            </vueSeamless>
+                        </div>
                     </div>
-                </div>
-            </section>
-        </main>
+                </section>
+            </main>
+
+        </v-touch>
     </div>
 </template>
 
@@ -264,8 +267,18 @@
           },
       },
     methods: {
+        swipeup(e){
+            console.log('swipeup');
+            console.log(e);
+            this.bottom = -101
+        },
+        swipedown(e){
+            console.log('swipedown');
+            console.log(e);
+            this.bottom = -155
+        },
       handleLineClick() {
-        this.bottom = this.bottom === -155 ? -101 : -155
+        //this.bottom = this.bottom === -155 ? -101 : -155
       }
     }
   }
@@ -327,7 +340,6 @@
             padding-top: 1.3vh;
             max-height: 84vh;
             transition: all .3s;
-            overflow: scroll;
             .line {
                 position: sticky;
                 left: 50%;
