@@ -60,11 +60,28 @@
     .el-select {
         width: 10.6vw;
         margin-right: 0.8vw;
-        ::v-deep.el-input__inner{
-            background-color: #0f1f24;
-            height: 3.7vh;
-            border-radius: 0;
+        ::v-deep .el-input {
+            &::before {
+                content: "";
+                width: 0.3vw;
+                height: 1.3vw;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 2vw;
+                background-image: url("~@/assets/index/input-right.png");
+                background-size: 100% 100%;
+            }
+            .el-input__inner{
+                background-color: #0f1f24;
+                height: 3.7vh;
+                border-radius: 0;
+            }
         }
+
+
+
+
         ::v-deep .el-select__caret{
             color: #01eff0;
         }

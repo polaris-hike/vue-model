@@ -431,15 +431,16 @@
                 this.Y = this.moveEndY - this.startY;
                 const main = document.getElementById('myMain')
                 if (Math.abs(this.Y) > Math.abs(this.X) && this.Y > 0) {//下滑
-                    main.scrollTop = main.scrollTop - Math.abs(this.Y)
+                    main.scrollTop = main.scrollTop - Math.abs(this.Y)/10
                 }
                 if (Math.abs(this.Y) > Math.abs(this.X) && this.Y < 0) {// 上滑
-                    main.scrollTop = main.scrollTop + Math.abs(this.Y)
+                    console.log(this.Y);
+                    main.scrollTop = main.scrollTop + Math.abs(this.Y)/10
                 }
             },
             touchstart(e) {
                 e.preventDefault();
-                this.startX = e.changedTouches[0].pageX,
+                this.startX = e.changedTouches[0].pageX;
                     this.startY = e.changedTouches[0].pageY;
             },
             swipeup(e) {
@@ -563,6 +564,7 @@
                 transform: translateX(-50%);
                 width: 9.4vw;
                 height: 1.3vw;
+                margin-bottom: 1.3vh;
                 background-color: #3b5157;
             }
 

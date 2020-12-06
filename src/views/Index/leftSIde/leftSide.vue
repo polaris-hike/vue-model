@@ -19,7 +19,8 @@
                 <header>
                     <span>挂牌编号</span>
                     <span>报警描述</span>
-                    <span>报警时间</span>					<span>状态</span>
+                    <span>报警时间</span>
+					<span>状态</span>
                 </header>
                 <div class="list-wrapper">
                     <vueSeamless :data="warningList"
@@ -30,8 +31,8 @@
                             <span>{{list.id}}</span>
                             <span>{{list.desc}}</span>
                             <span>{{list.time}}</span>
-                            <span v-if="list.state ===1">未处理</span>
-                            <span v-if="list.state ===2">已处理</span>
+                            <span v-if="list.state ===1" class="unHandle"><i></i> 未处理</span>
+                            <span v-if="list.state ===2" class="handel"><i></i> 已处理</span>
                         </div>
                     </vueSeamless>
 
@@ -126,12 +127,18 @@
         components: {
             vueSeamless
         },
-        computed: {			vhToPx() {				return this.$store.getters["vhToPx"];			},
+        computed: {
+			vhToPx() {
+				return this.$store.getters["vhToPx"];
+			},
             seamlessOptions() {
                 return {
                     //step: 0.5,
                     // step: 0,
-                    // limitMoveNum: 5					singleHeight: ~~(this.vhToPx(2.6)),					limitMoveNum: 4,					waitTime: 3500
+                    // limitMoveNum: 5
+					singleHeight: ~~(this.vhToPx(2.6)),
+					limitMoveNum: 4,
+					waitTime: 3500
                 };
             }
         },
@@ -205,7 +212,8 @@
                         position: absolute;
                         left: 8.9vw;
                         color: #fff;
-                        font-size: 1.5vw;						font-family: SBOld;
+                        font-size: 1.5vw;
+						font-family: SBOld;
                         // font-w: DINEngschrift;
                     }
                 }
@@ -250,7 +258,33 @@
                         height: 2.6vh;
                         font-size: 0.6vw;
                         padding-left: 1.5vw;
+                        .unHandle {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: #ef4343;
 
+                            i {
+                                width: 0.4vw;
+                                height: 0.4vw;
+                                background: #ef4343;
+                                margin-right: 0.2vw;
+                            }
+                        }
+
+                        .handle {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: #22b573;
+
+                            i {
+                                width: 0.4vw;
+                                height: 0.4vw;
+                                background: #22b573;
+                                margin-right: 0.2vw;
+                            }
+                        }
                         &:nth-child(odd){
                             background-color: #2f444a;
                         }
