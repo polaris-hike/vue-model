@@ -1,7 +1,9 @@
 <template>
   <div class="mobile">
     <header>
-      <div class="logo"></div>
+      <div class="logo">
+        <img src="@/assets/index/logo.png" alt="" />
+      </div>
       <h2>智能消火栓平台</h2>
     </header>
     <main>
@@ -45,7 +47,10 @@ export default {
       width: 18vw;
       height: 12.5vw;
       margin-right: 4.2vw;
-      border: 1px solid red;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     h2 {
       font-size: 7vw;
