@@ -18,7 +18,7 @@
     </ul>
     <div class="right">
       <div class="user-img">
-        <img src="" />
+        <img src="@/assets/index/people.png" />
       </div>
       <span v-if="userInfo.name" class="username">{{ userInfo.name }}</span>
       <div class="quit-out" @click="quitOut">
@@ -94,7 +94,7 @@ header {
   align-items: center;
   height: 7.1vh;
   margin-bottom: 2vh;
-  padding: 0 1.1vw 0 1.3vw;
+  padding: 0 1.1vw 0 1.3vw;  border-bottom: 1px solid #044a50;
   .left {
     display: flex;
     align-items: center;
@@ -135,10 +135,10 @@ header {
   }
   .right {
     display: flex;
-    margin-left: auto;
+    margin-left: auto;	align-items: center;	.user-img{		width:25px;		height:25px;		margin-right:0.8vw;		border: 1px solid #044a50;		img{			width:100%;		}	}
     .quit-out {
       cursor: pointer;
-      margin-left: 1.1vw;
+      margin-left: 0.8vw;
       width: 0.6vw;
       height: 0.7vw;
     }

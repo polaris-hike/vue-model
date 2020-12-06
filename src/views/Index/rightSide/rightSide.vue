@@ -220,16 +220,15 @@ export default {
       }
       .legend {
         flex-grow: 1;
-        height: 100%;
+        height: 100%;		padding-top:7.5%;		padding-bottom:7.5%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         color: #fff;
         font-size: 0.63vw;
-        margin-left: 0.8vw;
         .list {
           display: flex;
-          align-items: center;
+          align-items: center;		  flex-grow: 1;
           .square {
             width: 0.3vw;
             height: 0.3vw;
@@ -243,7 +242,7 @@ export default {
           }
           &:nth-child(1) {
             .square {
-              background: #33e2ff;
+              background: #ffffff;
             }
           }
           &:nth-child(2) {
@@ -310,7 +309,7 @@ export default {
           }
         }
       }
-    }
+    }	&:nth-child(4){		margin-bottom:0;		height:22.4vh;	}
     .people-wrapper {
       flex: 1;
       display: flex;
@@ -324,7 +323,7 @@ export default {
         .img {
           width: 2.3vw;
           height: 2.3vw;
-          margin-right: 1.1vw;
+          margin-right: 1.1vw;		  border: 1px solid #044a50;
           img {
             width: 100%;
             height: 100%;
