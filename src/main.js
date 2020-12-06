@@ -6,7 +6,7 @@ import { get, post, del, put } from './utils/http';
 /*import VueAMap from 'vue-amap';
 Vue.use(VueAMap);*/
 import {
-  Switch, Pagination, Dialog, Transfer, Message, Select, Option,Checkbox
+  Switch, Pagination, Dialog, Transfer, Message, Select, Option,Checkbox,DatePicker
 } from "element-ui";
 Vue.use(Switch);
 Vue.use(Pagination);
@@ -15,6 +15,7 @@ Vue.use(Transfer);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Checkbox);
+Vue.use(DatePicker);
 
 /*VueAMap.initAMapApiLoader({
   // 高德的key

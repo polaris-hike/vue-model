@@ -2,7 +2,13 @@
   <div class="alarm-wrapper">
     <header>
       <chinaArea />
-      <input type="text" placeholder="日期" />
+      <el-date-picker
+              v-model="date"
+              type="daterange"
+              :range-separator="rangeSeparator"
+              start-placeholder="日期"
+             >
+      </el-date-picker>
       <div class="input-wrapper">
         <i class="search-icon"></i>
         <input class="search" type="text" placeholder="请输入关键字" />
@@ -74,6 +80,8 @@ export default {
   name: "DataOverview",
   data() {
     return {
+      rangeSeparator:'',
+      date:'',
       pageSize: 15,
       total: 0,
       currentPage: 1,
@@ -123,6 +131,15 @@ export default {
       console.log(val);
     },
   },
+  watch:{
+    date(val){
+      if(val){
+        this.rangeSeparator = '-'
+      }else{
+        this.rangeSeparator = ''
+      }
+    }
+  }
 };
 </script>
 
@@ -135,6 +152,34 @@ export default {
   > header {
     display: flex;
     margin-bottom: 4.1vh;
+    ::v-deep .el-date-editor{
+      width: 14vw;
+      background: #0f1f24;
+      border-radius: 0;
+      input {
+        background: #0f1f24;
+        width: 5vw;
+        color: #fff;
+      }
+      .el-range-separator {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        margin-right: 5px;
+      }
+      .el-range__close-icon {
+        display: flex;
+        align-items: center;
+      }
+      .el-range__icon {
+        position: absolute;
+        right: 0.6vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1896a1;
+      }
+    }
     input {
       width: 10.6vw;
       margin-right: 0.8vw;
@@ -190,6 +235,7 @@ export default {
       display: flex;
       font-size: 0.9vw;
       height: 7.5vh;
+
       .state {
         width: 43.2vw;
         border-right: 1px solid #303f42;
@@ -293,6 +339,77 @@ export default {
     transform: translateX(-50%);
   }
 }
+</style>
+<style>
+  .el-date-picker__time-header {
+    border-bottom: 1px solid #00ffff;
+  }
+  .el-picker-panel__footer {
+    border-top: 1px solid #00ffff;
+  }
+  .el-input__inner {
+    border: 1px solid #00ffff;
+  }
+  .el-date-range-picker__content.is-left {
+    border-right: 1px solid #00ffff;
+  }
+  .el-picker-panel {
+    border: 1px solid #00ffff;
+  }
+  .el-picker-panel__body-wrapper {
+    background-color: #020b0c;
+  }
+  .el-date-table td {
+    color: #fff;
+  }
+  .el-date-range-picker__content .el-date-range-picker__header div {
+    color: #fff;
+  }
+  .el-date-table th {
+    color: #00ffff;
+    border-bottom: 1px solid #00ffff;
+  }
+  .el-picker-panel__icon-btn {
+    color: #00ffff;
+  }
+  .el-date-table td.today {
+    background-color: #00ffff;
+    border-radius: 50%;
+  span {
+    color: #000000;
+  }
+  }
+  .el-date-table td.in-range div,
+  .el-date-table td.in-range div:hover,
+  .el-date-table.is-week-mode .el-date-table__row.current div,
+  .el-date-table.is-week-mode .el-date-table__row:hover div {
+    background-color: rgba(0, 255, 255, 0.2);
+  }
+  .el-date-table td.end-date span,
+  .el-date-table td.start-date span {
+    background-color: #00ffff;
+    color: #000000;
+    width: 31px;
+    height: 28px;
+  }
+  .el-picker-panel__footer {
+    background-color: #020b0c;
+  }
+  .el-date-picker__header-label {
+    color: #ffffff;
+  }
+  .el-time-panel {
+    background-color: #020b0c;
+  }
+  .el-time-spinner__item {
+    color: #fff;
+  }
+  .el-time-spinner__item.active:not(.disabled) {
+    color: #00ffff;
+  }
+  .el-time-spinner__item:hover:not(.disabled):not(.active) {
+    background-color: unset;
+  }
 </style>
 <style src="../../assets/style/element.css">
 </style>
