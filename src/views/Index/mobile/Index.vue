@@ -8,8 +8,9 @@
             </div>
             <div class="right"></div>
         </header>
-        <v-touch  @swipeup="swipeup" @swipedown="swipedown">
-            <main :style="{bottom:bottom+'vh'}" @click="handleLineClick">
+        <v-touch  @swipeup="swipeup" @swipedown
+                ="swipedown">
+            <main  :style="{bottom:bottom+'vh',overflow:overflow}" @click="handleLineClick">
                 <div class="line" @click="handleLineClick"></div>
                 <section class="top">
                     <ul>
@@ -116,6 +117,7 @@
     },
     data() {
       return {
+          overflow:'unset',
           warningList: [
               {
                   id: 'wfg957',
@@ -267,14 +269,20 @@
           },
       },
     methods: {
+        srcoll(e){
+            console.log(e);
+            //e.stopPropagation();
+            //e.preventDefault()
+        },
         swipeup(e){
             console.log('swipeup');
-            console.log(e);
+            this.overflow = 'scroll'
             this.bottom = -101
         },
         swipedown(e){
-            console.log('swipedown');
             console.log(e);
+            console.log('swipedown');
+            this.overflow = 'unset'
             this.bottom = -155
         },
       handleLineClick() {
