@@ -130,6 +130,14 @@ export default {
     handleCurrentChange(val) {
       console.log(val);
     },
+    getData(){
+      this.$get('/api/v1/dataOverview').then(res=>{
+
+      })
+    }
+  },
+  mounted() {
+    this.getData()
   },
   watch:{
     date(val){
@@ -347,9 +355,7 @@ export default {
   .el-picker-panel__footer {
     border-top: 1px solid #00ffff;
   }
-  .el-input__inner {
-    border: 1px solid #00ffff;
-  }
+
   .el-date-range-picker__content.is-left {
     border-right: 1px solid #00ffff;
   }

@@ -3,7 +3,7 @@
         <header>
             <div class="left">
                 <div class="small" @click="isCreateShow = true">+ 新建</div>
-                <div class="small">导出</div>
+                <a  class="small export"  href="http://testa.shenim.cn/api/v1/equipmentExport">导出</a>
                 <div class="small" @click="isImportShow = true">导入</div>
                 <div class="small" @click="handleSetParamClick">报警参数设置</div>
             </div>
@@ -187,6 +187,10 @@
                     <input class="file" type="file" @change="getFile($event)"/>
                     <div class="mask"></div>
                 </div>
+                <div class="download-model">
+                    <div class="download"></div>
+                    <a href="http://testa.shenim.cn/api/v1/equipmentExport?is_template=true">下载模板</a>
+                </div>
             </main>
             <div class="confirm" @click="uploadFile">确定</div>
         </el-dialog>
@@ -195,6 +199,7 @@
 
 <script>
     import chinaArea from "../../components/chinaArea";
+    import axios from 'axios';
 
     export default {
         name: "Device",
@@ -342,6 +347,32 @@
             chinaArea
         },
         methods: {
+            exportFile(){
+                axios({
+                    methods: 'get',
+                    url:'http://testa.shenim.cn/api/v1/equipmentExport',
+                    responseType: 'blob'
+                }).then(res=>{
+                    this.download(res)
+                })
+                /*this.$get('/api/v1/equipmentExport').then(res=>{
+                    console.log(res);
+                })*/
+            },
+            // 下载文件
+            download (data) {
+                if (!data) {
+                    return
+                }
+                const url = window.URL.createObjectURL(new Blob([data], { type: 'application/x-xls'}))
+                const link = document.createElement('a')
+                link.style.display = 'none'
+                link.href = url
+                link.setAttribute('download', '设备管理.xlsx')
+                document.body.appendChild(link)
+                link.click()
+                window.URL.revokeObjectURL(url) // 释放掉blob对象
+            },
             handleSetParamClick(){
               this.isSleepShow = true
                 this.$get('/api/v1/equipmentSelect').then(res=>{
@@ -568,6 +599,16 @@
                 margin-bottom: 1.6vh;
 
                 > div {
+                    height: 3.7vh;
+                    line-height: 3.7vh;
+                    text-align: center;
+                    background-color: #122a38;
+                    border: 1px solid #1b647b;
+                    border-radius: 0.2vw;
+                    margin-right: 0.4vw;
+                    cursor: pointer;
+                }
+                .export {
                     height: 3.7vh;
                     line-height: 3.7vh;
                     text-align: center;
@@ -950,26 +991,37 @@
         }
         .import-wrapper {
             .el-dialog__body {
-                .input-wrapper {
-                    width: 15.2vw;
-                    height: 10.4vw;
-                    position: relative;
-                    margin: 0 auto;
-                    border: 1px solid #1e6f85;
+                main {
                     margin-bottom: 2vh;
-                    input {
-                        opacity: 0;
-                        width: 100%;
-                        height: 100%;
-                        position: absolute;
-                        left: 0;
-                        cursor: pointer;
+                    .input-wrapper {
+                        width: 15.2vw;
+                        height: 10.4vw;
+                        position: relative;
+                        margin: 0 auto;
+                        border: 1px solid #1e6f85;
+                        input {
+                            opacity: 0;
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            left: 0;
+                            cursor: pointer;
+                        }
+                        .mask {
+                            width: 100%;
+                            height: 100%;
+                        }
                     }
-                    .mask {
-                        width: 100%;
-                        height: 100%;
+                    .download-model {
+                        cursor: pointer;
+                        color: #fff;
+                        font-size: 0.6vw;
+                        margin-top: 1.5vh;
+                        margin-left: 1.5vw;
+                        display: inline-block;
                     }
                 }
+
 
                 .confirm {
                     width: 4.7vw;
