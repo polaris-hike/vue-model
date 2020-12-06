@@ -10,7 +10,7 @@
         </header>
         <v-touch  @swipeup="swipeup" @swipedown
                 ="swipedown">
-            <main  :style="{bottom:bottom+'vh',overflow:overflow}" @click="handleLineClick">
+            <main id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend" :style="{bottom:bottom+'vh',overflow:overflow}" @click="handleLineClick">
                 <div class="line" @click="handleLineClick"></div>
                 <section class="top">
                     <ul>
@@ -254,6 +254,14 @@
                   contact: "王长贵",
               },
           ],
+          startX:'',
+          startY:'',
+          moveEndX:'',
+          moveEndY:'',
+          X:'',
+          Y:'',
+          canScrollToBottom:true
+
       }
     },
       computed: {
@@ -269,18 +277,59 @@
           },
       },
     methods: {
-        srcoll(e){
-            console.log(e);
-            //e.stopPropagation();
-            //e.preventDefault()
+        touchend(e){
+            e.preventDefault();
+            this.moveEndX = e.changedTouches[0].pageX;
+                this.moveEndY = e.changedTouches[0].pageY;
+               let X = this.moveEndX - this.startX;
+               let Y = this.moveEndY - this.startY;
+
+             if ( Math.abs(Y) > Math.abs(X) && Y > 0) {//下滑
+                 if(this.canScrollToBottom){
+                     this.overflow = 'unset'
+                     this.bottom = -155
+                 }
+
+            }
+            else if ( Math.abs(Y) > Math.abs(X) && Y < 0 ) {// 上滑
+                 this.overflow = 'scroll'
+                 this.bottom = -101
+            }
+            const main = document.getElementById('myMain');
+            if(main.scrollTop !== 0){
+                this.canScrollToBottom = false
+            }else{
+                this.canScrollToBottom = true
+            }
+        },
+        touchmove(e){
+            this.moveEndX = e.changedTouches[0].pageX;
+            this.moveEndY = e.changedTouches[0].pageY;
+            this.X = this.moveEndX - this.startX;
+            this.Y = this.moveEndY - this.startY;
+            const main = document.getElementById('myMain')
+            if ( Math.abs(this.Y) > Math.abs(this.X) && this.Y > 0) {//下滑
+              /*  this.overflow = 'unset'
+                this.bottom = -155*/
+                main.scrollTop = main.scrollTop- Math.abs(this.Y)
+            }
+             if ( Math.abs(this.Y) > Math.abs(this.X) && this.Y < 0 ) {// 上滑
+                 main.scrollTop = main.scrollTop+ Math.abs(this.Y)
+            }
+        },
+        touchstart(e){
+            e.preventDefault();
+            this.startX = e.changedTouches[0].pageX,
+                this.startY = e.changedTouches[0].pageY;
         },
         swipeup(e){
+            return
             console.log('swipeup');
             this.overflow = 'scroll'
             this.bottom = -101
         },
         swipedown(e){
-            console.log(e);
+            return
             console.log('swipedown');
             this.overflow = 'unset'
             this.bottom = -155
