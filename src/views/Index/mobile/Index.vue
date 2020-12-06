@@ -1,6 +1,13 @@
 <template>
     <div class="mobile">
-        <header></header>
+        <header>
+            <div class="left"></div>
+            <div class="center">
+                <i class="search-icon"></i>
+                <input class="search" type="text" placeholder="请输入关键字" />
+            </div>
+            <div class="right"></div>
+        </header>
         <main :style="{bottom:bottom+'vh'}" @click="handleLineClick">
             <div class="line" @click="handleLineClick"></div>
             <section class="top">
@@ -32,9 +39,9 @@
                     <div class="legend">
                         <div class="list" v-for="(item,index) in legendList" :key="index">
                             <div class="square"></div>
-                            <span>{{item.name}}</span>
-                            <span>{{item.percent}}</span>
-                            <span>{{item.value}}</span>
+                            <span class="name">{{item.name}}</span>
+                            <span class="percent">{{item.percent}}</span>
+                            <span class="value">{{item.value}}</span>
                         </div>
                     </div>
                 </div>
@@ -78,7 +85,7 @@
                                      :data="warningList">
                             <div :key="index"
                                  class="list"
-                                 v-for="(list,index) in warningList">
+                                 v-for="(list,index) in errorList">
                                 <span>{{list.id}}</span>
                                 <span>{{list.desc}}</span>
                                 <span>{{list.address}}</span>
@@ -106,50 +113,57 @@
     },
     data() {
       return {
-        warningList: [
-          {
-            id: 'wfg957',
-            desc: '水压异常',
-            address: '福田区XX路15',
-            contact: '王长贵'
-          },
-          {
-            id: 'wfg957',
-            desc: '水压异常',
-            address: '福田区XX路15',
-            contact: '王长贵'
-          },
-          {
-            id: 'wfg957',
-            desc: '水压异常',
-            address: '福田区XX路15',
-            contact: '王长贵'
-          },
-          {
-            id: 'wfg957',
-            desc: '水压异常',
-            address: '福田区XX路15',
-            contact: '王长贵'
-          },
-          {
-            id: 'wfg957',
-            desc: '水压异常',
-            address: '福田区XX路15',
-            contact: '王长贵'
-          },
-          {
-            id: 'wfg957',
-            desc: '水压异常',
-            address: '福田区XX路15',
-            contact: '王长贵'
-          },
-          {
-            id: 'wfg957',
-            desc: '水压异常',
-            address: '福田区XX路15',
-            contact: '王长贵'
-          },
-        ],
+          warningList: [
+              {
+                  id: 'wfg957',
+                  desc: '水压异常',
+                  time: '11/19 12:10',
+                  state: 1
+              },
+              {
+                  id: 'wfg957',
+                  desc: '水压异常',
+                  time: '11/19 12:10',
+                  state: 1
+              },
+              {
+                  id: 'wfg957',
+                  desc: '水压异常',
+                  time: '11/19 12:10',
+                  state: 1
+              },
+              {
+                  id: 'wfg957',
+                  desc: '水压异常',
+                  time: '11/19 12:10',
+                  state: 1
+              },
+              {
+                  id: 'wfg957',
+                  desc: '水压异常',
+                  time: '11/19 12:10',
+                  state: 1
+              },
+              {
+                  id: 'wfg957',
+                  desc: '水压异常',
+                  time: '11/19 12:10',
+                  state: 1
+              },
+              {
+                  id: 'wfg957',
+                  desc: '水压异常',
+                  time: '11/19 12:10',
+                  state: 1
+              },
+              {
+                  id: 'wfg957',
+                  desc: '水压异常',
+                  time: '11/19 12:10',
+                  state: 1
+              },
+
+          ],
         pieOption,
         legendList: [
           {
@@ -191,16 +205,64 @@
             num: 12810,
           }
         ],
+          errorList: [
+              {
+                  id: "wfg957",
+                  desc: "水压异常",
+                  address: "福田区XX路15",
+                  contact: "王长贵",
+              },
+              {
+                  id: "wfg957",
+                  desc: "水压异常",
+                  address: "福田区XX路15",
+                  contact: "王长贵",
+              },
+              {
+                  id: "wfg957",
+                  desc: "水压异常",
+                  address: "福田区XX路15",
+                  contact: "王长贵",
+              },
+              {
+                  id: "wfg957",
+                  desc: "水压异常",
+                  address: "福田区XX路15",
+                  contact: "王长贵",
+              },
+              {
+                  id: "wfg957",
+                  desc: "水压异常",
+                  address: "福田区XX路15",
+                  contact: "王长贵",
+              },
+              {
+                  id: "wfg957",
+                  desc: "水压异常",
+                  address: "福田区XX路15",
+                  contact: "王长贵",
+              },
+              {
+                  id: "wfg957",
+                  desc: "水压异常",
+                  address: "福田区XX路15",
+                  contact: "王长贵",
+              },
+          ],
       }
     },
-    computed: {
-      seamlessOptions() {
-        return {
-          step: 0.5,
-          limitMoveNum: 5
-        };
-      }
-    },
+      computed: {
+          vhToPx() {
+              return this.$store.getters["vhToPx"];
+          },
+          seamlessOptions() {
+              return {
+                  singleHeight: ~~(this.vhToPx(2.6)),
+                  limitMoveNum: 4,
+                  waitTime: 3500
+              };
+          },
+      },
     methods: {
       handleLineClick() {
         this.bottom = this.bottom === -155 ? -101 : -155
@@ -213,7 +275,49 @@
     .mobile {
         position: relative;
         z-index: 1;
-        header {
+       > header {
+           position: fixed;
+           top: 5.7vw;
+           display: flex;
+           width: 100vw;
+           justify-content: center;
+           .left {
+               width: 9.8vw;
+               height: 9.8vw;
+               background-color: #064653;
+               border-radius: 1vw;
+               margin-right: 1.4vw;
+           }
+            .center {
+                position: relative;
+                width: 66.9vw;
+                height: 9.8vw;
+                margin-right: 1.4vw;
+                input {
+                    width: 100%;
+                    height: 100%;
+                    color: #b3b3b3;
+                    background-color: #064653;
+                    padding-left: 9.4vw;
+                    border-radius: 1vw;
+                }
+                .search-icon {
+                    position: absolute;
+                    background-image: url("~@/assets/alarm/search.png");
+                    background-size: 100% 100%;
+                    left: 2.8vw;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 4.5vw;
+                    height: 4.4vw;
+                }
+            }
+           .right {
+               width: 9.8vw;
+               height: 9.8vw;
+               background-color: #064653;
+               border-radius: 1vw;
+           }
         }
         main {
             position: absolute;
@@ -234,7 +338,9 @@
                 background-color: #3b5157;
             }
             section {
+                margin: 0 auto;
                 margin-bottom: 1.4vh;
+                width: 88.3vw;
                 &.top {
                     ul {
                         li {
@@ -272,7 +378,6 @@
                     }
                 }
                 &.chart-wrapper {
-                    width: 100%;
                     height: 20.65vh;
                     display: flex;
                     flex-direction: column;
@@ -288,6 +393,21 @@
                     .pie-wrapper {
                         display: flex;
                         flex: 1;
+                        .chartContainer {
+                            width: 41.8vw;
+                            &::before {
+                                content: "";
+                                width: 3.6vw;
+                                height: 5.5vw;
+                                background-image: url("~@/assets/index/pie-center.png");
+                                position: absolute;
+                                left: 50%;
+                                top: 50%;
+                                transform: translate(-50%, -50%);
+                                background-size: 100% 100%;
+                                z-index: 1;
+                            }
+                        }
                         .legend {
                             flex-grow: 1;
                             height: 100%;
@@ -297,6 +417,36 @@
                             color: #fff;
                             font-size: 0.63vw;
                             margin-left: 0.94vw;
+                            .list {
+                                display: flex;
+                                align-items: center;
+                                .square {
+                                    width: 1.4vw;
+                                    height: 1.4vw;
+                                    margin-right: 1.4vw;
+                                }
+                                .name {
+                                    margin-right: 3.1vw;
+                                }
+                                .percent {
+                                    margin-right: 5vw;
+                                }
+                                &:nth-child(1) {
+                                    .square {
+                                        background: #33e2ff;
+                                    }
+                                }
+                                &:nth-child(2) {
+                                    .square {
+                                        background: #ff0000;
+                                    }
+                                }
+                                &:nth-child(3) {
+                                    .square {
+                                        background: #ffd506;
+                                    }
+                                }
+                            }
                         }
                     }
                     .echarts {
@@ -324,7 +474,7 @@
                             margin-top: 1.7vh;
                             margin-bottom: 0.6vh;
                             span {
-                                margin-right: 1vw;
+                                margin-right: 5.5vw;
                             }
                         }
 
@@ -338,10 +488,21 @@
                             .list {
                                 display: flex;
                                 align-items: center;
-                                justify-content: space-between;
                                 height: 2.6vh;
                                 font-size: 0.6vw;
                                 padding-left: 1.5vw;
+                                span {
+                                    &:nth-child(1){
+                                        margin-right: 7vw;
+                                    }
+                                    &:nth-child(2){
+                                        margin-right: 5.3vw;
+                                    }
+                                    &:nth-child(3){
+                                        margin-right: 6.5vw;
+                                    }
+
+                                }
 
                                 &:nth-child(odd){
                                     background-color: #2f444a;
@@ -363,9 +524,9 @@
                             padding-left: 1.5vw;
                             font-size: 0.6vw;
                             span {
-                                margin-right: 1vw;
+                                margin-right: 5.5vw;
                                 &:nth-child(3){
-                                    margin-right:3.8vw;
+                                    margin-right:20.2vw;
                                 }
                                 &:last-child {
                                     margin: 0;
@@ -386,18 +547,18 @@
                                 padding-left: 1.4vw;
                                 span{
                                     &:nth-child(1){
-                                        margin-right: 1.3vw;
+                                        margin-right: 7vw;
                                     }
                                     &:nth-child(2){
-                                        margin-right: 1.3vw;
+                                        margin-right: 5.1vw;
                                     }
                                     &:nth-child(3){
                                         display: inline-block;
-                                        width: 4.5vw;
+                                        width: 22.5vw;
                                         overflow: hidden;
                                         white-space: nowrap;
                                         text-overflow: ellipsis;
-                                        margin-right: 0.6vw;
+                                        margin-right: 3.9vw;
                                     }
                                 }
                                 &:nth-child(odd) {
