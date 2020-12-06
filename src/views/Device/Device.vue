@@ -2,7 +2,7 @@
     <div class="alarm-wrapper">
         <header>
             <div class="left">
-                <div class="small" @click="isCreateShow = true">+ 新建</div>
+                <div class="small" @click="handleCreateClick">+ 新建</div>
                 <a  class="small export"  href="http://testa.shenim.cn/api/v1/equipmentExport">导出</a>
                 <div class="small" @click="isImportShow = true">导入</div>
                 <div class="small" @click="handleSetParamClick">报警参数设置</div>
@@ -112,8 +112,10 @@
                             type="text"
                             v-model.trim="item.value"
                             placeholder="请输入内容"
+                            @keyup.enter="setMapCenter(item.name)"
                     />
                 </li>
+                <div class="map" id="amap" ></div>
             </ul>
             <div class="confirm" @click="addDevice">确定</div>
         </el-dialog>
@@ -185,10 +187,14 @@
             <main>
                 <div class="input-wrapper">
                     <input class="file" type="file" @change="getFile($event)"/>
-                    <div class="mask"></div>
+                    <div class="mask">
+                        <img src="@/assets/device/add.png" alt="">
+                    </div>
                 </div>
                 <div class="download-model">
-                    <div class="download"></div>
+                    <div class="download">
+                        <img src="@/assets/device/upload.png" alt="">
+                    </div>
                     <a href="http://testa.shenim.cn/api/v1/equipmentExport?is_template=true">下载模板</a>
                 </div>
             </main>
@@ -200,11 +206,29 @@
 <script>
     import chinaArea from "../../components/chinaArea";
     import axios from 'axios';
+    import AMapLoader from "@amap/amap-jsapi-loader";
+    import echarts from "echarts";
 
     export default {
         name: "Device",
         data() {
             return {
+                options: {
+                    amap: {
+                        viewMode: "3D",
+                        center: [114.05571, 22.52245],
+                        zoom: 12,
+                        resizeEnable: true,
+                        mapStyle: "amap://styles/a16a47c4d16c0ba993e9d72f6a46b8b9",
+                        renderOnMoving: true,
+                        echartsLayerZIndex: 2019,
+                    },
+                    tooltip: {
+                        trigger: "item",
+                    },
+                    animation: false,
+                    series:[],
+                },
                 search:"",
                 equipment_id:'',
                 isModifyParamShow:false,
@@ -340,38 +364,40 @@
                         phone: '123456'
                     },
                 ],
-                addArr:[]
+                addArr:[],
+                chart:null,
+                mapInstance:null
             };
         },
         components: {
             chinaArea
         },
         methods: {
-            exportFile(){
-                axios({
-                    methods: 'get',
-                    url:'http://testa.shenim.cn/api/v1/equipmentExport',
-                    responseType: 'blob'
-                }).then(res=>{
-                    this.download(res)
-                })
-                /*this.$get('/api/v1/equipmentExport').then(res=>{
-                    console.log(res);
-                })*/
-            },
-            // 下载文件
-            download (data) {
-                if (!data) {
-                    return
+            setMapCenter(item){
+                console.log(item);
+                if(item === '经度' ||item === '维度'){
+                    //this.options.amap.center =[114.24771, 22.71986]
+                    this.options.amap.center =[this.createList[7].value, this.createList[8].value]
+                    this.chart.setOption(this.options);
                 }
-                const url = window.URL.createObjectURL(new Blob([data], { type: 'application/x-xls'}))
-                const link = document.createElement('a')
-                link.style.display = 'none'
-                link.href = url
-                link.setAttribute('download', '设备管理.xlsx')
-                document.body.appendChild(link)
-                link.click()
-                window.URL.revokeObjectURL(url) // 释放掉blob对象
+            },
+            handleCreateClick(){
+                this.isCreateShow = true;
+                AMapLoader.load({
+                    "key": "852b4331fa1629f5c4722b5cab98a8c6",              // 申请好的Web端开发者Key，首次调用 load 时必填
+                    "version": "2.0",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+                    "plugins": [],           // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+                    "AMapUI": {             // 是否加载 AMapUI，缺省不加载
+                        "version": '1.1',   // AMapUI 缺省 1.1
+                        "plugins": [],       // 需要加载的 AMapUI ui插件
+                    },
+                }).then(() => {
+                    this.chart = echarts.init(document.getElementById("amap"));
+                    this.chart.setOption(this.options);
+                    this.mapInstance = this.chart.getModel().getComponent("amap").getAMap();
+                }).catch(e => {
+                    console.log(e);
+                })
             },
             handleSetParamClick(){
               this.isSleepShow = true
@@ -578,6 +604,9 @@
         },
         mounted() {
             this.getDeviceList();
+        },
+        destroyed() {
+            this.mapInstance.destroy();
         },
     };
 </script>
@@ -918,6 +947,10 @@
                             outline: none;
                         }
                     }
+                    .map {
+                        width: 31.8vw;
+                        height: 11.9vw;
+                    }
                 }
 
                 .confirm {
@@ -1008,6 +1041,9 @@
                             cursor: pointer;
                         }
                         .mask {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
                             width: 100%;
                             height: 100%;
                         }
@@ -1018,7 +1054,11 @@
                         font-size: 0.6vw;
                         margin-top: 1.5vh;
                         margin-left: 1.5vw;
-                        display: inline-block;
+                        display: inline-flex;
+                        align-items: center;
+                        .download {
+                            margin-right: 0.6vw;
+                        }
                     }
                 }
 
