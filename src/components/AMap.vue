@@ -153,6 +153,7 @@
         methods: {
             handleMapClick(zoom, center) {
                 this.options.amap.zoom = zoom
+                this.$store.commit('setZoom',zoom)
                 this.options.amap.center = [center.lng, center.lat]
                 if (zoom >= 15) {
                     this.options.series[0].data = secondPoint;
