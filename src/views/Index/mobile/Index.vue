@@ -8,12 +8,7 @@
             </div>
             <div class="right"></div>
         </header>
-        <div class="second-wrapper" v-show="isSecondShow" >
-            <div class="list" v-for="(item, index) in secondList" :key="index">
-                <img :src="item.img" alt=""/>
-                <span>{{ item.name }}</span>
-            </div>
-        </div>
+
         <main v-show="!isSecondShow" id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
               :style="{bottom:bottom+'vh',overflow:overflow}">
             <div class="line" @click="handleLineClick"></div>
@@ -78,7 +73,7 @@
                     </div>
                 </div>
             </section>
-            <section class="warning">
+            <section class="warning bottom">
                 <header>离线列表</header>
                 <div class="warning-wrapper">
                     <header>
@@ -105,6 +100,12 @@
         </main>
         <v-touch @swipeup="swipeup" @swipedown="swipedown">
             <main v-show="isSecondShow" :style="{bottom:bottom1+'vh'}">
+                <div class="second-wrapper" v-show="isSecondShow" >
+                    <div class="list" v-for="(item, index) in secondList" :key="index">
+                        <img :src="item.img" alt=""/>
+                        <span>{{ item.name }}</span>
+                    </div>
+                </div>
                 <section class="bottom percentAnalyse">
                     <header>报警占比分析</header>
                     <ul>
@@ -391,9 +392,12 @@
             vhToPx() {
                 return this.$store.getters["vhToPx"];
             },
+            vwToPx() {
+                return this.$store.getters["vwToPx"];
+            },
             seamlessOptions() {
                 return {
-                    singleHeight: ~~(this.vhToPx(2.6)),
+                    singleHeight: ~~(this.vwToPx(7)),
                     limitMoveNum: 4,
                     waitTime: 3500
                 };
@@ -445,7 +449,7 @@
             },
             swipeup(e) {
                 console.log('swipeup');
-                this.bottom1 = -101
+                this.bottom1 = -99
             },
             swipedown(e) {
                 console.log('swipedown');
@@ -519,10 +523,10 @@
             }
         }
         .second-wrapper {
-            position: fixed;
+            position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 85vw;
+            top: -12vw;
             display: flex;
             justify-content: space-around;
             z-index: 1;
@@ -570,7 +574,7 @@
 
             section {
                 margin: 0 auto;
-                margin-bottom: 1.4vh;
+                margin-bottom: 5.9vw;
                 width: 88.3vw;
 
                 &.top {
@@ -745,7 +749,7 @@
                             .list {
                                 display: flex;
                                 align-items: center;
-                                height: 2.6vh;
+                                height: 7vw;
                                 font-size: 3.1vw;
                                 padding-left: 1.5vw;
 
@@ -800,7 +804,6 @@
                         }
 
                         .list-wrapper {
-                            height: 15.7vh;
                             overflow: scroll;
 
                             &::-webkit-scrollbar {
@@ -810,7 +813,7 @@
                             .list {
                                 display: flex;
                                 align-items: center;
-                                height: 2.6vh;
+                                height: 7vw;
                                 font-size: 3.1vw;
                                 padding-left: 1.4vw;
 
@@ -893,7 +896,8 @@
 
                     .warning-wrapper {
                         .list-wrapper {
-                            height: 44vw;
+                            height: unset;
+                          //  height: 44vw;
                         }
                     }
 
