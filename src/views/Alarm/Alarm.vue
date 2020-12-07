@@ -39,14 +39,14 @@
                     <span>{{ item.phone }}</span>
                     <div class="operation">
                         <div class="notice">一键通知</div>
-                        <div class="sign" @click="sign(item.id)">标记为已处理</div>
+                        <div class="sign" @click="sign(item.id)">标记为已确认</div>
                     </div>
                 </li>
             </ul>
         </main>
         <div class="handle-all">
             <div class="notice">一键通知</div>
-            <div class="sign" @click="signAll">标记为已处理</div>
+            <div class="sign" @click="signAll">标记为已确认</div>
         </div>
         <div class="pagination">
             <el-pagination
@@ -247,8 +247,8 @@
 
             .confirm {
                 width: 5.9vw;
-                height: 2.1vw;
-                line-height: 2.1vw;
+                height: 3.7vh;
+                line-height: 3.7vh;
                 text-align: center;
                 background-color: #1e4b6d;
                 border: 1px solid #17fff3;

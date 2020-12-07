@@ -163,7 +163,7 @@ export default {
     ::v-deep .el-date-editor{
       width: 14vw;
       background: #0f1f24;
-      border-radius: 0;
+      border-radius: 0;	  margin-right:0.8vw;
       input {
         background: #0f1f24;
         width: 5vw;
@@ -196,7 +196,7 @@ export default {
       background-color: #0f1f24;
       padding-left: 0.7vw;
       border: 1px solid #1e6f85;
-      outline: none;
+      outline: none!important;
       &.search {
         width: 12.4vw;
         &::after {
@@ -229,8 +229,8 @@ export default {
     }
     .confirm {
       width: 5.9vw;
-      height: 2.1vw;
-      line-height: 2.1vw;
+      height: 3.7vh;
+      line-height: 3.7vh;
       text-align: center;
       background-color: #1e4b6d;
       border: 1px solid #17fff3;

@@ -110,7 +110,7 @@ const pieOption = {
           value: 40,
           name: '非法用水',
           itemStyle: {
-            color: '#33e2ff',
+            color: '#ffffff',
           }
         }
       ],
@@ -147,7 +147,7 @@ const pieOption = {
           value: 40,
           name: '非法用水',
           itemStyle: {
-            color: '#33e2ff',
+            color: '#ffffff',
             opacity: 0.4,
           },
         }
