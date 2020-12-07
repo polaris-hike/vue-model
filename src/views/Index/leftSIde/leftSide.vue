@@ -183,6 +183,7 @@
         }
       },
       mounted() {
+            return
           this.getNumList();
           this.getSevenDaysAlarm();
           this.getProportionAlarms();
