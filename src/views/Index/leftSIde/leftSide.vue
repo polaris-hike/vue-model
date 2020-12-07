@@ -142,6 +142,55 @@
                 };
             }
         },
+      methods:{
+          getNumList(){
+            this.$get('/api/v1/number').then(res=>{
+              this.numList[0].num = res.data.count
+              this.numList[1].num = res.data.fault
+              this.numList[2].num = res.data.stop
+              this.numList[3].num = res.data.normal
+            })
+          },
+        getSevenDaysAlarm(){
+          this.$get('/api/v1/sevenDaysAlarm').then(res=>{
+            console.log(res);
+          })
+        },
+        getProportionAlarms(){
+          this.$get('/api/v1/proportionAlarms').then(res=>{
+            console.log(res);
+          })
+        },
+        getMap(){
+          this.$get('/api/v1/map').then(res=>{
+            console.log(res);
+          })
+        },
+        getHomeFault(){
+          this.$get('/api/v1/homeFault').then(res=>{
+            console.log(res);
+          })
+        },
+        getHomeCallThePolice(){
+          this.$get('/api/v1/homeCallThePolice').then(res=>{
+            console.log(res);
+          })
+        },
+        getMaintainer(){
+          this.$get('/api/v1/maintainer').then(res=>{
+            console.log(res);
+          })
+        }
+      },
+      mounted() {
+          this.getNumList();
+          this.getSevenDaysAlarm();
+          this.getProportionAlarms();
+          this.getMap();
+          this.getHomeFault();
+          this.getHomeCallThePolice();
+          this.getMaintainer();
+      }
     };
 </script>
 
