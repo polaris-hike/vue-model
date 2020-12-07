@@ -1,7 +1,7 @@
 <template>
     <div class="alarm-wrapper">
         <header>
-            <chinaArea/>
+            <chinaArea  @setAreaData="setAreaData"/>
             <div class="input-wrapper">
                 <i class="search-icon"></i>
                 <input class="search" type="text" v-model="search" placeholder="请输入关键字"/>
@@ -70,20 +70,21 @@
             return {
                 checked: false,
                 search: "",
-                province: "",
-                city: "",
-                area: "",
                 status: "",
                 pageSize: 15,
                 total: 0,
                 currentPage: 1,
                 alarmList: [],
+                area:{}
             };
         },
         components: {
             chinaArea
         },
         methods: {
+            setAreaData(data){
+                this.area = data
+            },
             signAll(){
                 const idList = this.alarmList.filter(item=>item.isCheck).map(i=>i.id)
                 if(idList.length ===0)return
@@ -103,9 +104,9 @@
             handleSearchClick() {
                 this.$get("/api/v1/callThePolice", {
                     search: this.search,
-                    province: this.province,
-                    city: this.city,
-                    area: this.area,
+                    province:this.area.prov,
+                    city:this.area.city,
+                    area:this.area.district,
                     status: this.status,
                 }).then((res) => {
                     this.alarmList = res.data;

@@ -598,7 +598,7 @@
                             }
 
                             .name {
-                                font-size: 0.7vw;
+                                font-size: 3.7vw;
                                 margin-right: 1.7vw;
                                 color: #fff;
                             }
@@ -607,7 +607,7 @@
                                 position: absolute;
                                 right: 7.4vw;
                                 color: #fff;
-                                font-size: 1.9vw;
+                                font-size: 9.6vw;
                                 font-weight: DINEngschrift;
                             }
                         }
@@ -625,7 +625,7 @@
                     > header {
                         height: 2.6vh;
                         line-height: 2.6vh;
-                        font-size: 0.7vw;
+                        font-size: 3.7vw;
                         padding-left: 0.7vw;
                     }
 
@@ -672,12 +672,16 @@
 
                                 .name {
                                     margin-right: 3.1vw;
+                                    font-size: 3.9vw;
                                 }
 
                                 .percent {
                                     margin-right: 5vw;
+                                    font-size: 3.9vw;
                                 }
-
+                                .value {
+                                    font-size: 4.4vw;
+                                }
                                 &:nth-child(1) {
                                     .square {
                                         background: #33e2ff;
@@ -712,14 +716,14 @@
                     background-size: 100% 100%;
 
                     h2 {
-                        font-size: 0.7vw;
+                        font-size: 3.7vw;
                         font-weight: normal;
                         margin-left: 0.9vw;
                     }
 
                     .warning-wrapper {
                         header {
-                            font-size: 0.6vw;
+                            font-size: 3.1vw;
                             color: rgba(255, 255, 255, 0.6);
                             padding-left: 1.5vw;
                             margin-top: 1.7vh;
@@ -742,7 +746,7 @@
                                 display: flex;
                                 align-items: center;
                                 height: 2.6vh;
-                                font-size: 0.6vw;
+                                font-size: 3.1vw;
                                 padding-left: 1.5vw;
 
                                 span {
@@ -773,14 +777,14 @@
                     > header {
                         height: 2.6vh;
                         line-height: 2.6vh;
-                        font-size: 0.7vw;
+                        font-size: 3.7vw;
                         padding-left: 0.7vw;
                     }
 
                     .warning-wrapper {
                         header {
                             padding-left: 1.5vw;
-                            font-size: 0.6vw;
+                            font-size: 3.1vw;
 
                             span {
                                 margin-right: 5.5vw;
@@ -807,7 +811,7 @@
                                 display: flex;
                                 align-items: center;
                                 height: 2.6vh;
-                                font-size: 0.6vw;
+                                font-size: 3.1vw;
                                 padding-left: 1.4vw;
 
                                 span {
@@ -842,12 +846,13 @@
                     padding-left: 4.1vw;
 
                     header {
-
+                        font-size: 3.7vw;
                     }
 
                     ul {
                         padding-top: 5.7vw;
                         padding-bottom: 8.4vw;
+                        font-size: 3.1vw;
 
                         li {
                             display: flex;
@@ -902,6 +907,7 @@
                             align-items: center;
                             justify-content: center;
                             height: 7.4vw;
+                            font-size: 3.1vw;
                         }
 
                         .left {

@@ -28,11 +28,11 @@
                         <div class="list"
                           v-for="(list,index) in warningList"
                           :key="index">
-                            <span>{{list.id}}</span>
-                            <span>{{list.desc}}</span>
-                            <span>{{list.time}}</span>
-                            <span v-if="list.state ===1" class="unHandle"><i></i> 未处理</span>
-                            <span v-if="list.state ===2" class="handel"><i></i> 已处理</span>
+                            <span>{{list.listing_number}}</span>
+                            <span>{{list.describe}}</span>
+                            <span>{{list.created_at}}</span>
+                            <span v-if="list.status ===0" class="unHandle"><i></i> 未处理</span>
+                            <span v-if="list.status ===1" class="handle"><i></i> 已处理</span>
                         </div>
                     </vueSeamless>
 
@@ -53,75 +53,25 @@
                     {
                         name: '消防栓数量',
                         img: require('@/assets/index/1.png'),
-                        num: 17800,
+                        num: 0,
                     },
                     {
                         name: '故障数量',
                         img: require('@/assets/index/2.png'),
-                        num: 149,
+                        num: 0,
                     },
                     {
                         name: '停用数量',
                         img: require('@/assets/index/3.png'),
-                        num: 231,
+                        num: 0,
                     },
                     {
                         name: '正常数量',
                         img: require('@/assets/index/4.png'),
-                        num: 12810,
+                        num: 0,
                     }
                 ],
-                warningList: [
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-
-                ]
+                warningList: []
             };
         },
         components: {
@@ -151,46 +101,16 @@
               this.numList[3].num = res.data.normal
             })
           },
-        getSevenDaysAlarm(){
-          this.$get('/api/v1/sevenDaysAlarm').then(res=>{
-            console.log(res);
-          })
-        },
-        getProportionAlarms(){
-          this.$get('/api/v1/proportionAlarms').then(res=>{
-            console.log(res);
-          })
-        },
-        getMap(){
-          this.$get('/api/v1/map').then(res=>{
-            console.log(res);
-          })
-        },
-        getHomeFault(){
-          this.$get('/api/v1/homeFault').then(res=>{
-            console.log(res);
-          })
-        },
-        getHomeCallThePolice(){
-          this.$get('/api/v1/homeCallThePolice').then(res=>{
-            console.log(res);
-          })
-        },
-        getMaintainer(){
-          this.$get('/api/v1/maintainer').then(res=>{
-            console.log(res);
-          })
-        }
+          getHomeCallThePolice(){
+              this.$get('/api/v1/homeCallThePolice').then(res=>{
+                  this.warningList = res.data
+              })
+          },
+
       },
       mounted() {
-            return
           this.getNumList();
-          this.getSevenDaysAlarm();
-          this.getProportionAlarms();
-          this.getMap();
-          this.getHomeFault();
           this.getHomeCallThePolice();
-          this.getMaintainer();
       }
     };
 </script>

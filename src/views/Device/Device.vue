@@ -334,36 +334,7 @@
                 isImportShow: false,
                 isCreateShow: false,
                 isSleepShow: false,
-                alarmList: [
-                    {
-                        id: 11877495581,
-                        sn: "WG54991",
-                        address: "高新技术产业园区南区科苑南路综合服务楼",
-                        stopUse: 1,
-                        normal: 1,
-                        knockDown: 1,
-                        illegalWaterUse: 1,
-                        abnormalWaterPressure: 1,
-                        abnormalVoltage: 1,
-                        eventTime: "11/08 12：55",
-                        people: "王维维",
-                        phone: '123456'
-                    },
-                    {
-                        id: 11877495581,
-                        sn: "WG54991",
-                        address: "高新技术产业园区南区科苑南路综合服务楼",
-                        stopUse: 1,
-                        normal: 1,
-                        knockDown: 1,
-                        illegalWaterUse: 1,
-                        abnormalWaterPressure: 1,
-                        abnormalVoltage: 1,
-                        eventTime: "11/08 12：55",
-                        people: "王维维",
-                        phone: '123456'
-                    },
-                ],
+                alarmList: [],
                 addArr:[],
                 chart:null,
                 mapInstance:null

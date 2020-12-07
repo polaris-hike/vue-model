@@ -42,64 +42,76 @@
 </template>
 
 <script>
-  import arrAll from './proviceData';
+    import arrAll from './proviceData';
 
-  export default {
-    name: 'chinaArea',
-    data() {
-      return {
-        province: '',
-        area: '',
-        status: '',
-        roleList:[],
-        prov: '北京',
-        city: '北京',
-        district: '东城区',
-        arr: arrAll,
-        cityArr: [],
-        districtArr: []
-      };
-    },
-    methods: {
-      updateCity() {
-        for (var i in this.arr) {
-          var obj = this.arr[i];
-          if (obj.name == this.prov) {
-            this.cityArr = obj.sub;
-            break;
-          }
+    export default {
+        name: 'chinaArea',
+        data() {
+            return {
+                province: '',
+                area: '',
+                status: '',
+                roleList: [],
+                prov: '',
+                city: '',
+                district: '',
+                arr: arrAll,
+                cityArr: [],
+                districtArr: []
+            };
+        },
+        methods: {
+            updateCity() {
+                for (var i in this.arr) {
+                    var obj = this.arr[i];
+                    if (obj.name == this.prov) {
+                        this.cityArr = obj.sub;
+                        break;
+                    }
+                }
+                this.city = this.cityArr[1].name;
+            },
+            updateDistrict() {
+                for (var i in this.cityArr) {
+                    var obj = this.cityArr[i];
+                    if (obj.name == this.city) {
+                        this.districtArr = obj.sub;
+                        break;
+                    }
+                }
+                if (this.districtArr && this.districtArr.length > 0 && this.districtArr[1].name) {
+                    this.district = this.districtArr[1].name;
+                } else {
+                    this.district = '';
+                }
+            },
+            setAreaData() {
+                this.$emit('setAreaData', {
+                    prov: this.prov,
+                    city: this.city,
+                    district: this.district
+                })
+            }
+        },
+        beforeMount() {
+            this.updateCity();
+            this.updateDistrict();
+        },
+        watch: {
+            prov() {
+                this.updateCity();
+                this.updateDistrict();
+                this.setAreaData()
+            },
+            city() {
+                this.updateDistrict();
+                this.setAreaData()
+            },
+            district(val){
+                this.setAreaData()
+            }
         }
-        this.city = this.cityArr[1].name;
-      },
-      updateDistrict() {
-        for (var i in this.cityArr) {
-          var obj = this.cityArr[i];
-          if (obj.name == this.city) {
-            this.districtArr = obj.sub;
-            break;
-          }
-        }
-        if (this.districtArr && this.districtArr.length > 0 && this.districtArr[1].name) {
-          this.district = this.districtArr[1].name;
-        } else {
-          this.district = '';
-        }
-      }
-    },
-    beforeMount() {
-      this.updateCity();
-      this.updateDistrict();
-    },
-    watch: {
-      prov() {
-        this.updateCity();
-        this.updateDistrict();
-      },
-      city() {
-        this.updateDistrict();
-      }
-    }
-  };
+    };
 </script>
 
 <style lang="scss" scoped>
@@ -107,6 +119,7 @@
         .el-select {
             width: 10.6vw;
             margin-right: 0.8vw;
+
             ::v-deep .el-input {
                 &::before {
                     content: "";
@@ -119,12 +132,15 @@
                     background-image: url("~@/assets/index/input-right.png");
                     background-size: 100% 100%;
                 }
+
                 .el-input__inner {
                     background-color: #0f1f24;
                     height: 3.7vh;
                     border-radius: 0;
+                    color: #fff;
                 }
             }
+
             ::v-deep .el-select__caret {
                 color: #01eff0;
             }

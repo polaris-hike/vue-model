@@ -35,7 +35,7 @@ const lineOptions = {
     },
     type: 'category',
     boundaryGap: false,
-    data: ['11月28日', '11月29日', '11月30日', '12月1日', '12月2日', '12月3日', '12月4日']
+    data: []
   },
   yAxis: {
     axisLine: {
@@ -55,7 +55,7 @@ const lineOptions = {
     type: 'value'
   },
   series: [{
-    data: [820, 932, 901, 934, 1290, 1330, 1320],
+    data: [],
     type: 'line',
     symbolSize: 0,
     areaStyle: {

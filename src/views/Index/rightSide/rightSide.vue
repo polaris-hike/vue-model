@@ -37,10 +37,10 @@
         <div class="list-wrapper">
           <vueSeamless :class-option="seamlessOptions" :data="warningList">
             <div :key="index" class="list" v-for="(list, index) in warningList">
-              <span>{{ list.id }}</span>
-              <span>{{ list.desc }}</span>
+              <span>{{ list.listing_number }}</span>
+              <span>{{ list.describe }}</span>
               <span>{{ list.address }}</span>
-              <span>{{ list.contact }}</span>
+              <span>{{ list.name }}</span>
             </div>
           </vueSeamless>
         </div>
@@ -51,11 +51,11 @@
       <ul class="people-wrapper">
         <li v-for="(item, index) in peopleList" :key="index">
           <div class="img">
-            <img :src="item.img" alt="" />
+            <img :src="item.avatar" alt="" />
           </div>
           <div class="people-info">
             <span>{{ item.name }}</span>
-            <span>{{ item.address }}</span>
+            <span>{{ item.area }}</span>
             <span>{{ item.phone }}</span>
           </div>
         </li>
@@ -177,6 +177,41 @@ export default {
       };
     },
   },
+  methods:{
+    getSevenDaysAlarm(){
+      this.$get('/api/v1/sevenDaysAlarm').then(res=>{
+        const seriesValue = [];
+        const xAxisData = [];
+        res.data.forEach((item)=>{
+          xAxisData.push(item.date)
+          seriesValue.push(item.value)
+        })
+        this.lineOptions.xAxis.data = xAxisData
+        this.lineOptions.series[0].data = seriesValue
+      })
+    },
+    getProportionAlarms(){
+      this.$get('/api/v1/proportionAlarms').then(res=>{
+        console.log(res);
+      })
+    },
+    getHomeFault(){
+      this.$get('/api/v1/homeFault').then(res=>{
+        this.warningList = res.data
+      })
+    },
+    getMaintainer(){
+      this.$get('/api/v1/maintainer').then(res=>{
+        this.peopleList = res.data
+      })
+    }
+  },
+  mounted() {
+    this.getSevenDaysAlarm();
+    this.getProportionAlarms();
+    this.getHomeFault();
+    this.getMaintainer();
+  }
 };
 </script>
 
@@ -220,7 +255,9 @@ export default {
       }
       .legend {
         flex-grow: 1;
-        height: 100%;		padding-top:7.5%;		padding-bottom:7.5%;
+        height: 100%;
+		padding-top:7.5%;
+		padding-bottom:7.5%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -228,7 +265,8 @@ export default {
         font-size: 0.63vw;
         .list {
           display: flex;
-          align-items: center;		  flex-grow: 1;
+          align-items: center;
+		  flex-grow: 1;
           .square {
             width: 0.3vw;
             height: 0.3vw;
@@ -309,7 +347,11 @@ export default {
           }
         }
       }
-    }	&:nth-child(4){		margin-bottom:0;		height:22.4vh;	}
+    }
+	&:nth-child(4){
+		margin-bottom:0;
+		height:22.4vh;
+	}
     .people-wrapper {
       flex: 1;
       display: flex;
@@ -323,7 +365,8 @@ export default {
         .img {
           width: 2.3vw;
           height: 2.3vw;
-          margin-right: 1.1vw;		  border: 1px solid #044a50;
+          margin-right: 1.1vw;
+		  border: 1px solid #044a50;
           img {
             width: 100%;
             height: 100%;

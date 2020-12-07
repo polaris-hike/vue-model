@@ -1,7 +1,7 @@
 <template>
   <div class="alarm-wrapper">
     <header>
-      <chinaArea />
+      <chinaArea @setAreaData="setAreaData"/>
       <el-date-picker
               v-model="date"
               type="daterange"
@@ -11,9 +11,9 @@
       </el-date-picker>
       <div class="input-wrapper">
         <i class="search-icon"></i>
-        <input class="search" type="text" placeholder="请输入关键字" />
+        <input class="search" type="text" placeholder="请输入关键字" v-model="searchValue"/>
       </div>
-      <div class="confirm">确认</div>
+      <div class="confirm" @click="search">确认</div>
     </header>
     <main>
       <header>
@@ -44,7 +44,7 @@
       </header>
       <ul class="alarmList-wrapper">
         <li v-for="(item, index) in alarmList" :key="index">
-          <span>{{ item.id }}</span>
+          <span>{{ item.listing_number }}</span>
           <span>{{ item.sn }}</span>
           <span>{{ item.address }}</span>
           <span style="width: 6.2vw">{{ item.stopUse }}</span>
@@ -54,10 +54,10 @@
           <span style="width: 6.2vw">{{ item.abnormalWaterPressure }}</span>
           <span style="width: 6.2vw">{{ item.abnormalVoltage }}</span>
           <span style="width: 6.2vw">{{ item.eventTime }}</span>
-          <span style="width: 5.7vw">{{ item.sleepCircle }}</span>
+          <span style="width: 5.7vw">{{ item.press }}</span>
           <span style="width: 5.4vw">{{ item.pressureCollectionCycle }}</span>
           <span style="width: 5.1vw">{{ item.maxPressureAlarm }}</span>
-          <span style="width: 5.5vw">{{ item.people }}</span>
+          <span style="width: 5.5vw">{{ item.name }}</span>
         </li>
       </ul>
     </main>
@@ -86,53 +86,41 @@ export default {
       total: 0,
       currentPage: 1,
       alarmList: [
-        {
-          id: 11877495581,
-          sn: "WG54991",
-          address: "高新技术产业园区南区科苑南路综合服务楼",
-          stopUse: 1,
-          normal: 1,
-          knockDown: 1,
-          illegalWaterUse: 1,
-          abnormalWaterPressure: 1,
-          abnormalVoltage: 1,
-          eventTime: "11/08 12：55",
-          sleepCircle: "10.00MPa",
-          pressureCollectionCycle: "10.00MPa",
-          maxPressureAlarm: "11/08 12：55",
-          minPressureAlarm: "11/08 12：55",
-          people: "王维维",
-        },
-        {
-          id: 11877495581,
-          sn: "WG54991",
-          address: "高新技术产业园区南区科苑南路综合服务楼",
-          stopUse: 1,
-          normal: 1,
-          knockDown: 1,
-          illegalWaterUse: 1,
-          abnormalWaterPressure: 1,
-          abnormalVoltage: 1,
-          eventTime: "11/08 12：55",
-          sleepCircle: "10.00MPa",
-          pressureCollectionCycle: "10.00MPa",
-          maxPressureAlarm: "11/08 12：55",
-          minPressureAlarm: "11/08 12：55",
-          people: "王维维",
-        },
       ],
+      area:{},
+      searchValue:'',
+      status:''
     };
   },
   components:{
     chinaArea
   },
   methods: {
-    handleCurrentChange(val) {
-      console.log(val);
+    setAreaData(data){
+      this.area = data
     },
-    getData(){
-      this.$get('/api/v1/dataOverview').then(res=>{
-
+    search(){
+      this.$get('/api/v1/dataOverview',{
+        province:this.area.prov,
+        city:this.area.city,
+        area:this.area.district,
+        status:this.status,
+        search:this.searchValue,
+        datetime:this.date
+      }).then(res=>{
+        this.alarmList = res.data
+      })
+    },
+    handleCurrentChange(val) {
+      this.getData(val)
+    },
+    getData(page){
+      let url = "/api/v1/dataOverview";
+      if (page) {
+        url = url + `?page=${page}`;
+      }
+      this.$get(url).then(res=>{
+        this.alarmList = res.data
       })
     }
   },
@@ -163,7 +151,8 @@ export default {
     ::v-deep .el-date-editor{
       width: 14vw;
       background: #0f1f24;
-      border-radius: 0;	  margin-right:0.8vw;
+      border-radius: 0;
+	  margin-right:0.8vw;
       input {
         background: #0f1f24;
         width: 5vw;

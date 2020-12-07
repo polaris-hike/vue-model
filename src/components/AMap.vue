@@ -194,6 +194,7 @@
                 this.isSecondShow = zoom >= 15;
             },
             init(AMap) {
+
                 var cluster;
 
                 this.mapInstance = new AMap.Map("echarts-amap", {
@@ -213,6 +214,10 @@
                 this.mapInstance.on('zoomend', (e) => {
                     this.handleMapClick(this.mapInstance.getZoom(), this.mapInstance.getCenter())
                 })
+                this.$get('/api/v1/map').then(res=>{
+                    console.log(res);
+                })
+
                 const gridSize = 60
                 var count = shenzhen1.length;
 

@@ -67,6 +67,7 @@ export default {
       margin-bottom: 4.1vh;
       padding-bottom: 2.7vh;
       padding-left: 1.4vw;
+      font-size: 3.9vw;
       color: #d6d6d6;
     }
     .login-btn {
@@ -75,6 +76,7 @@ export default {
       line-height: 7.3vh;
       text-align: center;
       border-radius: 1vw;
+      font-size: 4.3vw;
       background-color: #1d4f70;
     }
   }
