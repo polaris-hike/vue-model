@@ -112,7 +112,7 @@
                     animation: false,
                     series: [
                         {
-                            name: "PM2.5",
+                            name: "聚合数据",
                             type: "effectScatter",
 
                             coordinateSystem: "amap",
@@ -125,8 +125,8 @@
                                 value: 2,
                             },
                             label: {
-                                formatter: "{b}",
-                                position: "right",
+                                formatter: "{@[2]}",
+                                position: "inside",
                                 show: true,
                             },
                             itemStyle: {
