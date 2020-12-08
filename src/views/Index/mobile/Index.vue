@@ -267,8 +267,8 @@
                         value: 89
                     }
                 ],
-                bottom: -155,
-                bottom1: -140,
+                bottom: -154,
+                bottom1: -145,
                 percentList: [
                     {
                         name: '非法用水',
@@ -414,7 +414,7 @@
                 if (Math.abs(Y) > Math.abs(X) && Y > 0) {//下滑
                     if (this.canScrollToBottom) {
                         this.overflow = 'unset'
-                        this.bottom = -155
+                        this.bottom = -154
                     }
 
                 } else if (Math.abs(Y) > Math.abs(X) && Y < 0) {// 上滑
@@ -453,7 +453,7 @@
             },
             swipedown(e) {
                 console.log('swipedown');
-                this.bottom1 = -140
+                this.bottom1 = -145
             },
             handleLineClick() {
                 //this.bottom = this.bottom === -155 ? -101 : -155
@@ -847,6 +847,7 @@
                 &.percentAnalyse {
                     height: unset;
                     padding-left: 4.1vw;
+                    margin-bottom: 2vw;
 
                     header {
                         font-size: 3.7vw;
@@ -903,7 +904,7 @@
 
                     .pagination {
                         display: flex;
-                        margin-top: 4.1vw;
+                        //margin-top: 4.1vw;
 
                         > div {
                             display: flex;
