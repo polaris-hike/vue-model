@@ -853,14 +853,13 @@
                     }
 
                     ul {
-                        padding-top: 5.7vw;
-                        padding-bottom: 8.4vw;
+                        padding: 3.4vw 0 ;
                         font-size: 3.1vw;
 
                         li {
                             display: flex;
                             justify-content: space-between;
-                            margin-bottom: 3.1vw;
+                            margin-bottom: 2.1vw;
                             padding-right: 3.2vw;
 
                             &:last-child {
@@ -874,6 +873,7 @@
                 &.errorList {
                     padding: 0 4.1vw 4vw 4.1vw;
                     height: unset;
+                    margin-bottom: 0;
 
                     header {
                         display: flex;
