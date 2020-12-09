@@ -147,7 +147,7 @@
                     tooltip: {
                         trigger: "item",
                     },
-                    animation: false,
+                    //animation:"AMAP_ANIMATION_BOUNCE",
                     series: [
                         {
                             name: "聚合数据",
@@ -199,7 +199,6 @@
 
                 this.mapInstance = new AMap.Map("echarts-amap", {
                     viewMode: "3D",
-
                     center: [114.05571, 22.52245],
                     zoom: 12,
 
@@ -235,7 +234,7 @@
                     div.style.lineHeight = size + 'px';
                     div.style.color = '#fff';
                     div.style.fontSize = '14px';
-                    div.style.textAlign = 'center';
+                    div.style.textAlign = 'center';					div.style.backgroundImage = "url('')";//设置背景图的的地址					div.style.backgroundRepeat = "no-repeat";//设置背景不平铺					div.style.backgroundPosition = "center";//设置背景图的位置					div.style.backgroundSize = "100%";//设置背景图像的尺寸
                     context.marker.setOffset(new AMap.Pixel(-size / 2, -size / 2));
                     context.marker.setContent(div)
                 };
@@ -280,8 +279,6 @@
                     },
                 }).then((AMap) => {
                     this.init(AMap)
-
-
                     return
                     this.chart = echarts.init(document.getElementById("echarts-amap"));
                     this.chart.setOption(this.options);
@@ -306,7 +303,7 @@
         width: 100vw;
         height: 100vh;
     }
-
+	.mapstyle{		color:red	}
     .second-wrapper {
         position: absolute;
         left: 50%;

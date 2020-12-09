@@ -51,7 +51,7 @@
       <ul class="people-wrapper">
         <li v-for="(item, index) in peopleList" :key="index">
           <div class="img">
-            <img :src="item.avatar" alt="" />
+            <img v-if='item.avatar!=""' :src="item.avatar" alt="" />			 <img v-if='item.avatar==""' src="@/assets/index/people.png" alt="" />
           </div>
           <div class="people-info">
             <span>{{ item.name }}</span>

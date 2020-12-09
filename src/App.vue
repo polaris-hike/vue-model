@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Header v-show="$route.path !== '/login' && !isMobile" />
-    <Map v-if="$route.path === '/index'" />
-    <router-view class="main-view" />
+    <Map v-if="$route.path === '/index'" />	<transition name="el-zoom-in-top" mode="out-in">
+    <router-view class="main-view" />	</transition>
   </div>
 </template>
 <script>
@@ -58,5 +58,5 @@ a {
     height: 100%;
     overflow: hidden;
   }
-}
+}
 </style>
