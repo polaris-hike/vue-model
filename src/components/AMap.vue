@@ -224,17 +224,17 @@
                     var factor = Math.pow(context.count / count, 1 / 18);
                     var div = document.createElement('div');
                     div.style.boxSizing='border-box';
-                    div.style.backgroundColor = '#26a58f';
-                    var size = Math.round(30 + Math.pow(context.count / count, 1 / 4) * 20);
+                    // div.style.backgroundColor = '#26a58f';
+                    var size = Math.round(50 + Math.pow(context.count / count, 1 / 4) * 20);
                     div.style.width = div.style.height = size + 'px';
-                    div.style.border = 'solid 5px #10353b';
+                    // div.style.border = 'solid 5px #10353b';
                    // div.style.border = 'solid 10px red';
                     div.style.borderRadius = size / 2 + 'px';
                     div.innerHTML = context.count;
                     div.style.lineHeight = size + 'px';
                     div.style.color = '#fff';
-                    div.style.fontSize = '14px';
-                    div.style.textAlign = 'center';					div.style.backgroundImage = "url('')";//设置背景图的的地址					div.style.backgroundRepeat = "no-repeat";//设置背景不平铺					div.style.backgroundPosition = "center";//设置背景图的位置					div.style.backgroundSize = "100%";//设置背景图像的尺寸
+                    div.style.fontSize = '16px';
+                    div.style.textAlign = 'center';					div.style.backgroundImage = "url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/dian1.gif')";//设置背景图的的地址					div.style.backgroundRepeat = "no-repeat";//设置背景不平铺					div.style.backgroundPosition = "center";//设置背景图的位置					div.style.backgroundSize = "100%";//设置背景图像的尺寸					div.style.className="mapstyle"
                     context.marker.setOffset(new AMap.Pixel(-size / 2, -size / 2));
                     context.marker.setContent(div)
                 };
