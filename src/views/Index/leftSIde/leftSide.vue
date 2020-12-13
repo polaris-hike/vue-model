@@ -56,18 +56,23 @@
                         num: 0,
                     },
                     {
-                        name: '故障数量',
+                        name:'离线数量',
                         img: require('@/assets/index/2.png'),
                         num: 0,
                     },
                     {
-                        name: '停用数量',
+                        name: '报警数量',
                         img: require('@/assets/index/3.png'),
                         num: 0,
                     },
                     {
-                        name: '正常数量',
+                        name: '停用数量',
                         img: require('@/assets/index/4.png'),
+                        num: 0,
+                    },
+                    {
+                        name: '正常数量',
+                        img: require('@/assets/index/1.png'),
                         num: 0,
                     }
                 ],

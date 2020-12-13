@@ -134,11 +134,11 @@
                     },
                     {
                         name: "故障",
-                        img: img.error,
+                        img: img.warn,
                     },
                     {
                         name: "告警",
-                        img: img.warn,
+                        img: img.error,
                     },
                     {
                         name: "停用",
