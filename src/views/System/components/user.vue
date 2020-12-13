@@ -70,7 +70,15 @@
         </li>
         <li>
           <span>用户状态</span>
-          <input type="text" v-model="status" placeholder="请输入内容" />
+          <el-select v-model="status" placeholder="请输入内容">
+            <el-option
+                    v-for="item in userStatusList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+            >
+            </el-option>
+          </el-select>
         </li>
       </ul>
       <div class="confirm" @click="adduser">确定</div>
@@ -91,6 +99,16 @@ export default {
       email: "",
       role: "",
       roleList: [],
+      userStatusList:[
+        {
+          name:'冻结',
+          id:0
+        },
+        {
+          name:'正常',
+          id:1
+        }
+      ],
       phone: "",
       status: "",
       currentUserId: "",
@@ -362,30 +380,9 @@ export default {
 }
 </style>
 <style>
-  .el-select-dropdown {
-    background-color: #11171c;
-  }
-  .el-input__suffix {
-    display: flex;
-    align-items: center;
-  }
 .el-dialog .el-dialog__body {
   color: #fff;
   font-size: 0.7vw;
   padding-left: 2.7vw;
 }
-.el-pagination .btn-next,
-.el-pagination .btn-prev {
-  color: #00ffff;
-}
-/* .el-pagination button:hover {
-  color: inherit;
-} */
-.el-pagination__jump {
-  color: #fff;
-}
-  .el-dialog__body .el-input__inner {
-    background: #172f3b;
-    border: 1px solid #134a55;
-  }
 </style>

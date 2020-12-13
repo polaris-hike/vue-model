@@ -30,7 +30,7 @@
         <el-select popper-class="select" v-if="$route.path === '/alarmManage'||$route.path === '/dataOverview' "
                    v-model="status" placeholder="状态">
             <el-option
-                    v-for="item in roleList"
+                    v-for="item in statusList"
                     :key="item.id"
                     :label="item.name"
                     :value="item.id"
@@ -46,6 +46,7 @@
 
     export default {
         name: 'chinaArea',
+        props:['statusList'],
         data() {
             return {
                 province: '',
@@ -69,7 +70,9 @@
                         break;
                     }
                 }
-                this.city = this.cityArr[1].name;
+                if(this.cityArr.length !== 0){
+                    this.city = this.cityArr[1].name;
+                }
             },
             updateDistrict() {
                 for (var i in this.cityArr) {
@@ -109,6 +112,9 @@
             },
             district(val){
                 this.setAreaData()
+            },
+            status(val){
+                this.$emit('setStatus',val)
             }
         }
     };

@@ -1,7 +1,7 @@
 <template>
     <div class="alarm-wrapper">
         <header>
-            <chinaArea  @setAreaData="setAreaData"/>
+            <chinaArea  @setAreaData="setAreaData" :statusList="statusList" @setStatus="setStatus"/>
             <div class="input-wrapper">
                 <i class="search-icon"></i>
                 <input class="search" type="text" v-model="search" placeholder="请输入关键字"/>
@@ -70,7 +70,14 @@
             return {
                 checked: false,
                 search: "",
-                status: "",
+                status:'',
+                statusList: [{
+                    name:'未处理',
+                    id:0
+                },{
+                    name:'已处理',
+                    id:1
+                }],
                 pageSize: 15,
                 total: 0,
                 currentPage: 1,
@@ -82,6 +89,9 @@
             chinaArea
         },
         methods: {
+            setStatus(status){
+                this.status =status
+            },
             setAreaData(data){
                 this.area = data
             },
@@ -103,7 +113,7 @@
             },
             handleSearchClick() {
                 this.$get("/api/v1/callThePolice", {
-                    search: this.search,
+                    search: this.search ? this.search :undefined,
                     province:this.area.prov,
                     city:this.area.city,
                     area:this.area.district,

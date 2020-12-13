@@ -104,9 +104,9 @@ export default {
         province:this.area.prov,
         city:this.area.city,
         area:this.area.district,
-        status:this.status,
+        status:this.status? this.status :undefined,
         search:this.searchValue,
-        datetime:this.date
+        datetime:this.date ? this.date :undefined
       }).then(res=>{
         this.alarmList = res.data
       })

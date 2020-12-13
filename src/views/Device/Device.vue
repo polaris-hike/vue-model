@@ -83,7 +83,7 @@
 			<div class="confirm" @click="setParams">确定</div>
 		</el-dialog>
 		<!-- 新建 -->
-		<el-dialog :title="title" :visible.sync="isCreateShow" width="35.78%" custom-class="create-wrapper" @close="handClose">
+		<el-dialog :close-on-click-modal="false" :title="title" :visible.sync="isCreateShow" width="35.78%" custom-class="create-wrapper" @close="handClose">
 			<ul>
 				<li v-for="(item, index) in createList" :key="index">
 					<span>{{ item.name }}</span>

@@ -16,6 +16,13 @@
 .el-pagination .btn-next, .el-pagination .btn-prev {
   background: unset;
 }
+el-pagination .btn-next,
+.el-pagination .btn-prev {
+  color: #00ffff;
+}
+.el-pagination__jump {
+  color: #fff;
+}
 .el-input__inner {
   background: #172f3b;
   border: 1px solid #1e6f85;
