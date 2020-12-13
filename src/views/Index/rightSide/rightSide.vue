@@ -290,7 +290,7 @@ export default {
           }
           &:nth-child(3) {
             .square {
-              background: #ffd506;
+              background: #f2c860;
             }
           }
         }

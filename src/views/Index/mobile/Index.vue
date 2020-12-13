@@ -611,8 +611,8 @@
                                 position: absolute;
                                 right: 7.4vw;
                                 color: #fff;
-                                font-size: 9.6vw;
-                                font-weight: DINEngschrift;
+                                font-size: 8.6vw;
+                                font-family: DM;
                             }
                         }
                     }

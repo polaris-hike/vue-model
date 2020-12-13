@@ -183,7 +183,7 @@
                         left: 8.9vw;
                         color: #fff;
                         font-size: 1.5vw;
-						font-family: SBOld;
+						font-family: DM;
                         // font-w: DINEngschrift;
                     }
                 }

@@ -92,7 +92,7 @@ const pieOption = {
           value: 30,
           name: '电压异常',
           itemStyle: {
-            color: '#ffd506',
+            color: '#f2c860',
             color2: 'rgba(1,98,254,0.1)'
 
           },
@@ -131,7 +131,7 @@ const pieOption = {
           value: 30,
           name: '电压异常',
           itemStyle: {
-            color: '#ffd506',
+            color: '#f2c860',
             opacity: 0.4,
           },
         },
