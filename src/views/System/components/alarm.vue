@@ -36,10 +36,10 @@
       :title="title"
       :visible.sync="isCreateShow"
       :close-on-click-modal="false"
-      width="20.6%"
+      width="18.6%"
       custom-class="create-wrapper"
       @close="handClose"
-    >
+    >	<el-alert title="成功提示的文案"	type="success" show-icon></el-alert>
       <ul>
         <li>
           <span>名称</span>
@@ -292,7 +292,7 @@ export default {
           margin-bottom: 1vw;
           width: 14.8vw;
           span {
-            margin-bottom: 0.4vw;
+            margin-bottom: 0.4vw;			color:#fff;
           }
           input {
             width: 14.8vw;

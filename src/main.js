@@ -10,7 +10,7 @@ Vue.use(VueTouch, {name: 'v-touch'})
 /*import VueAMap from 'vue-amap';
 Vue.use(VueAMap);*/
 import {
-  Switch, Pagination, Dialog, Transfer, Message, Select, Option,Checkbox,DatePicker
+  Switch, Pagination, Dialog, Transfer, Message, Select, Option,Checkbox,DatePicker,Alert
 } from "element-ui";
 Vue.use(Switch);
 Vue.use(Pagination);
@@ -20,7 +20,7 @@ Vue.use(Select);
 Vue.use(Option);
 Vue.use(Checkbox);
 Vue.use(DatePicker);
-
+Vue.use(Alert);
 /*VueAMap.initAMapApiLoader({
   // 高德的key
   key: '852b4331fa1629f5c4722b5cab98a8c6',
