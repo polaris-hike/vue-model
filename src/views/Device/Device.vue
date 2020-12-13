@@ -98,9 +98,9 @@
 					<el-select popper-class="select" v-model="status" >
 						<el-option
 								v-for="item in statusList"
-								:key="item.name"
+								:key="item.id"
 								:label="item.name"
-								:value="item.name"
+								:value="item.id"
 						>
 						</el-option>
 					</el-select>
@@ -251,7 +251,16 @@
 				arr: arrAll,
 				cityArr: [],
 				districtArr: [],
-				statusList:[],
+				statusList:[
+					{
+						name:0,
+						id:0
+					},
+					{
+						name:1,
+						id:1
+					},
+				],
 				createList: [
 					{
 						name: "挂牌编号",
@@ -402,7 +411,7 @@
 				}
 			},
 			getStatusList(){
-				this.$get('/api/v1/callThePoliceStatus').then(res=>{
+				this.$get('/api/v1/equipmentStatus').then(res=>{
 					console.log(res);
 				})
 			},

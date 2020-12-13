@@ -8,6 +8,16 @@
                 <span>{{ item.name }}</span>
             </div>
         </div>
+        <div class="box" v-show="boxShow" :style="{left,top}">
+            <div class="close" @click="boxShow = false">X</div>
+            <h1>消火栓信息</h1>
+            <ul>
+                <li v-for="(val, key, index) in boxInfo">{{boxInfoNameList[index]}}: {{val}}</li>
+            </ul>
+            <div class="seeDetail" @click="toDevice">
+                查看详情
+            </div>
+        </div>
 
         <!--<v-chart
                 style="width: 100vw; height: 100vh"
@@ -18,11 +28,8 @@
                 :options="options"
         ></v-chart>-->
     </div>
-
     <!--<el-amap vid="amapDemo" :zoom="zoom" :center="center">
     </el-amap>-->
-
-
 </template>
 
 <script>
@@ -108,6 +115,17 @@
         },
         data() {
             return {
+                boxShow:false,
+                boxInfo:{
+                    listing_number:'AD321561',
+                    sn:'AD321561',
+                    status:"正常",
+                    name:'李工',
+                    phone:'123456',
+                    city:'广东省深圳市南山区',
+                    address:'南山区粤海街道100米左侧',
+                },
+                boxInfoNameList:['挂牌编号','SN码','状况','联系人','联系方式','城市','地址'],
                 isSecondShow: true,
                 secondList: [
                     {
@@ -179,7 +197,9 @@
                     ],
                 },
                 mapInstance: null,
-                chart: null
+                chart: null,
+                left:'',
+                top:''
             };
         },
         mounted() {
@@ -189,6 +209,9 @@
             this.mapInstance.destroy();
         },
         methods: {
+            toDevice(){
+                this.$router.push('/device')
+            },
             handleMapClick(zoom, center) {
                 this.$store.commit('setZoom', zoom)
                 this.isSecondShow = zoom >= 15;
@@ -281,8 +304,12 @@
                     renderMarker: _renderMarker, // 自定义非聚合点样式
                 });
                 cluster.on('click',(e)=>{
-                    this.$router.push('/device')
-                    console.log(e);
+                    this.boxShow = true;
+                    const left = Number(e.marker.dom.style.left.split('px')[0])
+                    const top = Number(e.marker.dom.style.top.split('px')[0])
+                    console.log(left);
+                    this.left = left + 150+'px'
+                    this.top = top-50+'px'
                 })
             },
             initMap() {
@@ -348,6 +375,43 @@
                 height: 1.4vw;
                 margin-right: 0.4vw;
             }
+        }
+    }
+    .box {
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        color: #fff;
+        box-shadow: rgb(11, 234, 235) 0px 0px 8px inset;
+        border-top: 1px solid #00ffff;
+        border-bottom: 1px solid #00ffff;
+        background: #192a37;
+        padding: 1vw;
+        .close {
+            position: absolute;
+            right: 1vw;
+            top: 1vw;
+            cursor: pointer;
+        }
+        h1 {
+            font-size: 1vw;
+            margin-bottom: 1vh;
+        }
+        li {
+            margin-bottom: 1vh;
+        }
+        .seeDetail {
+            width: 5.9vw;
+            height: 3.7vh;
+            line-height: 3.7vh;
+            text-align: center;
+            background-color: #1e4b6d;
+            border: 1px solid #17fff3;
+            font-size: 0.7vw;
+            cursor: pointer;
+            margin: 0 auto;
         }
     }
 </style>
