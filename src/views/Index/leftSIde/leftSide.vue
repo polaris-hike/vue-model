@@ -57,12 +57,12 @@
                     },
                     {
                         name:'离线数量',
-                        img: require('@/assets/index/2.png'),
+                        img: require('@/assets/index/4.png'),
                         num: 0,
                     },
                     {
                         name: '报警数量',
-                        img: require('@/assets/index/3.png'),
+                        img: require('@/assets/index/2.png'),
                         num: 0,
                     },
                     {

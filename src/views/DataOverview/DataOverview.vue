@@ -1,7 +1,7 @@
 <template>
   <div class="alarm-wrapper">
     <header>
-      <chinaArea @setAreaData="setAreaData"/>
+      <chinaArea @setAreaData="setAreaData" :statusList="statusList" @setStatus="setStatus"/>
       <el-date-picker
               v-model="date"
               type="daterange"
@@ -89,13 +89,26 @@ export default {
       ],
       area:{},
       searchValue:'',
-      status:''
+      status:'',
+      statusList:[
+        {
+          name:0,
+          id:0
+        },
+        {
+          name:1,
+          id:1
+        },
+      ],
     };
   },
   components:{
     chinaArea
   },
   methods: {
+    setStatus(status){
+      this.status =status
+    },
     setAreaData(data){
       this.area = data
     },
