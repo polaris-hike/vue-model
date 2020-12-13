@@ -199,11 +199,13 @@
                 mapInstance: null,
                 chart: null,
                 left:'',
-                top:''
+                top:'',
+                isMobile:false
             };
         },
         mounted() {
             this.initMap()
+            this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
         },
         destroyed() {
             this.mapInstance.destroy();
@@ -304,10 +306,10 @@
                     renderMarker: _renderMarker, // 自定义非聚合点样式
                 });
                 cluster.on('click',(e)=>{
+                    if(this.isMobile) return
                     this.boxShow = true;
                     const left = Number(e.marker.dom.style.left.split('px')[0])
                     const top = Number(e.marker.dom.style.top.split('px')[0])
-                    console.log(left);
                     this.left = left + 150+'px'
                     this.top = top-50+'px'
                 })

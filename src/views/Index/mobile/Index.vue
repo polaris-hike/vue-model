@@ -1,12 +1,11 @@
 <template>
     <div class="mobile">
         <header>
-            <div class="left"></div>
             <div class="center">
                 <i class="search-icon"></i>
                 <input class="search" type="text" placeholder="请输入关键字"/>
             </div>
-            <div class="right"></div>
+            <!--<div class="right"></div>-->
         </header>
 
         <main v-show="!isSecondShow" id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
@@ -267,7 +266,7 @@
                         value: 89
                     }
                 ],
-                bottom: -154,
+                bottom: -146,
                 bottom1: -145,
                 percentList: [
                     {
@@ -307,22 +306,27 @@
                     {
                         name: '消防栓数量',
                         img: require('@/assets/index/1.png'),
-                        num: 17800,
+                        num: 0,
                     },
                     {
-                        name: '故障数量',
+                        name:'离线数量',
+                        img: require('@/assets/index/4.png'),
+                        num: 0,
+                    },
+                    {
+                        name: '报警数量',
                         img: require('@/assets/index/2.png'),
-                        num: 149,
+                        num: 0,
                     },
                     {
                         name: '停用数量',
-                        img: require('@/assets/index/3.png'),
-                        num: 231,
+                        img: require('@/assets/index/4.png'),
+                        num: 0,
                     },
                     {
                         name: '正常数量',
-                        img: require('@/assets/index/4.png'),
-                        num: 12810,
+                        img: require('@/assets/index/1.png'),
+                        num: 0,
                     }
                 ],
                 errorList: [
@@ -403,7 +407,18 @@
                 };
             },
         },
+        mounted() {
+            this.getNumList();
+        },
         methods: {
+            getNumList(){
+                this.$get('/api/v1/number').then(res=>{
+                    this.numList[0].num = res.data.count
+                    this.numList[1].num = res.data.fault
+                    this.numList[2].num = res.data.stop
+                    this.numList[3].num = res.data.normal
+                })
+            },
             touchend(e) {
                 e.preventDefault();
                 this.moveEndX = e.changedTouches[0].pageX;
@@ -414,7 +429,7 @@
                 if (Math.abs(Y) > Math.abs(X) && Y > 0) {//下滑
                     if (this.canScrollToBottom) {
                         this.overflow = 'unset'
-                        this.bottom = -154
+                        this.bottom = -146
                     }
 
                 } else if (Math.abs(Y) > Math.abs(X) && Y < 0) {// 上滑
