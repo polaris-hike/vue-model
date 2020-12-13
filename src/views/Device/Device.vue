@@ -85,10 +85,82 @@
 		<!-- 新建 -->
 		<el-dialog :close-on-click-modal="false" :title="title" :visible.sync="isCreateShow" width="35.78%" custom-class="create-wrapper" @close="handClose">
 			<ul>
-				<li v-for="(item, index) in createList" :key="index">
+				<li>
+					<span>挂牌编号</span>
+					<input type="text" v-model.trim="listing_number" placeholder="请输入内容" >
+				</li>
+				<li>
+					<span>SN码</span>
+					<input type="text" v-model.trim="sn" placeholder="请输入内容" >
+				</li>
+				<li>
+					<span>状态</span>
+					<el-select popper-class="select" v-model="status" >
+						<el-option
+								v-for="item in statusList"
+								:key="item.name"
+								:label="item.name"
+								:value="item.name"
+						>
+						</el-option>
+					</el-select>
+				</li>
+				<li>
+					<span>省份</span>
+					<el-select popper-class="select" v-model="province" >
+						<el-option
+								v-for="item in arr"
+								:key="item.name"
+								:label="item.name"
+								:value="item.name"
+						>
+						</el-option>
+					</el-select>
+				</li>
+				<li>
+					<span>城市</span>
+					<el-select popper-class="select" v-model="city">
+						<el-option
+								v-for="item in cityArr"
+								:key="item.name"
+								:label="item.name"
+								:value="item.name"
+						>
+						</el-option>
+					</el-select>
+				</li>
+				<li>
+					<span>区域</span>
+					<el-select popper-class="select" v-model="city">
+						<el-option
+								v-for="item in cityArr"
+								:key="item.name"
+								:label="item.name"
+								:value="item.name"
+						>
+						</el-option>
+					</el-select>
+				</li>
+				<li>
+					<span>责任人</span>
+					<input type="text" v-model.trim="responsible" placeholder="请输入内容" >
+				</li>
+				<li>
+					<span>经度</span>
+					<input type="text" v-model.trim="longitude" placeholder="请输入内容" >
+				</li>
+				<li>
+					<span>维度</span>
+					<input type="text" v-model.trim="latitude" placeholder="请输入内容" >
+				</li>
+				<li>
+					<span>详细地址</span>
+					<input type="text" v-model.trim="address" placeholder="请输入内容" >
+				</li>
+				<!--<li v-for="(item, index) in createList" :key="index">
 					<span>{{ item.name }}</span>
 					<input type="text" v-model.trim="item.value" placeholder="请输入内容" @keyup.enter="setMapCenter(item.name)" />
-				</li>
+				</li>-->
 				<div class="map" id="amap"></div>
 			</ul>
 			<div class="confirm" @click="addDevice">确定</div>
@@ -168,6 +240,7 @@
 <script>
 	import chinaArea from "../../components/chinaArea";
 	import axios from 'axios';
+	import arrAll from "../../components/proviceData";
 	import AMapLoader from "@amap/amap-jsapi-loader";
 	import echarts from "echarts";
 
@@ -175,6 +248,48 @@
 		name: "Device",
 		data() {
 			return {
+				arr: arrAll,
+				cityArr: [],
+				districtArr: [],
+				statusList:[],
+				createList: [
+					{
+						name: "挂牌编号",
+						value: "",
+					},
+					{
+						name: "SN码",
+						value: "",
+					},
+					{
+						name: "状态",
+						value: "",
+					},
+					{
+						name: "省份",
+						value: "",
+					},
+					{
+						name: "城市",
+						value: "",
+					},
+					{
+						name: "区域",
+						value: "",
+					},
+					{
+						name: "责任人",
+						value: "",
+					},
+					{
+						name: "经度",
+						value: "",
+					},
+					{
+						name: "维度",
+						value: "",
+					},
+				],
 				options: {
 					amap: {
 						viewMode: "3D",
@@ -194,7 +309,8 @@
 				search: "",
 				equipment_id: '',
 				isModifyParamShow: false,
-				paramList: [{
+				paramList: [
+						{
 						label: '电压上限',
 						value: 'voltage_uper'
 					},
@@ -254,50 +370,23 @@
 				currentPage: 1,
 				data: [],
 				value: [],
-				createList: [{
-						name: "挂牌编号",
-						value: "",
-					},
-					{
-						name: "SN码",
-						value: "",
-					},
-					{
-						name: "状态",
-						value: "",
-					},
-					{
-						name: "省份",
-						value: "",
-					},
-					{
-						name: "城市",
-						value: "",
-					},
-					{
-						name: "区域",
-						value: "",
-					},
-					{
-						name: "责任人",
-						value: "",
-					},
-					{
-						name: "经度",
-						value: "",
-					},
-					{
-						name: "维度",
-						value: "",
-					},
-				],
 				isImportShow: false,
 				isCreateShow: false,
 				isSleepShow: false,
 				alarmList: [],
 				addArr: [],
 				chart: null,
-				mapInstance: null
+				mapInstance: null,
+				province:'',
+				city:'',
+				area:'',
+				listing_number:'',
+				sn:'',
+				status:'',
+				responsible:'',
+				longitude:'',
+				latitude:'',
+				address:''
 			};
 		},
 		components: {
@@ -312,7 +401,13 @@
 					this.chart.setOption(this.options);
 				}
 			},
+			getStatusList(){
+				this.$get('/api/v1/callThePoliceStatus').then(res=>{
+					console.log(res);
+				})
+			},
 			handleCreateClick() {
+				this.getStatusList()
 				this.isCreateShow = true;
 				AMapLoader.load({
 					"key": "852b4331fa1629f5c4722b5cab98a8c6", // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -322,10 +417,14 @@
 						"version": '1.1', // AMapUI 缺省 1.1
 						"plugins": [], // 需要加载的 AMapUI ui插件
 					},
-				}).then(() => {
+				}).then((AMap) => {
 					this.chart = echarts.init(document.getElementById("amap"));
 					this.chart.setOption(this.options);
 					this.mapInstance = this.chart.getModel().getComponent("amap").getAMap();
+					this.mapInstance.on('click',(e)=>{
+						this.latitude = e.lnglat.lat
+						this.longitude = e.lnglat.lng
+					})
 				}).catch(e => {
 					console.log(e);
 				})
@@ -868,6 +967,17 @@
 						flex-direction: column;
 						margin-right: 2vw;
 						margin-bottom: 1.2vh;
+						.el-select {
+							width: 14.8vw;
+
+							input {
+								border-radius: 0;
+							}
+							::v-deep .el-input__inner {
+								border-radius: 0;
+							}
+
+						}
 
 						span {
 							color: #fff;
@@ -880,7 +990,8 @@
 							padding-left: 0.6vw;
 							color: #fff;
 							background: #172f3b;
-							border: 1px solid #134a55;
+							border: 1px solid #1e6f85;
+							border-radius: 0;
 							outline: none;
 						}
 					}

@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <Header v-show="$route.path !== '/login' && !isMobile" />
-    <Map v-if="$route.path === '/index'" />	<transition name="el-zoom-in-top" mode="out-in">
-    <router-view class="main-view" />	</transition>
+    <Map v-if="$route.path === '/index'" />
+	<transition name="el-zoom-in-top" mode="out-in">
+    <router-view class="main-view" />
+	</transition>
   </div>
 </template>
 <script>
@@ -58,5 +60,16 @@ a {
     height: 100%;
     overflow: hidden;
   }
-}
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: #b3b3b3;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #b3b3b3;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #b3b3b3;
+}
 </style>

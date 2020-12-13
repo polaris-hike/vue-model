@@ -341,8 +341,14 @@ export default {
     left: 50%;
     transform: translateX(-50%);
   }
-  .create-wrapper {
-    .el-dialog__body {
+  ::v-deep.el-dialog__wrapper {
+    .create-wrapper {
+      .el-dialog__body {
+        color: #fff;
+        font-size: 0.7vw;
+        padding-left: 2.7vw;
+      }
+
       ul {
         li {
           display: flex;
@@ -377,12 +383,8 @@ export default {
       }
     }
   }
+
 }
 </style>
-<style>
-.el-dialog .el-dialog__body {
-  color: #fff;
-  font-size: 0.7vw;
-  padding-left: 2.7vw;
-}
+<style src="@/assets/style/element.css">
 </style>

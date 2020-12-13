@@ -213,6 +213,14 @@
                 this.mapInstance.on('zoomend', (e) => {
                     this.handleMapClick(this.mapInstance.getZoom(), this.mapInstance.getCenter())
                 })
+                /*this.mapInstance.on('mouseover', (e) => {
+                    console.log('mouseover');
+                    console.log(e);
+                })
+                this.mapInstance.on('mouseout', (e) => {
+                    console.log('mouseout');
+                    console.log(e);
+                })*/
                 this.$get('/api/v1/map').then(res=>{
                     console.log(res);
                 })
@@ -234,7 +242,12 @@
                     div.style.lineHeight = size + 'px';
                     div.style.color = '#fff';
                     div.style.fontSize = '16px';
-                    div.style.textAlign = 'center';					div.style.backgroundImage = "url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/dian1.gif')";//设置背景图的的地址					div.style.backgroundRepeat = "no-repeat";//设置背景不平铺					div.style.backgroundPosition = "center";//设置背景图的位置					div.style.backgroundSize = "100%";//设置背景图像的尺寸					div.style.className="mapstyle"
+                    div.style.textAlign = 'center';
+					div.style.backgroundImage = "url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/dian1.gif')";//设置背景图的的地址
+					div.style.backgroundRepeat = "no-repeat";//设置背景不平铺
+					div.style.backgroundPosition = "center";//设置背景图的位置
+					div.style.backgroundSize = "100%";//设置背景图像的尺寸
+					div.style.className="mapstyle"
                     context.marker.setOffset(new AMap.Pixel(-size / 2, -size / 2));
                     context.marker.setContent(div)
                 };
@@ -267,6 +280,10 @@
                     renderClusterMarker: _renderClusterMarker, // 自定义聚合点样式
                     renderMarker: _renderMarker, // 自定义非聚合点样式
                 });
+                cluster.on('click',(e)=>{
+                    this.$router.push('/device')
+                    console.log(e);
+                })
             },
             initMap() {
                 AMapLoader.load({
@@ -303,7 +320,9 @@
         width: 100vw;
         height: 100vh;
     }
-	.mapstyle{		color:red	}
+	.mapstyle{
+		color:red
+	}
     .second-wrapper {
         position: absolute;
         left: 50%;
