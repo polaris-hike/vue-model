@@ -5,7 +5,9 @@
                 <i class="search-icon"></i>
                 <input class="search" type="text" placeholder="请输入关键字"/>
             </div>
-            <!--<div class="right"></div>-->
+            <div class="right">
+                <img src="@/assets/index/search.png" alt="">
+            </div>
         </header>
 
         <main v-show="!isSecondShow" id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
@@ -531,10 +533,17 @@
             }
 
             .right {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 width: 9.8vw;
                 height: 9.8vw;
                 background-color: #064653;
                 border-radius: 1vw;
+                img {
+                    width: 5.5vw;
+                    height: 5.5vw;
+                }
             }
         }
         .second-wrapper {

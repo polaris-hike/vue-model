@@ -9,7 +9,9 @@
             </div>
         </div>
         <div class="box" v-show="boxShow" :style="{left,top}">
-            <div class="close" @click="boxShow = false">X</div>
+            <div class="close" @click="boxShow = false">
+                <img src="@/assets/index/close.png" alt="">
+            </div>
             <h1>消火栓信息</h1>
             <ul>
                 <li v-for="(val, key, index) in boxInfo">{{boxInfoNameList[index]}}: {{val}}</li>
@@ -395,7 +397,13 @@
             position: absolute;
             right: 1vw;
             top: 1vw;
+            width: 1.5vw;
+            height: 1.5vw;
             cursor: pointer;
+            img {
+                width: 100%;
+                height: 100%;
+            }
         }
         h1 {
             font-size: 1vw;
