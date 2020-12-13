@@ -108,7 +108,7 @@
         },
         data() {
             return {
-                isSecondShow: false,
+                isSecondShow: true,
                 secondList: [
                     {
                         name: "正常",
