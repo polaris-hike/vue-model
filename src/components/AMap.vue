@@ -8,7 +8,7 @@
                 <span>{{ item.name }}</span>
             </div>
         </div>
-        <div class="box" v-show="boxShow" :style="{left,top}">
+        <div class="box" :class="currentBoxType" v-show="boxShow" :style="{left,top}">
             <div class="close" @click="boxShow = false">
                 <img src="@/assets/index/close.png" alt="">
             </div>
@@ -63,7 +63,7 @@
     ];
     const shenzhen1 = [
         {
-            id: "1",
+            id: "0",
             lnglat: [113.890267, 22.557764],
         },
         {
@@ -75,7 +75,7 @@
             lnglat: [113.93029, 22.53291],
         },
         {
-            id: "4",
+            id: "0",
             lnglat: [114.05571, 22.52245],
         },
         {
@@ -83,7 +83,7 @@
             lnglat: [113.52,22.3]
         },
         {
-            id:'1',
+            id:'0',
             lnglat: [113.889342,22.561878]
         },
         {
@@ -91,7 +91,7 @@
             lnglat: [113.889764,22.562328]
         },
         {
-            id:'1',
+            id:'0',
             lnglat: [113.52,22.3]
         },{
             id:'1',
@@ -136,11 +136,11 @@
                     },
                     {
                         name: "故障",
-                        img: img.error,
+                        img: img.warn,
                     },
                     {
                         name: "告警",
-                        img: img.warn,
+                        img: img.error,
                     },
                     {
                         name: "停用",
@@ -202,7 +202,8 @@
                 chart: null,
                 left:'',
                 top:'',
-                isMobile:false
+                isMobile:false,
+                currentBoxType:''
             };
         },
         mounted() {
@@ -280,17 +281,17 @@
                 };
                 var _renderMarker = function (context) {
                     var content
-                    if (context.data[0].id === '1') {
+                    if (context.data[0].id === '0') {
                         content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/normal.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
                         // content = '<div style="background-color: hsla(180, 100%, 50%, 0.3); height: 18px; width: 18px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 3px;"></div>';
                     }
-                    if (context.data[0].id === '2') {
+                    if (context.data[0].id === '1') {
                         content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/error.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
                     }
-                    if (context.data[0].id === '3') {
+                    if (context.data[0].id === '2') {
                         content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/warn.png');background-size:100% 100%; height: 36px; width: 30px;"></div>`;
                     }
-                    if (context.data[0].id === '4') {
+                    if (context.data[0].id === '3') {
                         content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/stop.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
                     }
 
@@ -309,6 +310,19 @@
                 });
                 cluster.on('click',(e)=>{
                     if(this.isMobile) return
+                    console.log(e);
+                    if(e.clusterData[0].id === '0'){
+                        this.currentBoxType = 'normal'
+                    }
+                    if(e.clusterData[0].id === '1'){
+                        this.currentBoxType = 'error'
+                    }
+                    if(e.clusterData[0].id === '2'){
+                        this.currentBoxType = 'warn'
+                    }
+                    if(e.clusterData[0].id === '3'){
+                        this.currentBoxType = 'stop'
+                    }
                     this.boxShow = true;
                     const left = Number(e.marker.dom.style.left.split('px')[0])
                     const top = Number(e.marker.dom.style.top.split('px')[0])
@@ -383,16 +397,33 @@
     }
     .box {
         position: fixed;
-        z-index: 1;
+        z-index: 2;
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
         color: #fff;
-        box-shadow: rgb(11, 234, 235) 0px 0px 8px inset;
-        border-top: 1px solid #00ffff;
-        border-bottom: 1px solid #00ffff;
         background: #192a37;
         padding: 1vw;
+        &.normal {
+            box-shadow: #36ba75 0 0 8px inset;
+            border-top: 1px solid #36ba75;
+            border-bottom: 1px solid #36ba75;
+        }
+        &.error {
+            box-shadow: #e54e4e 0 0 8px inset;
+            border-top: 1px solid #e54e4e;
+            border-bottom: 1px solid #e54e4e;
+        }
+        &.warn {
+            box-shadow: #db4b4b 0 0 8px inset;
+            border-top: 1px solid #db4b4b;
+            border-bottom: 1px solid #db4b4b;
+        }
+        &.stop {
+            box-shadow: #999999 0 0 8px inset;
+            border-top: 1px solid #999999;
+            border-bottom: 1px solid #999999;
+        }
         .close {
             position: absolute;
             right: 1vw;

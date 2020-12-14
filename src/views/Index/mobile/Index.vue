@@ -311,13 +311,18 @@
                         num: 0,
                     },
                     {
+                        name: '正常数量',
+                        img: require('@/assets/index/5.png'),
+                        num: 0,
+                    },
+                    {
                         name:'离线数量',
-                        img: require('@/assets/index/4.png'),
+                        img: require('@/assets/index/2.png'),
                         num: 0,
                     },
                     {
                         name: '报警数量',
-                        img: require('@/assets/index/2.png'),
+                        img: require('@/assets/index/3.png'),
                         num: 0,
                     },
                     {
@@ -325,11 +330,7 @@
                         img: require('@/assets/index/4.png'),
                         num: 0,
                     },
-                    {
-                        name: '正常数量',
-                        img: require('@/assets/index/1.png'),
-                        num: 0,
-                    }
+
                 ],
                 errorList: [
                     {
