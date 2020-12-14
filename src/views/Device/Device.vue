@@ -157,10 +157,6 @@
 					<span>详细地址</span>
 					<input type="text" v-model.trim="address" placeholder="请输入内容" >
 				</li>
-				<!--<li v-for="(item, index) in createList" :key="index">
-					<span>{{ item.name }}</span>
-					<input type="text" v-model.trim="item.value" placeholder="请输入内容" @keyup.enter="setMapCenter(item.name)" />
-				</li>-->
 				<div class="map" id="amap"></div>
 			</ul>
 			<div class="confirm" @click="addDevice">确定</div>
@@ -470,7 +466,6 @@
 				this.$post('/api/v1/equipmentImport', formData).then(res => {
 
 				})
-				console.log(document.querySelector('input[type=file]').files[0]);
 			},
 			getFile(event) {
 				var file = event.target.files;
@@ -1121,7 +1116,7 @@
 						color: #fff;
 						font-size: 0.6vw;
 						margin-top: 1.5vh;
-						margin-left: 1.5vw;
+						margin-left: 2vw;
 						display: inline-flex;
 						align-items: center;
 
