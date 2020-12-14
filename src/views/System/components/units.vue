@@ -32,7 +32,7 @@
                 :title="title"
                 :visible.sync="isCreateShow"
                 :close-on-click-modal="false"
-                width="18.6%"
+                width="37.6%"
                 custom-class="create-wrapper"
                 @close="handClose"
         >
@@ -40,7 +40,7 @@
                 <li>
                     <span>名称</span>
                     <input type="text" v-model="name" placeholder="请输入内容" />
-                </li>
+                </li>				<li>				    <span>简称</span>				    <input type="text" v-model="name" placeholder="请输入内容" />				</li>				<li>				    <span>上一级</span>				    <input type="text" v-model="name" placeholder="请输入内容" />				</li>				<li>				    <span>地址</span>				    <input type="text" v-model="name" placeholder="请输入内容" />				</li>				<li>				    <span>电话</span>				    <input type="text" v-model="name" placeholder="请输入内容" />				</li>				<li>				    <span>邮箱</span>				    <input type="text" v-model="name" placeholder="请输入内容" />				</li>				<li>				    <span>网址</span>				    <input type="text" v-model="name" placeholder="请输入内容" />				</li>
                 <li>
                     <span>备注</span>
                     <textarea
@@ -257,11 +257,11 @@
         }
         .create-wrapper {
             .el-dialog__body {
-                ul {
+                ul {					display: flex;					flex-wrap: wrap;					font-size: 0.7vw;					margin-bottom: 1.8vh;
                     li {
                         display: flex;
                         flex-direction: column;
-                        margin-bottom: 1vw;
+                        margin-bottom: 1vw;						margin-right: 2vw;
                         width: 14.8vw;
                         span {
                             margin-bottom: 0.4vw;
