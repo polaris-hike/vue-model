@@ -119,14 +119,14 @@
               name: "",
               remarks: "",
               alarmList: [
-                  {
+                 /* {
                       name:'1',
                       remarks:'2'
                   },
                   {
                       name:'1',
                       remarks:'2'
-                  },
+                  },*/
               ],
               isCreateShow: false,
               isModify: false,
