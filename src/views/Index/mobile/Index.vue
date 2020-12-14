@@ -415,10 +415,11 @@
         methods: {
             getNumList(){
                 this.$get('/api/v1/number').then(res=>{
-                    this.numList[0].num = res.data.count
-                    this.numList[1].num = res.data.fault
-                    this.numList[2].num = res.data.stop
-                    this.numList[3].num = res.data.normal
+                    this.numList[0].num = res.data.count;
+                    this.numList[1].num = res.data.normal;
+                    this.numList[2].num = res.data.fault;
+                    this.numList[3].num = res.data.callThePolice;
+                    this.numList[4].num = res.data.stop;
                 })
             },
             touchend(e) {

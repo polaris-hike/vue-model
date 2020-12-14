@@ -155,8 +155,13 @@ export default {
           role_id: this.role,
           status: this.status,
         }).then((res) => {
-          this.isCreateShow = false;
-          this.getUserData();
+            this.isCreateShow = false;
+            this.getUserData();
+        }).catch(err=>{
+          console.log(err.response);
+          if(err.response) {
+            this.$message.error(err.response.data.message)
+          }
         });
       } else {
         this.changeUserInfo();
