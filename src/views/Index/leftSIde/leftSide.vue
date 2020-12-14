@@ -54,10 +54,10 @@
                         name: '消防栓数量',
                         img: require('@/assets/index/1.png'),
                         num: 0,
-                    },
+                    },					{					    name: '正常数量',					    img: require('@/assets/index/1.png'),					    num: 0,					},
                     {
                         name:'离线数量',
-                        img: require('@/assets/index/4.png'),
+                        img: require('@/assets/index/3.png'),
                         num: 0,
                     },
                     {
@@ -70,11 +70,7 @@
                         img: require('@/assets/index/4.png'),
                         num: 0,
                     },
-                    {
-                        name: '正常数量',
-                        img: require('@/assets/index/1.png'),
-                        num: 0,
-                    }
+                   
                 ],
                 warningList: []
             };
@@ -101,9 +97,9 @@
           getNumList(){
             this.$get('/api/v1/number').then(res=>{
               this.numList[0].num = res.data.count
-              this.numList[1].num = res.data.fault
-              this.numList[2].num = res.data.stop
-              this.numList[3].num = res.data.normal
+              this.numList[1].num = res.data.normal
+              this.numList[2].num = res.data.fault
+              this.numList[3].num = res.data.stop
             })
           },
           getHomeCallThePolice(){

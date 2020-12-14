@@ -83,7 +83,7 @@
 			<div class="confirm" @click="setParams">确定</div>
 		</el-dialog>
 		<!-- 新建 -->
-		<el-dialog :close-on-click-modal="false" :title="title" :visible.sync="isCreateShow" width="35.78%" custom-class="create-wrapper" @close="handClose">
+		<el-dialog :close-on-click-modal="false" :title="title" :visible.sync="isCreateShow" width="37.78%" custom-class="create-wrapper" @close="handClose">
 			<ul>
 				<li>
 					<span>挂牌编号</span>
@@ -94,7 +94,7 @@
 					<input type="text" v-model.trim="sn" placeholder="请输入内容" >
 				</li>
 				<li>
-					<span>状态</span>
+					<span>设备状态</span>
 					<el-select popper-class="select" v-model="status" >
 						<el-option
 								v-for="item in statusList"
@@ -146,16 +146,16 @@
 					<input type="text" v-model.trim="responsible" placeholder="请输入内容" >
 				</li>
 				<li>
+					<span>详细地址</span>
+					<input type="text" v-model.trim="address" placeholder="请输入内容" >
+				</li>
+				<li>
 					<span>经度</span>
 					<input type="text" v-model.trim="longitude" placeholder="请输入内容" >
 				</li>
 				<li>
 					<span>维度</span>
 					<input type="text" v-model.trim="latitude" placeholder="请输入内容" >
-				</li>
-				<li>
-					<span>详细地址</span>
-					<input type="text" v-model.trim="address" placeholder="请输入内容" >
 				</li>
 				<div class="map" id="amap"></div>
 			</ul>
