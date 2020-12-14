@@ -10,7 +10,7 @@ Vue.use(VueTouch, {name: 'v-touch'})
 /*import VueAMap from 'vue-amap';
 Vue.use(VueAMap);*/
 import {
-  Switch, Pagination, Dialog, Transfer, Message, Select, Option,Checkbox,DatePicker,Alert
+  Switch, Pagination, Dialog, Transfer, Message, Select, Option,Checkbox,DatePicker,Alert,Popconfirm
 } from "element-ui";
 Vue.use(Switch);
 Vue.use(Pagination);
@@ -20,7 +20,7 @@ Vue.use(Select);
 Vue.use(Option);
 Vue.use(Checkbox);
 Vue.use(DatePicker);
-Vue.use(Alert);
+Vue.use(Alert);Vue.use(Popconfirm);
 /*VueAMap.initAMapApiLoader({
   // 高德的key
   key: '852b4331fa1629f5c4722b5cab98a8c6',
@@ -35,8 +35,13 @@ Vue.prototype.$get = get;
 Vue.prototype.$post = post;
 Vue.prototype.$put = put;
 Vue.prototype.$del = del;
-new Vue({
+let vm=new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app')
+router.beforeEach(((to, from, next) => {
+  if (!localStorage.getItem("token")) {	if (to.path !== '/login') {	  return next('/login')	}
+  }
+  next()  
+}))

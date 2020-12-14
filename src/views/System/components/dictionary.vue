@@ -10,8 +10,8 @@
                 <span>{{ item.name }}</span>
                 <span>{{ item.remarks }}</span>
                 <div class="operation">
-                    <div class="amend" @click="handleModifyClick(item)">修改</div>
-                    <div class="freeze" @click="deleteAlarm(item.id)">删除</div>
+                    <div class="amend" @click="handleModifyClick(item)">修改</div>					<el-popconfirm					  confirm-button-text='是的'					  cancel-button-text='取消'					  icon="el-icon-error"					  icon-color="red"					  title="确定删除吗？"								@confirm="deleteAlarm(item.id)"					>					<div class="freeze"slot="reference">删除</div>					</el-popconfirm>
+                    
                 </div>
             </li>
         </ul>

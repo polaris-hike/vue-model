@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '../router';
+import router from '../router';import {Message} from "element-ui";
 const http = axios.create({
   timeout: 180000,
   baseURL: 'http://testa.shenim.cn',
@@ -20,8 +20,7 @@ http.interceptors.response.use(
     return response;
   },
   error => {
-    if(JSON.stringify(error).indexOf('423') > 0){
-      router.push("/login")
+    if(JSON.stringify(error).indexOf('423') > 0){		router.push("/login");
     }
     return Promise.reject(error);
   });

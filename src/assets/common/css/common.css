@@ -24,5 +24,6 @@
 .slide-left-leave-active {
   opacity: 0;
   transform: translateX(-100%);
-}.el-alert{	background:rgba(0,0,0,0)!important}.el-dialog{	box-shadow:rgb(11, 234, 235) 0px 0px 8px inset;	border-top:1px solid #00ffff;	border-bottom:1px solid #00ffff}
-.el-dialog__body{	padding-right:0px;}
+}.el-alert{	background:rgba(0,0,0,0)!important}.el-dialog{	box-shadow:rgb(11, 234, 235) 0px 0px 18px inset;	border-top:1px solid #00ffff;	border-top:1px solid #00ffff}
+.el-popover{	box-sizing: border-box;	color:#fff;	border: 1px solid #00ffff;}
+.el-popconfirm{	box-sizing: border-box;	width:200px;	height:100px;	padding:20px 10px;	padding-bottom:10px;	background:#192a37;	outline: none!important;}.el-popconfirm:focus,.el-popover:focus{	border: 1px solid #00ffff;	outline: none;}.el-popconfirm__action{	margin-top:10px;}.el-popconfirm__action button{	cursor: pointer;}.el-popconfirm__action .el-button--primary{	background-color:#00a5a5;	border-width:0	}.el-button--primary:focus, .el-button--primary:hover{	background-color:#00a5a5;	border-width:0}.el-popover__reference{	outline: none;	cursor: pointer;}.el-popconfirm__action .el-button--text,.el-popconfirm__action .el-button--text:active{	color:#00a5a5;}

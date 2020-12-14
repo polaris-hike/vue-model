@@ -10,8 +10,8 @@
         <span>{{ item.id }}</span>
         <span>{{ item.name }}</span>
         <div class="operation" v-show="item.id && item.name">
-          <div class="amend" @click="handleModifyClick(item)">修改</div>
-          <div class="freeze" @click="deleteRole(item.id)">删除</div>
+          <div class="amend" @click="handleModifyClick(item)">修改</div>		  <el-popconfirm		    confirm-button-text='是的'		    cancel-button-text='取消'		    icon="el-icon-error"		    icon-color="red"		    title="确定删除吗？"			@confirm="deleteRole(item.id)"		  >
+          <div class="freeze" slot="reference">删除</div>		  </el-popconfirm>
         </div>
       </li>
     </ul>
