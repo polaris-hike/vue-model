@@ -1,25 +1,45 @@
 <template>
-    <div class="units">
+    <div class="dictionary">
         <header>
-            <span v-for="(item,index) in nameList" :key="index">{{item}}</span>
+            <span>名称</span>
+			<span>简称</span>
+			<span>上一级</span>
+			<span>Logo</span>
+			<span>照片</span>
+            <span>地址</span>
+			<span>电话</span>
+			<span>邮箱</span>
+			<span>网址</span>
+			<span>类型</span>
+			<span>备注</span>
+            <span>操作</span>
         </header>
         <ul class="userList-wrapper">
-            <li v-for="(item, index) in alarmList" :key="index">
+			<li>
+			    <span></span>
+				 <span></span>
+				  <span></span>
+				  <span></span>
+				   <span></span>
+				    <span></span>
+					<span></span>
+					 <span></span>
+					  <span></span>
+					  <span></span>
+					   <span></span>
+			    <div class="operation">
+			        <div class="amend">修改</div>
+			        <div class="freeze">删除</div>
+			    </div>
+			</li>
+            <!-- <li v-for="(item, index) in alarmList" :key="index">
                 <span>{{ item.name }}</span>
-                <span>{{ item.remarks }}</span>
-                <span>{{ item.remarks }}</span>
-                <span>{{ item.remarks }}</span>
-                <span>{{ item.remarks }}</span>
-                <span>{{ item.remarks }}</span>
-                <span>{{ item.remarks }}</span>
-                <span>{{ item.remarks }}</span>
-                <span>{{ item.remarks }}</span>
                 <span>{{ item.remarks }}</span>
                 <div class="operation">
                     <div class="amend" @click="handleModifyClick(item)">修改</div>
                     <div class="freeze" @click="deleteAlarm(item.id)">删除</div>
                 </div>
-            </li>
+            </li> -->
         </ul>
         <div @click="handleCreateClick" class="create">+ 新建</div>
         <div class="pagination">
@@ -38,40 +58,39 @@
                 :title="title"
                 :visible.sync="isCreateShow"
                 :close-on-click-modal="false"
-                width="30%"
-                top="2vh"
+                width="37.6%"
                 custom-class="create-wrapper"
                 @close="handClose"
         >
             <ul>
                 <li>
-                    <span>名称:</span>
+                    <span>名称</span>
                     <input type="text" v-model="name" placeholder="请输入内容" />
                 </li>
-                <li>
-                    <span>简称:</span>
-                    <input type="text" v-model="name" placeholder="请输入内容" />
-                </li>
-                <li>
-                    <span>地址:</span>
-                    <input type="text" v-model="name" placeholder="请输入内容" />
-                </li>
-                <li>
-                    <span>电话:</span>
-                    <input type="text" v-model="name" placeholder="请输入内容" />
-                </li>
-                <li>
-                    <span>邮箱:</span>
-                    <input type="text" v-model="name" placeholder="请输入内容" />
-                </li>
-                <li>
-                    <span>网址:</span>
-                    <input type="text" v-model="name" placeholder="请输入内容" />
-                </li>
-                <li>
-                    <span>排序:</span>
-                    <input type="text" v-model="name" placeholder="请输入内容" />
-                </li>
+				<li>
+				    <span>简称</span>
+				    <input type="text" v-model="name" placeholder="请输入内容" />
+				</li>
+				<li>
+				    <span>上一级</span>
+				    <input type="text" v-model="name" placeholder="请输入内容" />
+				</li>
+				<li>
+				    <span>地址</span>
+				    <input type="text" v-model="name" placeholder="请输入内容" />
+				</li>
+				<li>
+				    <span>电话</span>
+				    <input type="text" v-model="name" placeholder="请输入内容" />
+				</li>
+				<li>
+				    <span>邮箱</span>
+				    <input type="text" v-model="name" placeholder="请输入内容" />
+				</li>
+				<li>
+				    <span>网址</span>
+				    <input type="text" v-model="name" placeholder="请输入内容" />
+				</li>
                 <li>
                     <span>备注</span>
                     <textarea
@@ -81,24 +100,6 @@
                             cols="30"
                             rows="10"
                     ></textarea>
-                </li>
-                <li>
-                    <span>logo</span>
-                    <div class="input-wrapper">
-                        <input class="file" type="file" @change="getFile($event)" />
-                        <div class="mask">
-                            <img src="@/assets/device/add.png" alt="">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <span>照片</span>
-                    <div class="input-wrapper">
-                        <input class="file" type="file" @change="getFile($event)" />
-                        <div class="mask">
-                            <img src="@/assets/device/add.png" alt="">
-                        </div>
-                    </div>
                 </li>
             </ul>
             <div class="confirm" @click="createAlarm">确定</div>
@@ -111,7 +112,6 @@
     name: "units",
       data() {
           return {
-              nameList:['名称','logo','照片','简称','地址','电话','邮箱','网址','排序','备注','操作'],
               pageSize: 15,
               total: 0,
               currentPage: 1,
@@ -119,43 +119,23 @@
               name: "",
               remarks: "",
               alarmList: [
-                 /* {
+                  {
                       name:'1',
                       remarks:'2'
                   },
                   {
                       name:'1',
                       remarks:'2'
-                  },*/
+                  },
               ],
               isCreateShow: false,
               isModify: false,
               canSendAddData: true,
               currentId: "",
               canDelete: true,
-              addArr: [],
           };
       },
       methods: {
-          getFile(event) {
-              var file = event.target.files;
-              for (var i = 0; i < file.length; i++) {
-                  //    上传类型判断
-                  var imgName = file[i].name;
-                  var idx = imgName.lastIndexOf(".");
-                  if (idx !== -1) {
-                      var ext = imgName.substr(idx + 1).toUpperCase();
-                      ext = ext.toLowerCase();
-                      if (ext !== 'pdf' && ext !== 'doc' && ext !== 'docx') {
-
-                      } else {
-                          this.addArr.push(file[i]);
-                      }
-                  } else {
-
-                  }
-              }
-          },
           handleModifyClick(item) {
               this.isModify = true;
               this.isCreateShow = true;
@@ -241,7 +221,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .units {
+    .dictionary {
         position: relative;
         padding: 8.7vh 5.7vw 3vh 5.8vw;
         > header {
@@ -325,77 +305,53 @@
             left: 50%;
             transform: translateX(-50%);
         }
-        ::v-deep.el-dialog__wrapper {
-            .create-wrapper {
-                .el-dialog__body {
-                    //padding: 0 5vw;
-                    ul {
-                        li {
-                            display: flex;
-                            align-items: center;
-                            margin-bottom: 1vw;
-                            span {
-                                margin-bottom: 0.4vw;
-                                margin-right: 1vw;
-                                color:#fff;
-                            }
-                            input {
-                                width: 20vw;
-                                height: 3.7vh;
-                                padding-left: 0.6vw;
-                                color: #fff;
-                                background: #172f3b;
-                                border: 1px solid #134a55;
-                                outline: none;
-                            }
-                            textarea {
-                                width: 20vw;
-                                height: 10vh;
-                                color: #fff;
-                                background: #172f3b;
-                                border: 1px solid #134a55;
-                                padding-left: 0.6vw;
-                                outline: none;
-                            }
-                            .input-wrapper {
-                                width: 20vw;
-                                height: 6vw;
-                                position: relative;
-                                border: 1px solid #1e6f85;
-
-                                input {
-                                    opacity: 0;
-                                    width: 100%;
-                                    height: 100%;
-                                    position: absolute;
-                                    left: 0;
-                                    cursor: pointer;
-                                }
-
-                                .mask {
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    width: 100%;
-                                    height: 100%;
-                                }
-                            }
+        .create-wrapper {
+            .el-dialog__body {
+                ul {
+					display: flex;
+					flex-wrap: wrap;
+					font-size: 0.7vw;
+					margin-bottom: 1.8vh;
+                    li {
+                        display: flex;
+                        flex-direction: column;
+                        margin-bottom: 1vw;
+						margin-right: 2vw;
+                        width: 14.8vw;
+                        span {
+                            margin-bottom: 0.4vw;
+                            color:#fff;
+                        }
+                        input {
+                            width: 14.8vw;
+                            height: 3.7vh;
+                            padding-left: 0.6vw;
+                            color: #fff;
+                            background: #172f3b;
+                            border: 1px solid #134a55;
+                            outline: none;
+                        }
+                        textarea {
+                            color: #fff;
+                            background: #172f3b;
+                            border: 1px solid #134a55;
+                            padding-left: 0.6vw;
+                            outline: none;
                         }
                     }
-                    .confirm {
-                        width: 4.7vw;
-                        height: 1.7vw;
-                        margin: 0 auto;
-                        background: #1e4d70;
-                        border-radius: 0.1vw;
-                        text-align: center;
-                        line-height: 1.7vw;
-                        cursor: pointer;
-                        color: #fff;
-                    }
+                }
+                .confirm {
+                    width: 4.7vw;
+                    height: 1.7vw;
+                    margin: 0 auto;
+                    background: #1e4d70;
+                    border-radius: 0.1vw;
+                    text-align: center;
+                    line-height: 1.7vw;
+                    cursor: pointer;
+                    color: #fff;
                 }
             }
-
         }
     }
 </style>
