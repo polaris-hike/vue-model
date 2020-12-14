@@ -94,7 +94,7 @@
 					<input type="text" v-model.trim="sn" placeholder="请输入内容" >
 				</li>
 				<li>
-					<span>状态</span>
+					<span>设备状态</span>
 					<el-select popper-class="select" v-model="status" >
 						<el-option
 								v-for="item in statusList"
