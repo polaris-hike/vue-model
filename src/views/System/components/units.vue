@@ -17,6 +17,8 @@
         <table-component
           v-for="item in data1"
           :list="item"
+          @handleDelete="handleDelete"
+          @modify="modify"
         ></table-component>
        <!-- <div class="operation">
           <div class="amend">修改</div>
@@ -202,6 +204,13 @@ export default {
     };
   },
   methods: {
+    modify(list){
+      console.log(list);
+      this.isModify = true;
+      this.isCreateShow = true;
+      this.title = "修改";
+      this.currentId = list.id;
+    },
     handleModifyClick(item) {
       this.isModify = true;
       this.isCreateShow = true;
@@ -217,7 +226,7 @@ export default {
       this.remarks = "";
     },
     modifyAlarm() {
-      this.$put("/api/v1/alarmSystem", {
+      this.$put("/api/v1/company", {
         id: this.currentId,
         name: this.name,
         remarks: this.remarks
@@ -226,11 +235,11 @@ export default {
         this.clearInput();
       });
     },
-    deleteAlarm(id) {
+    handleDelete(list) {
       if (!this.canDelete) return;
       this.canDelete = false;
-      this.$del("/api/v1/alarmSystem", {
-        id
+      this.$del("/api/v1/company", {
+        id:list.id
       })
         .then(res => {
           this.canDelete = true;
@@ -252,7 +261,7 @@ export default {
       } else {
         if (!this.canSendAddData) return;
         this.canSendAddData = false;
-        this.$post("/api/v1/alarmSystem", {
+        this.$post("/api/v1/company", {
           name: this.name,
           remarks: this.remarks
         })
@@ -268,12 +277,12 @@ export default {
     },
     handClose() {},
     getAlarmListData(page) {
-      let url = "/api/v1/alarmSystem";
+      let url = "/api/v1/company";
       if (page) {
         url = url + `?page=${page}`;
       }
       this.$get(url).then(res => {
-        this.alarmList = res.data;
+        this.data1 = res.data;
         this.total = res.meta.total;
         this.currentPage = res.meta.current_page;
         this.pageSize = res.meta.per_page;
@@ -281,7 +290,7 @@ export default {
     }
   },
   mounted() {
-    //this.getAlarmListData();
+    this.getAlarmListData();
   }
 };
 </script>

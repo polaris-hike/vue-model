@@ -63,9 +63,9 @@
                             <div class="list"
                                  v-for="(list,index) in warningList"
                                  :key="index">
-                                <span>{{list.id}}</span>
-                                <span>{{list.desc}}</span>
-                                <span>{{list.time}}</span>
+                                <span>{{list.listing_number}}</span>
+                                <span>{{list.describe}}</span>
+                                <span>{{list.created_at}}</span>
                                 <span v-if="list.state ===1">未处理</span>
                                 <span v-if="list.state ===2">已处理</span>
                             </div>
@@ -89,10 +89,10 @@
                             <div :key="index"
                                  class="list"
                                  v-for="(list,index) in errorList">
-                                <span>{{list.id}}</span>
-                                <span>{{list.desc}}</span>
-                                <span>{{list.address}}</span>
-                                <span>{{list.contact}}</span>
+                                <span>{{ list.listing_number }}</span>
+                                <span>{{ list.describe }}</span>
+                                <span>{{ list.address }}</span>
+                                <span>{{ list.name }}</span>
                             </div>
                         </vueSeamless>
                     </div>
@@ -138,10 +138,10 @@
                             <div :key="index"
                                  class="list"
                                  v-for="(list,index) in errorList">
-                                <span>{{list.id}}</span>
-                                <span>{{list.desc}}</span>
-                                <span>{{list.address}}</span>
-                                <span>{{list.contact}}</span>
+                                <span>{{ list.listing_number }}</span>
+                                <span>{{ list.describe }}</span>
+                                <span>{{ list.address }}</span>
+                                <span>{{ list.name }}</span>
                             </div>
                         </div>
                         <div class="pagination">
@@ -412,8 +412,21 @@
         },
         mounted() {
             this.getNumList();
+          this.getHomeCallThePolice();
+          this.getHomeFault()
         },
         methods: {
+          getHomeFault(){
+            this.$get('/api/v1/homeFault').then(res=>{
+              this.errorList = res.data
+              console.log(this.errorList);
+            })
+          },
+          getHomeCallThePolice(){
+            this.$get('/api/v1/homeCallThePolice').then(res=>{
+              this.warningList = res.data
+            })
+          },
             getNumList(){
                 this.$get('/api/v1/number').then(res=>{
                     this.numList[0].num = res.data.count;

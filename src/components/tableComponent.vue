@@ -3,33 +3,35 @@
     <div class="tem-p">
       <div><img src="@/assets/index/down.png" alt=""> <span>{{ list.name }}</span></div>
       <div>
-        <span>{{ list.energyone }}</span>
+        <span>{{ list.short_name }}</span>
       </div>
       <div>
-        <span>{{ list.energytwo }}</span>
+        <span>{{ list.address }}</span>
       </div>
       <div>
-        <span>{{ list.energythree }}</span>
+        <span>{{ list.phone }}</span>
       </div>
       <div>
-        <span>{{ list.huanRatio }}</span>
+        <span>{{ list.email }}</span>
       </div>
       <div>
-        <span>{{ list.tongRatio }}</span>
+        <span>{{ list.website }}</span>
       </div>
       <div>
-        <span>{{ list.tongRatio }}</span>
+        <span>{{ list.remark }}</span>
       </div>
        <div class="operation">
-         <div class="amend">修改</div>
-         <div class="freeze">删除</div>
+         <div class="amend" @click="modify(list)">修改</div>
+         <div class="freeze" @click="handleDelete(list)">删除</div>
        </div>
     </div>
     <div class="tem-c">
       <!-- 子组件 -->
       <table-component
-        v-for="itemc in list.child"
+        v-for="itemc in list.children"
         :list="itemc"
+        @handleDelete="handleDelete"
+        @modify="modify"
       ></table-component>
     </div>
   </div>
@@ -47,6 +49,12 @@ export default {
     }
   },
   methods: {
+    handleDelete(list){
+      this.$emit('handleDelete',list)
+    },
+    modify(list){
+      this.$emit('modify',list)
+    },
     /* 展开折叠操作 */
     toggleClick(event) {
       event.stopPropagation(); //阻止冒泡
