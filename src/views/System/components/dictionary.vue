@@ -54,6 +54,7 @@
                 <li>
                     <span>备注</span>
                     <textarea
+                            placeholder="请输入内容"
                             name=""
                             v-model="remark"
                             id=""
@@ -151,7 +152,10 @@
                       });
               }
           },
-          handClose() {},
+          handClose() {
+              this.name = ''
+              this.remark =''
+          },
           getAlarmListData(page) {
               let url = "/api/v1/dictionary";
               if (page) {

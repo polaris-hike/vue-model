@@ -57,42 +57,62 @@
       <ul>
         <li>
           <span>名称</span>
-          <input type="text" v-model="name" placeholder="请输入内容" />
+          <input type="text" v-model="unitObj.name" placeholder="请输入内容" />
         </li>
         <li>
           <span>简称</span>
-          <input type="text" v-model="name" placeholder="请输入内容" />
-        </li>
-        <li>
-          <span>上一级</span>
-          <input type="text" v-model="name" placeholder="请输入内容" />
+          <input type="text" v-model="unitObj.short_name" placeholder="请输入内容" />
         </li>
         <li>
           <span>地址</span>
-          <input type="text" v-model="name" placeholder="请输入内容" />
+          <input type="text" v-model="unitObj.address" placeholder="请输入内容" />
         </li>
         <li>
           <span>电话</span>
-          <input type="text" v-model="name" placeholder="请输入内容" />
+          <input type="text" v-model="unitObj.phone" placeholder="请输入内容" />
         </li>
         <li>
           <span>邮箱</span>
-          <input type="text" v-model="name" placeholder="请输入内容" />
+          <input type="text" v-model="unitObj.email" placeholder="请输入内容" />
         </li>
         <li>
           <span>网址</span>
-          <input type="text" v-model="name" placeholder="请输入内容" />
+          <input type="text" v-model="unitObj.website" placeholder="请输入内容" />
+        </li>
+        <li>
+          <span>排序</span>
+          <input type="text" v-model="unitObj.sort" placeholder="请输入内容" />
         </li>
         <li>
           <span>备注</span>
           <textarea
-            name=""
-            v-model="remarks"
-            id=""
-            cols="30"
-            rows="10"
+                  name=""
+                  v-model="unitObj.remark"
+                  id=""
+                  cols="30"
+                  rows="10"
+                  placeholder="请输入内容"
           ></textarea>
         </li>
+        <li>
+          <span>logo</span>
+          <div class="input-wrapper">
+            <input class="file" type="file" @change="getFile($event)" />
+            <div class="mask">
+              <img src="@/assets/device/add.png" alt="">
+            </div>
+          </div>
+        </li>
+        <li>
+          <span>照片</span>
+          <div class="input-wrapper">
+            <input class="file" type="file" @change="getFile($event)" />
+            <div class="mask">
+              <img src="@/assets/device/add.png" alt="">
+            </div>
+          </div>
+        </li>
+
       </ul>
       <div class="confirm" @click="createAlarm">确定</div>
     </el-dialog>
@@ -104,82 +124,7 @@ export default {
   name: "units",
   data() {
     return {
-      data1: [
-        {
-          name: "总能耗",
-          number: "0",
-          energyone: 14410,
-          energytwo: 1230,
-          energythree: 1230,
-          huanRatio: -36.8,
-          tongRatio: 148.5,
-          child: [
-            {
-              name: "租户电耗",
-              number: "1",
-              energyone: 14410,
-              energytwo: 1230,
-              energythree: 1230,
-              huanRatio: -36.8,
-              tongRatio: 148.5,
-              child: []
-            },
-            {
-              name: "公共用电",
-              number: "2",
-              energyone: 14410,
-              energytwo: 1230,
-              energythree: 1230,
-              huanRatio: -36.8,
-              tongRatio: 148.5,
-              child: [
-                {
-                  name: "暖通空调",
-                  number: "2.1",
-                  energyone: 14410,
-                  energytwo: 1230,
-                  energythree: 1230,
-                  huanRatio: -36.8,
-                  tongRatio: 148.5,
-                  child: [
-                    {
-                      name: "冷站",
-                      number: "2.1.1",
-                      energyone: 14410,
-                      energytwo: 1230,
-                      energythree: 1230,
-                      huanRatio: -36.8,
-                      tongRatio: 148.5,
-                      child: [
-                        {
-                          name: "冷水机组",
-                          number: "2.1.1.1",
-                          energyone: 14410,
-                          energytwo: 1230,
-                          energythree: 1230,
-                          huanRatio: -36.8,
-                          tongRatio: 148.5,
-                          child: []
-                        }
-                      ]
-                    },
-                    {
-                      name: "热力站",
-                      number: "2.1.2",
-                      energyone: 14410,
-                      energytwo: 1230,
-                      energythree: 1230,
-                      huanRatio: -36.8,
-                      tongRatio: 148.5,
-                      child: []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      data1: [],
       pageSize: 15,
       total: 0,
       currentPage: 1,
@@ -200,24 +145,51 @@ export default {
       isModify: false,
       canSendAddData: true,
       currentId: "",
-      canDelete: true
+      canDelete: true,
+      unitObj:{
+        name:'',
+        short_name:'',
+        address:'',
+        phone:'',
+        email:'',
+        website:'',
+        logo:'',
+        photo:'',
+        sort:'',
+        remark:''
+      }
     };
   },
   methods: {
+    getFile(event) {
+      var file = event.target.files;
+      for (var i = 0; i < file.length; i++) {
+        //    上传类型判断
+        var imgName = file[i].name;
+        var idx = imgName.lastIndexOf(".");
+        if (idx !== -1) {
+          var ext = imgName.substr(idx + 1).toUpperCase();
+          ext = ext.toLowerCase();
+          if (ext !== 'pdf' && ext !== 'doc' && ext !== 'docx') {
+
+          } else {
+            this.addArr.push(file[i]);
+          }
+        } else {
+
+        }
+      }
+    },
     modify(list){
-      console.log(list);
+      for(let i in list){
+        if(i in this.unitObj){
+          this.unitObj[i] = list[i]
+        }
+      }
       this.isModify = true;
       this.isCreateShow = true;
       this.title = "修改";
       this.currentId = list.id;
-    },
-    handleModifyClick(item) {
-      this.isModify = true;
-      this.isCreateShow = true;
-      this.name = item.name;
-      this.remarks = item.remarks;
-      this.currentId = item.id;
-      this.title = "修改";
     },
     clearInput() {
       this.isCreateShow = false;
@@ -227,9 +199,8 @@ export default {
     },
     modifyAlarm() {
       this.$put("/api/v1/company", {
+        ...this.unitObj,
         id: this.currentId,
-        name: this.name,
-        remarks: this.remarks
       }).then(res => {
         this.getAlarmListData();
         this.clearInput();
@@ -275,13 +246,31 @@ export default {
           });
       }
     },
-    handClose() {},
+    handClose() {
+      for(let i in this.unitObj){
+        this.unitObj[i] = ''
+      }
+    },
+    setDataIsShow(data){
+      this.$set(data,'isChildrenShow',true)
+      if(data.children.length !== 0){
+        for(let i of data.children){
+          this.setDataIsShow(i)
+        }
+      }else{
+        return
+      }
+    },
     getAlarmListData(page) {
       let url = "/api/v1/company";
       if (page) {
         url = url + `?page=${page}`;
       }
       this.$get(url).then(res => {
+        for(let i of res.data){
+          this.setDataIsShow(i)
+        }
+        console.log(res.data);
         this.data1 = res.data;
         this.total = res.meta.total;
         this.currentPage = res.meta.current_page;
@@ -407,11 +396,35 @@ export default {
             outline: none;
           }
           textarea {
+            height: 9vh;
             color: #fff;
             background: #172f3b;
             border: 1px solid #134a55;
             padding-left: 0.6vw;
             outline: none;
+          }
+          .input-wrapper {
+            width: 14.8vw;
+            height: 6vw;
+            position: relative;
+            border: 1px solid #1e6f85;
+
+            input {
+              opacity: 0;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              left: 0;
+              cursor: pointer;
+            }
+
+            .mask {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              height: 100%;
+            }
           }
         }
       }

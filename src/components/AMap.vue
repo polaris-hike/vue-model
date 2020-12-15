@@ -251,84 +251,86 @@
                 })*/
                 this.$get('/api/v1/map').then(res=>{
                     console.log(res);
+                    const mapPoint = res.data.base
+
+                    const gridSize = 60
+                    var count = mapPoint.length;
+
+                    var _renderClusterMarker = function (context) {
+                        var factor = Math.pow(context.count / count, 1 / 18);
+                        var div = document.createElement('div');
+                        div.style.boxSizing='border-box';
+                        // div.style.backgroundColor = '#26a58f';
+                        var size = Math.round(50 + Math.pow(context.count / count, 1 / 4) * 20);
+                        div.style.width = div.style.height = size + 'px';
+                        // div.style.border = 'solid 5px #10353b';
+                        // div.style.border = 'solid 10px red';
+                        div.style.borderRadius = size / 2 + 'px';
+                        div.innerHTML = context.count;
+                        div.style.lineHeight = size + 'px';
+                        div.style.color = '#fff';
+                        div.style.fontSize = '16px';
+                        div.style.textAlign = 'center';
+                        div.style.backgroundImage = "url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/dian1.gif')";//设置背景图的的地址
+                        div.style.backgroundRepeat = "no-repeat";//设置背景不平铺
+                        div.style.backgroundPosition = "center";//设置背景图的位置
+                        div.style.backgroundSize = "100%";//设置背景图像的尺寸
+                        div.style.className="mapstyle"
+                        context.marker.setOffset(new AMap.Pixel(-size / 2, -size / 2));
+                        context.marker.setContent(div)
+                    };
+                    var _renderMarker = function (context) {
+                        var content
+                        if (context.data[0].id === '0') {
+                            content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/normal.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
+                            // content = '<div style="background-color: hsla(180, 100%, 50%, 0.3); height: 18px; width: 18px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 3px;"></div>';
+                        }
+                        if (context.data[0].id === '1') {
+                            content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/error.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
+                        }
+                        if (context.data[0].id === '2') {
+                            content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/warn.png');background-size:100% 100%; height: 36px; width: 30px;"></div>`;
+                        }
+                        if (context.data[0].id === '3') {
+                            content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/stop.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
+                        }
+
+                        var offset = new AMap.Pixel(-9, -9);
+                        context.marker.setContent(content)
+                        context.marker.setOffset(offset)
+                    }
+
+
+                    cluster = new AMap.MarkerCluster(this.mapInstance, mapPoint, {
+                        gridSize, // 设置网格像素大小
+                        maxZoom: 15,
+                        minClusterSize:1,
+                        renderClusterMarker: _renderClusterMarker, // 自定义聚合点样式
+                        renderMarker: _renderMarker, // 自定义非聚合点样式
+                    });
+                    cluster.on('click',(e)=>{
+                        if(this.isMobile) return
+                        console.log(e);
+                        if(e.clusterData[0].id === '0'){
+                            this.currentBoxType = 'normal'
+                        }
+                        if(e.clusterData[0].id === '1'){
+                            this.currentBoxType = 'error'
+                        }
+                        if(e.clusterData[0].id === '2'){
+                            this.currentBoxType = 'warn'
+                        }
+                        if(e.clusterData[0].id === '3'){
+                            this.currentBoxType = 'stop'
+                        }
+                        this.boxShow = true;
+                        const left = Number(e.marker.dom.style.left.split('px')[0])
+                        const top = Number(e.marker.dom.style.top.split('px')[0])
+                        this.left = left + 150+'px'
+                        this.top = top-50+'px'
+                    })
                 })
 
-                const gridSize = 60
-                var count = shenzhen1.length;
-
-                var _renderClusterMarker = function (context) {
-                    var factor = Math.pow(context.count / count, 1 / 18);
-                    var div = document.createElement('div');
-                    div.style.boxSizing='border-box';
-                    // div.style.backgroundColor = '#26a58f';
-                    var size = Math.round(50 + Math.pow(context.count / count, 1 / 4) * 20);
-                    div.style.width = div.style.height = size + 'px';
-                    // div.style.border = 'solid 5px #10353b';
-                   // div.style.border = 'solid 10px red';
-                    div.style.borderRadius = size / 2 + 'px';
-                    div.innerHTML = context.count;
-                    div.style.lineHeight = size + 'px';
-                    div.style.color = '#fff';
-                    div.style.fontSize = '16px';
-                    div.style.textAlign = 'center';
-					div.style.backgroundImage = "url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/dian1.gif')";//设置背景图的的地址
-					div.style.backgroundRepeat = "no-repeat";//设置背景不平铺
-					div.style.backgroundPosition = "center";//设置背景图的位置
-					div.style.backgroundSize = "100%";//设置背景图像的尺寸
-					div.style.className="mapstyle"
-                    context.marker.setOffset(new AMap.Pixel(-size / 2, -size / 2));
-                    context.marker.setContent(div)
-                };
-                var _renderMarker = function (context) {
-                    var content
-                    if (context.data[0].id === '0') {
-                        content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/normal.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
-                        // content = '<div style="background-color: hsla(180, 100%, 50%, 0.3); height: 18px; width: 18px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 3px;"></div>';
-                    }
-                    if (context.data[0].id === '1') {
-                        content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/error.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
-                    }
-                    if (context.data[0].id === '2') {
-                        content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/warn.png');background-size:100% 100%; height: 36px; width: 30px;"></div>`;
-                    }
-                    if (context.data[0].id === '3') {
-                        content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/stop.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
-                    }
-
-                    var offset = new AMap.Pixel(-9, -9);
-                    context.marker.setContent(content)
-                    context.marker.setOffset(offset)
-                }
-
-
-                cluster = new AMap.MarkerCluster(this.mapInstance, shenzhen1, {
-                    gridSize, // 设置网格像素大小
-                    maxZoom: 15,
-                    minClusterSize:1,
-                    renderClusterMarker: _renderClusterMarker, // 自定义聚合点样式
-                    renderMarker: _renderMarker, // 自定义非聚合点样式
-                });
-                cluster.on('click',(e)=>{
-                    if(this.isMobile) return
-                    console.log(e);
-                    if(e.clusterData[0].id === '0'){
-                        this.currentBoxType = 'normal'
-                    }
-                    if(e.clusterData[0].id === '1'){
-                        this.currentBoxType = 'error'
-                    }
-                    if(e.clusterData[0].id === '2'){
-                        this.currentBoxType = 'warn'
-                    }
-                    if(e.clusterData[0].id === '3'){
-                        this.currentBoxType = 'stop'
-                    }
-                    this.boxShow = true;
-                    const left = Number(e.marker.dom.style.left.split('px')[0])
-                    const top = Number(e.marker.dom.style.top.split('px')[0])
-                    this.left = left + 150+'px'
-                    this.top = top-50+'px'
-                })
             },
             initMap() {
                 AMapLoader.load({

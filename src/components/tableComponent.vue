@@ -1,7 +1,7 @@
 <template>
   <div class="tem">
     <div class="tem-p">
-      <div><img src="@/assets/index/down.png" alt=""> <span>{{ list.name }}</span></div>
+      <div @click="list.isChildrenShow = !list.isChildrenShow"><img src="@/assets/index/down.png" alt=""> <span>{{ list.name }}</span></div>
       <div>
         <span>{{ list.short_name }}</span>
       </div>
@@ -28,6 +28,7 @@
     <div class="tem-c">
       <!-- 子组件 -->
       <table-component
+              v-show="list.isChildrenShow"
         v-for="itemc in list.children"
         :list="itemc"
         @handleDelete="handleDelete"
@@ -41,40 +42,12 @@
 export default {
   name: "tableComponent",
   props: ["list"],
-  computed: {
-    //计算属性
-    isFolder() {
-      //判断数据有没有子集，此效果中暂没用到，有需要的可以看下具体使用方式
-      return this.list.child && this.list.child.length > 0;
-    }
-  },
   methods: {
     handleDelete(list){
       this.$emit('handleDelete',list)
     },
     modify(list){
       this.$emit('modify',list)
-    },
-    /* 展开折叠操作 */
-    toggleClick(event) {
-      event.stopPropagation(); //阻止冒泡
-      var _this = $(event.currentTarget); //点击的对象
-      if (
-        _this
-          .parent()
-          .next()
-          .is(":visible")
-      ) {
-        _this
-          .parent()
-          .next()
-          .slideUp();
-      } else {
-        _this
-          .parent()
-          .next()
-          .slideDown();
-      }
     }
   }
 };
@@ -99,8 +72,8 @@ export default {
   text-align: left;
   overflow-x: auto;
   img {
-    width: 0.5vw;
-    height: 0.5vw;
+    width: 1vw;
+    height: 1vw;
   }
   &::-webkit-scrollbar {/*滚动条整体样式*/
 
@@ -131,13 +104,8 @@ export default {
   }
 }
 
+
 .tem > .tem-c .tem-p > div:first-of-type {
-  padding-left: 30px;
-}
-.tem > .tem-c .tem-c .tem-p > div:first-of-type {
-  padding-left: 60px;
-}
-/*.tem > .tem-c .tem-p > div:first-of-type {
   padding-left: 30px;
 }
 .tem > .tem-c .tem-c .tem-p > div:first-of-type {
@@ -151,7 +119,7 @@ export default {
 }
 .tem > .tem-c .tem-c .tem-c .tem-c .tem-c .tem-p > div:first-of-type {
   padding-left: 150px;
-}*/
+}
 .lastChild {
   background: #f8f8f8;
 }
