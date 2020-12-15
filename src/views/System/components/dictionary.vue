@@ -8,9 +8,19 @@
         <ul class="userList-wrapper">
             <li v-for="(item, index) in alarmList" :key="index">
                 <span>{{ item.name }}</span>
-                <span>{{ item.remarks }}</span>
+                <span>{{ item.remark }}</span>
                 <div class="operation">
-                    <div class="amend" @click="handleModifyClick(item)">修改</div>					<el-popconfirm					  confirm-button-text='是的'					  cancel-button-text='取消'					  icon="el-icon-error"					  icon-color="red"					  title="确定删除吗？"								@confirm="deleteAlarm(item.id)"					>					<div class="freeze"slot="reference">删除</div>					</el-popconfirm>
+                    <div class="amend" @click="handleModifyClick(item)">修改</div>
+					<el-popconfirm
+					  confirm-button-text='是的'
+					  cancel-button-text='取消'
+					  icon="el-icon-error"
+					  icon-color="red"
+					  title="确定删除吗？"
+								@confirm="deleteAlarm(item.id)"
+					>
+					<div class="freeze"slot="reference">删除</div>
+					</el-popconfirm>
                     
                 </div>
             </li>
@@ -45,7 +55,7 @@
                     <span>备注</span>
                     <textarea
                             name=""
-                            v-model="remarks"
+                            v-model="remark"
                             id=""
                             cols="30"
                             rows="10"
@@ -67,17 +77,8 @@
               currentPage: 1,
               title: "新增",
               name: "",
-              remarks: "",
-              alarmList: [
-                  {
-                      name:'1',
-                      remarks:'2'
-                  },
-                  {
-                      name:'1',
-                      remarks:'2'
-                  },
-              ],
+              remark: "",
+              alarmList: [],
               isCreateShow: false,
               isModify: false,
               canSendAddData: true,
@@ -90,7 +91,7 @@
               this.isModify = true;
               this.isCreateShow = true;
               this.name = item.name;
-              this.remarks = item.remarks;
+              this.remark = item.remark;
               this.currentId = item.id;
               this.title='修改'
           },
@@ -98,13 +99,13 @@
               this.isCreateShow = false;
               this.isModify = false;
               this.name = "";
-              this.remarks = "";
+              this.remark = "";
           },
           modifyAlarm() {
-              this.$put("/api/v1/alarmSystem", {
+              this.$put("/api/v1/dictionary", {
                   id: this.currentId,
                   name: this.name,
-                  remarks: this.remarks,
+                  remark: this.remark,
               }).then((res) => {
                   this.getAlarmListData();
                   this.clearInput();
@@ -113,7 +114,7 @@
           deleteAlarm(id) {
               if (!this.canDelete) return;
               this.canDelete = false;
-              this.$del("/api/v1/alarmSystem", {
+              this.$del("/api/v1/dictionary", {
                   id,
               })
                   .then((res) => {
@@ -138,7 +139,7 @@
                   this.canSendAddData = false;
                   this.$post("/api/v1/alarmSystem", {
                       name: this.name,
-                      remarks: this.remarks,
+                      remark: this.remark,
                   })
                       .then((res) => {
                           this.canSendAddData = true;
@@ -152,7 +153,7 @@
           },
           handClose() {},
           getAlarmListData(page) {
-              let url = "/api/v1/alarmSystem";
+              let url = "/api/v1/dictionary";
               if (page) {
                   url = url + `?page=${page}`;
               }
@@ -165,7 +166,7 @@
           },
       },
       mounted() {
-          //this.getAlarmListData();
+          this.getAlarmListData();
       },
   }
 </script>
