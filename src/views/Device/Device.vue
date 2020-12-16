@@ -252,12 +252,20 @@
         districtArr: [],
         statusList: [
           {
-            name: 0,
+            name: '在线',
             id: 0
           },
           {
-            name: 1,
+            name: '离线',
             id: 1
+          },
+          {
+            name: '停用',
+            id: 2
+          },
+          {
+            name: '报警',
+            id: 3
           },
         ],
         createList: [
@@ -429,12 +437,7 @@
           this.district = '';
         }
       },
-      getStatusList() {
-        this.$get('/api/v1/equipmentStatus').then(res => {
-        });
-      },
       handleCreateClick() {
-        this.getStatusList();
         this.isCreateShow = true;
         AMapLoader.load({
           'key': '852b4331fa1629f5c4722b5cab98a8c6', // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -566,15 +569,9 @@
       handClose() {
         this.title = '新建';
         this.isModify = false;
-        this.createList[0].value = '';
-        this.createList[1].value = '';
-        this.createList[2].value = '';
-        this.createList[3].value = '';
-        this.createList[4].value = '';
-        this.createList[5].value = '';
-        this.createList[6].value = '';
-        this.createList[7].value = '';
-        this.createList[8].value = '';
+        for (let i in this.createObj) {
+          this.createObj[i] = '';
+        }
       },
       handleModifyClick(item) {
         this.currentModifyId = item.id;
