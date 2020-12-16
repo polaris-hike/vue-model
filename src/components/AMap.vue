@@ -99,12 +99,6 @@
         }
 
     ];
-    const secondPoint = [
-        {
-            name: "会展中心",
-            value: [114.05798, 22.5282, 270],
-        },
-    ];
     const img = {
         error: require("@/assets/index/error.png"),
         warn: require("@/assets/index/warn.png"),
@@ -250,10 +244,17 @@
                     console.log(e);
                 })*/
                 this.$get('/api/v1/map').then(res=>{
-                    console.log(res);
+                  res.data.base.forEach(item=>{
+                    item.lnglat = item.lnglat.map(i=>{
+                      if(i){return Number(i)}
+                    })
+                  })
+                  res.data.base.push( {
+                    id:'0',
+                    lnglat: [113.889342,22.561878]
+                  },)
                     const mapPoint = res.data.base
-
-                    const gridSize = 60
+                  const gridSize = 60
                     var count = mapPoint.length;
 
                     var _renderClusterMarker = function (context) {
@@ -281,17 +282,17 @@
                     };
                     var _renderMarker = function (context) {
                         var content
-                        if (context.data[0].id === '0') {
+                      if (context.data[0].isonline == '0') {
                             content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/normal.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
                             // content = '<div style="background-color: hsla(180, 100%, 50%, 0.3); height: 18px; width: 18px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 3px;"></div>';
                         }
-                        if (context.data[0].id === '1') {
+                        if (context.data[0].isonline == '1') {
                             content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/error.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
                         }
-                        if (context.data[0].id === '2') {
+                        if (context.data[0].isonline == '2') {
                             content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/warn.png');background-size:100% 100%; height: 36px; width: 30px;"></div>`;
                         }
-                        if (context.data[0].id === '3') {
+                        if (context.data[0].isonline == '3') {
                             content = `<div style="background-image: url('https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/stop.png');background-size:100% 100%;  height: 36px; width: 30px;"></div>`;
                         }
 
@@ -310,17 +311,16 @@
                     });
                     cluster.on('click',(e)=>{
                         if(this.isMobile) return
-                        console.log(e);
-                        if(e.clusterData[0].id === '0'){
+                        if(e.clusterData[0].isonline == '0'){
                             this.currentBoxType = 'normal'
                         }
-                        if(e.clusterData[0].id === '1'){
+                        if(e.clusterData[0].isonline == '1'){
                             this.currentBoxType = 'error'
                         }
-                        if(e.clusterData[0].id === '2'){
+                        if(e.clusterData[0].isonline == '2'){
                             this.currentBoxType = 'warn'
                         }
-                        if(e.clusterData[0].id === '3'){
+                        if(e.clusterData[0].isonline == '3'){
                             this.currentBoxType = 'stop'
                         }
                         this.boxShow = true;
@@ -330,7 +330,6 @@
                         this.top = top-50+'px'
                     })
                 })
-
             },
             initMap() {
                 AMapLoader.load({

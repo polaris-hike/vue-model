@@ -81,50 +81,7 @@ export default {
   },
   data() {
     return {
-      warningList: [
-        {
-          id: "wfg957",
-          desc: "水压异常",
-          address: "福田区XX路15",
-          contact: "王长贵",
-        },
-        {
-          id: "wfg957",
-          desc: "水压异常",
-          address: "福田区XX路15",
-          contact: "王长贵",
-        },
-        {
-          id: "wfg957",
-          desc: "水压异常",
-          address: "福田区XX路15",
-          contact: "王长贵",
-        },
-        {
-          id: "wfg957",
-          desc: "水压异常",
-          address: "福田区XX路15",
-          contact: "王长贵",
-        },
-        {
-          id: "wfg957",
-          desc: "水压异常",
-          address: "福田区XX路15",
-          contact: "王长贵",
-        },
-        {
-          id: "wfg957",
-          desc: "水压异常",
-          address: "福田区XX路15",
-          contact: "王长贵",
-        },
-        {
-          id: "wfg957",
-          desc: "水压异常",
-          address: "福田区XX路15",
-          contact: "王长贵",
-        },
-      ],
+      warningList: [],
       lineOptions,
       pieOption,
       legendList: [
@@ -144,26 +101,7 @@ export default {
           value: 89,
         },
       ],
-      peopleList: [
-        {
-          img: require("@/assets/index/people.png"),
-          name: "王长春",
-          address: "福田区XX路150号西XXXXX",
-          phone: 13826621882,
-        },
-        {
-          img: require("@/assets/index/people.png"),
-          name: "王长春",
-          address: "福田区XX路150号西XXXXX",
-          phone: 13826621882,
-        },
-        {
-          img: require("@/assets/index/people.png"),
-          name: "王长春",
-          address: "福田区XX路150号西XXXXX",
-          phone: 13826621882,
-        },
-      ],
+      peopleList: [],
     };
   },
   computed: {
@@ -193,7 +131,18 @@ export default {
     },
     getProportionAlarms(){
       this.$get('/api/v1/proportionAlarms').then(res=>{
-        console.log(res);
+        let total = 0
+        res.data.reduce((totalPrice, item) => totalPrice + item.value, 0)
+        res.data.forEach((item,index)=>{
+          this.pieOption.series[0].data[index].name = item.name
+          this.pieOption.series[0].data[index].value = item.value
+          this.pieOption.series[1].data[index].name = item.name
+          this.pieOption.series[2].data[index].value = item.value
+          const percent = (item.value/total)*100 + '%'
+          this.legendList[index].name = item.name
+          this.legendList[index].value = item.value
+          this.legendList[index].percent = percent
+        })
       })
     },
     getHomeFault(){
