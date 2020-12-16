@@ -97,7 +97,8 @@
         <li>
           <span>logo</span>
           <div class="input-wrapper">
-            <input class="file" type="file" @change="getFile($event)" />
+            <input class="file" type="file" @change="getFile($event,'logo')" />
+            <img v-show="isLogoShow"  :src="'http://testa.shenim.cn/'+ unitObj.logo" alt="">
             <div class="mask">
               <img src="@/assets/device/add.png" alt="">
             </div>
@@ -106,13 +107,13 @@
         <li>
           <span>照片</span>
           <div class="input-wrapper">
-            <input class="file" type="file" @change="getFile($event)" />
+            <input  class="file" type="file" @change="getFile($event,'picture')" />
+            <img v-show="isPictureShow"  :src="'http://testa.shenim.cn/'+unitObj.photo" alt="">
             <div class="mask">
               <img src="@/assets/device/add.png" alt="">
             </div>
           </div>
         </li>
-
       </ul>
       <div class="confirm" @click="createAlarm">确定</div>
     </el-dialog>
@@ -124,6 +125,10 @@ export default {
   name: "units",
   data() {
     return {
+      isPictureShow:false,
+      isLogoShow:false,
+      logo:'',
+      picture:'',
       data1: [],
       pageSize: 15,
       total: 0,
@@ -161,24 +166,41 @@ export default {
     };
   },
   methods: {
-    getFile(event) {
-      var file = event.target.files;
-      for (var i = 0; i < file.length; i++) {
-        //    上传类型判断
-        var imgName = file[i].name;
-        var idx = imgName.lastIndexOf(".");
-        if (idx !== -1) {
-          var ext = imgName.substr(idx + 1).toUpperCase();
-          ext = ext.toLowerCase();
-          if (ext !== 'pdf' && ext !== 'doc' && ext !== 'docx') {
-
-          } else {
-            this.addArr.push(file[i]);
-          }
-        } else {
-
-        }
+    getFile(e,pictureType) {
+      e = e || window.event;
+      let files = e.target.files || e.dataTransfer.files;
+      this.createImage(files[0], files[0].type, files[0].name,pictureType);
+    },
+    createImage(file, type, name,pictureType){
+      const size = Math.floor(file.size / 1024);
+      const imgType = name.split('.').pop();
+      if (imgType !== 'jpg' && imgType !== 'gif' && imgType !== 'png') {
+        this.$message.error('图片仅支持JPG、PNG、GIF格式');
+        return
       }
+      if (imgType === 'gif' && size >= 1024) {
+        this.$message.error('请上传不超过1Mb的gif图片');
+        return
+      }
+      if ( (imgType !== 'jpg' || imgType !== 'png') && size >= 2048) {
+        this.$message.error('图片不能大于2MB');
+        return
+      }
+      const formData = new FormData()
+      formData.append('file', file);
+      this.$post('/api/v1/companyUploadImage', formData).then((res) => {
+        if (res.code === 200) {
+          if(pictureType === 'logo'){
+            this.isLogoShow = true
+            this.unitObj.logo = res.data.file_name
+          }else{
+            this.isPictureShow = true
+            this.unitObj.photo = res.data.file_name
+          }
+        }
+      }).catch(err=>{
+        console.log(err);
+      })
     },
     modify(list){
       for(let i in list){
@@ -233,8 +255,7 @@ export default {
         if (!this.canSendAddData) return;
         this.canSendAddData = false;
         this.$post("/api/v1/company", {
-          name: this.name,
-          remarks: this.remarks
+          ...this.unitObj
         })
           .then(res => {
             this.canSendAddData = true;
@@ -416,6 +437,14 @@ export default {
               position: absolute;
               left: 0;
               cursor: pointer;
+              z-index: 1;
+            }
+            >img {
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              left: 0;
+              z-index: 0;
             }
 
             .mask {
@@ -424,6 +453,8 @@ export default {
               justify-content: center;
               width: 100%;
               height: 100%;
+              img {
+              }
             }
           }
         }

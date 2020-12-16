@@ -69,11 +69,14 @@ export default {
   height: 100%;
 }
 .tem-p > div:first-of-type {
+  display: flex;
+  align-items: center;
   text-align: left;
   overflow-x: auto;
   img {
     width: 1vw;
     height: 1vw;
+    margin-right: 0.2vw;
   }
   &::-webkit-scrollbar {/*滚动条整体样式*/
 
