@@ -92,12 +92,20 @@ export default {
       status:'',
       statusList:[
         {
-          name:0,
-          id:0
+          name: '在线',
+          id: 0
         },
         {
-          name:1,
-          id:1
+          name: '离线',
+          id: 1
+        },
+        {
+          name: '停用',
+          id: 2
+        },
+        {
+          name: '报警',
+          id: 3
         },
       ],
     };
