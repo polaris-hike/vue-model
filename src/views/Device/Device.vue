@@ -23,13 +23,10 @@
                 <div class="state">
                     <div class="top">状态</div>
                     <div class="bottom">
-                        <span>停用</span>
                         <span>正常</span>
-                        <span>撞到</span>
-                        <span>非法用水</span>
-                        <span>水压异常</span>
-                        <span>电压异常</span>
-                        <span>事件时间</span>
+                        <span>停用</span>
+                        <span>离线</span>
+                        <span>报警</span>
                     </div>
                 </div>
                 <span class="people">责任人</span>
@@ -41,13 +38,10 @@
                     <span>{{ item.listing_number }}</span>
                     <span>{{ item.sn }}</span>
                     <span>{{ item.address }}</span>
-                    <span style="width: 5.5vw">{{ item.stopUse }}</span>
-                    <span style="width: 5.5vw">{{ item.normal }}</span>
-                    <span style="width: 5.5vw">{{ item.knockDown }}</span>
-                    <span style="width: 5.5vw">{{ item.illegalWaterUse }}</span>
-                    <span style="width: 5.5vw">{{ item.abnormalWaterPressure }}</span>
-                    <span style="width: 5.5vw">{{ item.abnormalVoltage }}</span>
-                    <span style="width: 6vw">{{ item.eventTime }}</span>
+                    <span style="width: 9.8vw">{{ item.normal }}</span>
+                    <span style="width: 9.8vw">{{ item.stopUse }}</span>
+                    <span style="width: 9.8vw">{{ item.knockDown }}</span>
+                    <span style="width: 9.8vw">{{ item.illegalWaterUse }}</span>
                     <span style="width: 6.8vw">{{ item.responsible }}1</span>
                     <span style="width: 6.8vw">{{ item.phone }}</span>
                     <div class="operation">

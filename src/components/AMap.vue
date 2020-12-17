@@ -50,7 +50,7 @@
                     sn:'AD321561',
                     status:"正常",
                     name:'李工',
-                    phone:'123456',
+                    phone:'',
                     city:'广东省深圳市南山区',
                     address:'南山区粤海街道100米左侧',
                 },
@@ -141,6 +141,26 @@
             this.mapInstance.destroy();
         },
         methods: {
+            getDeviceDetail(id){
+              console.log(id);
+              this.$get('/api/v1/equipmentInfo',{
+                id
+              }).then(res=>{
+                const data =res.data
+                console.log(data.province + data.city + data.area);
+                const city = data.province + data.city + data.area
+                this.boxInfo.listing_number = data.listing_number;
+                this.boxInfo.sn = data.sn;
+                this.boxInfo.status = data.status;
+                this.boxInfo.address = data.address;
+                this.boxInfo.city = city || ''  ;
+                this.boxInfo.name = data.responsible;
+                this.boxInfo.listing_number = data.listing_number;
+                console.log(res);
+              }).catch(err=>{
+                console.log(err);
+              })
+            },
             toDevice(){
                 this.$router.push('/device')
             },
@@ -237,6 +257,7 @@
                     });
                     cluster.on('click',(e)=>{
                         if(this.isMobile) return
+                        this.getDeviceDetail(e.clusterData[0].id)
                       if(e.clusterData[0].isonline === 0){
                             this.currentBoxType = 'normal'
                         }

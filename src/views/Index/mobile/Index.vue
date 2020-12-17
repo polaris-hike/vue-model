@@ -179,24 +179,24 @@
         },
         data() {
             return {
-                secondList: [
-                    {
-                        name: "正常",
-                        img: img.normal,
-                    },
-                    {
-                        name: "故障",
-                        img: img.error,
-                    },
-                    {
-                        name: "告警",
-                        img: img.warn,
-                    },
-                    {
-                        name: "停用",
-                        img: img.stop,
-                    },
-                ],
+              secondList: [
+                {
+                  name: "正常",
+                  img: img.normal,
+                },
+                {
+                  name: "离线",
+                  img: img.warn,
+                },
+                {
+                  name: "报警",
+                  img: img.error,
+                },
+                {
+                  name: "停用",
+                  img: img.stop,
+                },
+              ],
                 isSecondShow: false,
                 overflow: 'unset',
                 warningList: [
