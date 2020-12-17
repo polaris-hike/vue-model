@@ -62,11 +62,11 @@
                         img: img.normal,
                     },
                     {
-                        name: "故障",
+                        name: "离线",
                         img: img.warn,
                     },
                     {
-                        name: "告警",
+                        name: "报警",
                         img: img.error,
                     },
                     {
