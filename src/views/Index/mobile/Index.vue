@@ -101,7 +101,7 @@
         </main>
         <v-touch @swipeup="swipeup" @swipedown="swipedown">
             <main v-show="isSecondShow" :style="{bottom:bottom1+'vh'}">
-                <div class="second-wrapper" v-show="isSecondShow" >
+                <div class="second-wrapper"  >
                     <div class="list" v-for="(item, index) in secondList" :key="index">
                         <img :src="item.img" alt=""/>
                         <span>{{ item.name }}</span>
@@ -112,7 +112,7 @@
                     <ul>
                         <li v-for="(item,index) in percentList" :key="index">
                             <span>{{item.name}}:</span>
-                            <span>{{item.value}}</span>
+                            <span>{{mapPointDetail[item.key]}}</span>
                         </li>
                     </ul>
 
@@ -199,57 +199,7 @@
               ],
                 isSecondShow: false,
                 overflow: 'unset',
-                warningList: [
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-                    {
-                        id: 'wfg957',
-                        desc: '水压异常',
-                        time: '11/19 12:10',
-                        state: 1
-                    },
-
-                ],
+                warningList: [],
                 pieOption,
                 legendList: [
                     {
@@ -273,34 +223,42 @@
                 percentList: [
                     {
                         name: '非法用水',
+                        key:'status',
                         value: 'WG54991'
                     },
                     {
                         name: 'SN码',
+                        key:'sn',
                         value: 'WG54991'
                     },
                     {
                         name: '休眠周期',
+                        key:'sleep_cycle',
                         value: '20分钟'
                     },
                     {
                         name: '压力采集周期',
+                        key:'collection_cycle',
                         value: '20分钟'
                     },
                     {
                         name: '压力报警上限',
+                        key:'voltage_uper',
                         value: '10.00mpa'
                     },
                     {
                         name: '压力报警下限',
+                        key:'voltage_lower',
                         value: '10.00mpa'
                     },
                     {
                         name: '负责人',
+                        key:'responsible',
                         value: '10.00mpa'
                     },
                     {
                         name: '地址',
+                        key:'address',
                         value: '深圳高新区科苑南路综合服务楼'
                     },
                 ],
@@ -332,56 +290,7 @@
                     },
 
                 ],
-                errorList: [
-                    {
-                        id: "wfg957",
-                        desc: "水压异常",
-                        address: "福田区XX路15",
-                        contact: "王长贵",
-                    },
-                    {
-                        id: "wfg957",
-                        desc: "水压异常",
-                        address: "福田区XX路15",
-                        contact: "王长贵",
-                    },
-                    {
-                        id: "wfg957",
-                        desc: "水压异常",
-                        address: "福田区XX路15",
-                        contact: "王长贵",
-                    },
-                    {
-                        id: "wfg957",
-                        desc: "水压异常",
-                        address: "福田区XX路15",
-                        contact: "王长贵",
-                    },
-                    {
-                        id: "wfg957",
-                        desc: "水压异常",
-                        address: "福田区XX路15",
-                        contact: "王长贵",
-                    },
-                    {
-                        id: "wfg957",
-                        desc: "水压异常",
-                        address: "福田区XX路15",
-                        contact: "王长贵",
-                    },
-                    {
-                        id: "wfg957",
-                        desc: "水压异常",
-                        address: "福田区XX路15",
-                        contact: "王长贵",
-                    },
-                    {
-                        id: "wfg957",
-                        desc: "水压异常",
-                        address: "福田区XX路15",
-                        contact: "王长贵",
-                    },
-                ],
+                errorList: [],
                 startX: '',
                 startY: '',
                 moveEndX: '',
@@ -393,6 +302,12 @@
             }
         },
         computed: {
+            isMobileDetailShow(){
+                return this.$store.getters["getIsMobileDetailShow"];
+            },
+            mapPointDetail(){
+                return this.$store.getters["getMapPointDetail"];
+            },
             zoom() {
                 return this.$store.getters["getZoom"];
             },
@@ -493,8 +408,13 @@
         },
         watch: {
             zoom(val) {
-                console.log(val);
                 this.isSecondShow = val > 15;
+            },
+            isMobileDetailShow(val){
+                this.isSecondShow = true;
+                this.$nextTick(()=>{
+                    console.log(this.mapPointDetail);
+                })
             }
         }
     }

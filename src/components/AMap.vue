@@ -8,8 +8,8 @@
                 <span>{{ item.name }}</span>
             </div>
         </div>
-        <div class="box" :class="currentBoxType" v-show="boxShow" :style="{left,top}">
-            <div class="close" @click="boxShow = false">
+        <div class="box" :class="currentBoxType" v-show="boxShow && !isMobile" :style="{left,top}">
+            <div class="close" @click="boxShow = false,clearBoxInfo()">
                 <img src="@/assets/index/close.png" alt="">
             </div>
             <h1>消火栓信息</h1>
@@ -46,13 +46,13 @@
             return {
                 boxShow:false,
                 boxInfo:{
-                    listing_number:'AD321561',
-                    sn:'AD321561',
-                    status:"正常",
-                    name:'李工',
+                    listing_number:'',
+                    sn:'',
+                    status:"",
+                    name:'',
                     phone:'',
-                    city:'广东省深圳市南山区',
-                    address:'南山区粤海街道100米左侧',
+                    city:'',
+                    address:'',
                 },
                 boxInfoNameList:['挂牌编号','SN码','状况','联系人','联系方式','城市','地址'],
                 isSecondShow: true,
@@ -141,13 +141,18 @@
             this.mapInstance.destroy();
         },
         methods: {
+            clearBoxInfo(){
+              for(let i in this.boxInfo){
+                  this.boxInfo[i] = ''
+              }
+            },
             getDeviceDetail(id){
-              console.log(id);
               this.$get('/api/v1/equipmentInfo',{
                 id
               }).then(res=>{
+                  this.$store.commit('setMapPointDetail', res.data)
+                  this.$store.commit('setIsMobileDetailShow')
                 const data =res.data
-                console.log(data.province + data.city + data.area);
                 const city = data.province + data.city + data.area
                 this.boxInfo.listing_number = data.listing_number;
                 this.boxInfo.sn = data.sn;
@@ -155,8 +160,8 @@
                 this.boxInfo.address = data.address;
                 this.boxInfo.city = city || ''  ;
                 this.boxInfo.name = data.responsible;
-                this.boxInfo.listing_number = data.listing_number;
-                console.log(res);
+                this.boxInfo.phone = data.phone;
+                  this.boxShow = true;
               }).catch(err=>{
                 console.log(err);
               })
@@ -164,7 +169,7 @@
             toDevice(){
                 this.$router.push('/device')
             },
-            handleMapClick(zoom, center) {
+            handleMapClick(zoom) {
               this.$store.commit('setZoom', zoom)
               this.isSecondShow = zoom >= 15;
             },
@@ -191,6 +196,7 @@
               this.mapInstance.on('click', (e) => {
                 if(!e.clusterData) {
                   this.boxShow = false;
+                  this.clearBoxInfo()
                 }
               })
                 this.$get('/api/v1/map').then(res=>{
@@ -256,8 +262,11 @@
                         renderMarker: _renderMarker, // 自定义非聚合点样式
                     });
                     cluster.on('click',(e)=>{
-                        if(this.isMobile) return
                         this.getDeviceDetail(e.clusterData[0].id)
+                        if(this.isMobile) {
+
+                            return
+                        }
                       if(e.clusterData[0].isonline === 0){
                             this.currentBoxType = 'normal'
                         }
@@ -270,7 +279,7 @@
                         if(e.clusterData[0].isonline === 3){
                             this.currentBoxType = 'error'
                         }
-                        this.boxShow = true;
+
                         const left = Number(e.marker.dom.style.left.split('px')[0])
                         const top = Number(e.marker.dom.style.top.split('px')[0])
                         this.left = left + 150+'px'
@@ -289,13 +298,6 @@
                     },
                 }).then((AMap) => {
                     this.init(AMap)
-                    return
-                    this.chart = echarts.init(document.getElementById("echarts-amap"));
-                    this.chart.setOption(this.options);
-                    this.mapInstance = this.chart.getModel().getComponent("amap").getAMap();
-                    this.mapInstance.on('zoomend', (e) => {
-                        this.handleMapClick(this.mapInstance.getZoom(), this.mapInstance.getCenter())
-                    })
                 }).catch(e => {
                     console.log(e);
                 })

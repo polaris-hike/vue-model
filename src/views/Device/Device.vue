@@ -38,11 +38,23 @@
                     <span>{{ item.listing_number }}</span>
                     <span>{{ item.sn }}</span>
                     <span>{{ item.address }}</span>
-                    <span style="width: 9.8vw">{{ item.normal }}</span>
-                    <span style="width: 9.8vw">{{ item.stopUse }}</span>
-                    <span style="width: 9.8vw">{{ item.knockDown }}</span>
-                    <span style="width: 9.8vw">{{ item.illegalWaterUse }}</span>
-                    <span style="width: 6.8vw">{{ item.responsible }}1</span>
+                    <!-- 0 正常-->
+                    <span style="width: 9.8vw">
+                        <img v-show="item.isonline === 0" src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/normal1.png" alt="">
+                    </span>
+                    <!-- 2 停用-->
+                    <span style="width: 9.8vw">
+                        <img v-show="item.isonline === 2"  src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/stop.png" alt="">
+                    </span>
+                    <!-- 1 离线-->
+                    <span style="width: 9.8vw">
+                        <img v-show="item.isonline === 1"  src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/warn.png" alt="">
+                    </span>
+                    <!-- 3 报警-->
+                    <span style="width: 9.8vw">
+                        <img v-show="item.isonline === 3"  src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/error.png" alt="">
+                    </span>
+                    <span style="width: 6.8vw">{{item.name}}</span>
                     <span style="width: 6.8vw">{{ item.phone }}</span>
                     <div class="operation">
                         <div class="modify" @click="handleModifyClick(item)">修改</div>
@@ -433,26 +445,32 @@
       },
       handleCreateClick() {
         this.isCreateShow = true;
-        AMapLoader.load({
-          'key': '852b4331fa1629f5c4722b5cab98a8c6', // 申请好的Web端开发者Key，首次调用 load 时必填
-          'version': '2.0', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-          'plugins': [], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-          'AMapUI': { // 是否加载 AMapUI，缺省不加载
-            'version': '1.1', // AMapUI 缺省 1.1
-            'plugins': [], // 需要加载的 AMapUI ui插件
-          },
-        }).then((AMap) => {
-          this.chart = echarts.init(document.getElementById('amap'));
-          this.chart.setOption(this.options);
-          this.mapInstance = this.chart.getModel().getComponent('amap').getAMap();
-          this.mapInstance.on('click', (e) => {
-            this.createObj.latitude = e.lnglat.lat;
-            this.createObj.longitude = e.lnglat.lng;
-          });
-        }).catch(e => {
-          console.log(e);
-        });
+       this.setMap()
       },
+        setMap(lngLat){
+            AMapLoader.load({
+                'key': '852b4331fa1629f5c4722b5cab98a8c6', // 申请好的Web端开发者Key，首次调用 load 时必填
+                'version': '2.0', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+                'plugins': [], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+                'AMapUI': { // 是否加载 AMapUI，缺省不加载
+                    'version': '1.1', // AMapUI 缺省 1.1
+                    'plugins': [], // 需要加载的 AMapUI ui插件
+                },
+            }).then((AMap) => {
+                if(lngLat){
+                    this.options.amap.center = lngLat
+                }
+                this.chart = echarts.init(document.getElementById('amap'));
+                this.chart.setOption(this.options);
+                this.mapInstance = this.chart.getModel().getComponent('amap').getAMap();
+                this.mapInstance.on('click', (e) => {
+                    this.createObj.latitude = e.lnglat.lat;
+                    this.createObj.longitude = e.lnglat.lng;
+                });
+            }).catch(e => {
+                console.log(e);
+            });
+        },
       handleSetParamClick() {
         this.isSleepShow = true;
         this.$get('/api/v1/equipmentSelect').then(res => {
@@ -577,6 +595,7 @@
         this.title = '修改';
         this.isModify = true;
         this.isCreateShow = true;
+        this.setMap([Number(item.longitude),Number(item.latitude)])
       },
       modifyDevice() {
         this.$put('/api/v1/equipment', {
@@ -650,7 +669,7 @@
       this.getDeviceList();
     },
     destroyed() {
-      this.mapInstance.destroy();
+        this.mapInstance && this.mapInstance.destroy();
     },
   };
 </script>
@@ -835,6 +854,10 @@
                         }
                         &:nth-child(3) {
                             width: 14.8vw;
+                        }
+                        img {
+                            width: 1.1vw;
+                            height: 1.1vw;
                         }
                     }
                     .operation {

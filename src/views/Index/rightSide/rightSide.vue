@@ -26,21 +26,25 @@
       <VEcharts :options="lineOptions" />
     </div>
     <div class="chart-wrapper">
-      <header>离线列表</header>
+      <header>实时报警</header>
       <div class="warning-wrapper">
         <header>
           <span>挂牌编号</span>
           <span>报警描述</span>
-          <span>地址</span>
-          <span>联系人</span>
+          <span>报警时间</span>
+          <span>处理状态</span>
         </header>
         <div class="list-wrapper">
           <vueSeamless :class-option="seamlessOptions" :data="warningList">
             <div :key="index" class="list" v-for="(list, index) in warningList">
-              <span>{{ list.listing_number }}</span>
-              <span>{{ list.describe }}</span>
-              <span>{{ list.address }}</span>
-              <span>{{ list.name }}</span>
+
+              <span>{{list.listing_number}}</span>
+              <span>{{list.describe}}</span>
+              <span>{{list.created_at}}</span>
+              <span v-if="list.status ===0" class="unHandle"><i></i> 未处理</span>
+              <span v-if="list.status ===1" class="handle"><i></i> 已处理</span>
+
+
             </div>
           </vueSeamless>
         </div>
@@ -146,7 +150,7 @@ export default {
       })
     },
     getHomeFault(){
-      this.$get('/api/v1/homeFault').then(res=>{
+      this.$get('/api/v1/homeCallThePolice').then(res=>{
         this.warningList = res.data
       })
     },
