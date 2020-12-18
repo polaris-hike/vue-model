@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '../router';import {Message} from "element-ui";
+import router from '../router';import {Message} from "element-ui";var mesWindow=null;
 const http = axios.create({
   timeout: 180000,
   baseURL: 'http://testa.shenim.cn',
@@ -13,14 +13,13 @@ http.interceptors.request.use(
   },
   error => {
     return Promise.reject(error);
-  });
-
+});  
 http.interceptors.response.use(
   response => {
     return response;
   },
   error => {
-    if(JSON.stringify(error).indexOf('423') > 0){		router.push("/login");
+    if(JSON.stringify(error).indexOf('423') > 0){		if(mesWindow==null){			mesWindow=Message({				showClose: true,				message: '未登录或者登录已过期',				type: 'error',				onClose:()=>{					router.push("/login");				}			});		}
     }
     return Promise.reject(error);
   });

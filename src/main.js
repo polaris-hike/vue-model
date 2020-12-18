@@ -36,12 +36,8 @@ let vm=new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-
 router.beforeEach(((to, from, next) => {
-  if (!localStorage.getItem("token")) {
-	if (to.path !== '/login') {
-	  return next('/login')
-	}
+  if (!localStorage.getItem("token")) {	vm.$message({			showClose: true,			message: '未登录或者登录已过期',			type: 'error',			onClose:()=>{				if (to.path !== '/login') {				  return next('/login')				}		  }	})
   }
   next()
   

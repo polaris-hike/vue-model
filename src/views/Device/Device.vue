@@ -857,7 +857,7 @@
                         }
                         img {
                             width: 1.1vw;
-                            height: 1.1vw;
+                            height: 1.2vw;
                         }
                     }
                     .operation {

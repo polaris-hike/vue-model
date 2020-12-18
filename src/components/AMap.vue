@@ -85,7 +85,7 @@
 
                         resizeEnable: true,
 
-                        mapStyle: "amap://styles/a16a47c4d16c0ba993e9d72f6a46b8b9",
+                        mapStyle: "amap://styles/b346047a0bc4d9e33439f7fb52aa9e37",
 
                         renderOnMoving: true,
 
@@ -184,7 +184,7 @@
 
                     resizeEnable: true,
 
-                    mapStyle: "amap://styles/a16a47c4d16c0ba993e9d72f6a46b8b9",
+                    mapStyle: "amap://styles/b346047a0bc4d9e33439f7fb52aa9e37",
 
                     renderOnMoving: true,
 
@@ -289,7 +289,7 @@
             },
             initMap() {
                 AMapLoader.load({
-                    "key": "852b4331fa1629f5c4722b5cab98a8c6",              // 申请好的Web端开发者Key，首次调用 load 时必填
+                    "key": "49bbba4d07f08f2c9b4ad16160815cab",              // 申请好的Web端开发者Key，首次调用 load 时必填
                     "version": "2.0",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
                     "plugins": ['AMap.MarkerCluster'],           // 需要使用的的插件列表，如比例尺'AMap.Scale'等
                     "AMapUI": {             // 是否加载 AMapUI，缺省不加载
