@@ -11,8 +11,8 @@
         </header>
 
         <!-- 首页 -->
-        <main v-show="!isSecondShow" id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
-              :style="{bottom:bottom+'vh',overflow:overflow}">
+      <!--  <main v-show="!isSecondShow" id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
+              :style="{bottom:bottom+'vh',overflow:overflow}"> -->		<main v-show="!isSecondShow" id="myMain" @panup="panup"  @pandown="pandown"		      :style="{bottom:bottom+'vh',overflow:overflow}">
             <div class="line" @click="handleLineClick"></div>
             <div class="index" v-show="!searchContentShow">
                 <section class="top">
@@ -139,7 +139,7 @@
         </main>
 
         <!-- 点击地图点时出现 -->
-        <v-touch @swipeup="swipeup" @swipedown="swipedown">
+        <v-touch @swipeup="swipeup" @swipedown="swipedown" @panmove="panmove">
             <main v-show="isSecondShow" :style="{bottom:bottom1+'vh'}">
                 <div class="second-wrapper">
                     <div class="list" v-for="(item, index) in secondList" :key="index">
@@ -473,11 +473,11 @@
         e.preventDefault();
         this.startX = e.changedTouches[0].pageX;
         this.startY = e.changedTouches[0].pageY;
-      },
-      swipeup(e) {
+      },	  panup(e){		this.bottom1+=2	  },	  pandown(e){		this.bottom1-=2	  },
+      swipeup(e) {		 alert(e)
         this.bottom1 = -99;
       },
-      swipedown(e) {
+      swipedown(e) {		  
         this.bottom1 = -145;
       },
       handleLineClick() {
