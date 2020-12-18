@@ -54,8 +54,8 @@
           <span style="width: 13.8vw">{{ item.status }}</span>
           <span style="width: 13.8vw">{{ item.created_at }}</span>
           <span style="width: 5.7vw">{{ item.press }}</span>
-          <span style="width: 5.4vw">{{ item.pressureCollectionCycle }}</span>
-          <span style="width: 5.1vw">{{ item.maxPressureAlarm }}</span>
+          <span style="width: 5.4vw">{{ item.collection }}</span>
+          <span style="width: 5.1vw">{{ item.accept }}</span>
           <span style="width: 5.5vw">{{ item.name }}</span>
         </li>
       </ul>

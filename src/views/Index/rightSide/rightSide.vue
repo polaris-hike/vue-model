@@ -256,7 +256,7 @@ export default {
     }
     .warning-wrapper {
       header {
-        padding-left: 1.5vw;
+        padding-left: 0.7vw;
         font-size: 0.6vw;
         span {
           margin-right: 1vw;
@@ -310,12 +310,44 @@ export default {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
       font-size: 0.5vw;
       padding-left: 1.6vw;
+      overflow: auto;
+      &::-webkit-scrollbar {/*滚动条整体样式*/
+
+        width: 5px;     /*高宽分别对应横竖滚动条的尺寸*/
+
+        height: 3px;
+
+      }
+
+      &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+
+        border-radius: 10px;
+
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+
+        background: #535353;
+
+      }
+
+      &:-webkit-scrollbar-track {/*滚动条里面轨道*/
+
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+
+        border-radius: 10px;
+
+        background: #EDEDED;
+
+      }
       > li {
+        height: 2.3vw;
         display: flex;
         align-items: center;
+        margin-bottom: 1vh;
+        &:last-child {
+          margin: 0;
+        }
         .img {
           width: 2.3vw;
           height: 2.3vw;
