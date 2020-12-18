@@ -20,7 +20,10 @@
         <span>挂牌编号</span>
         <span>SN码</span>
         <span>地址</span>
-        <div class="state">
+        <span>设备状态</span>
+        <span>报警状况</span>
+        <span>事件时间</span>
+        <!--<div class="state">
           <div class="top">状态</div>
           <div class="bottom">
             <span>停用</span>
@@ -31,7 +34,7 @@
             <span>电压异常</span>
             <span>事件时间</span>
           </div>
-        </div>
+        </div>-->
         <div class="water-gage">
           <div class="top">水压</div>
           <div class="bottom">
@@ -47,13 +50,9 @@
           <span>{{ item.listing_number }}</span>
           <span>{{ item.sn }}</span>
           <span>{{ item.address }}</span>
-          <span style="width: 6.2vw">{{ item.stopUse }}</span>
-          <span style="width: 6.2vw">{{ item.normal }}</span>
-          <span style="width: 6.2vw">{{ item.knockDown }}</span>
-          <span style="width: 6.2vw">{{ item.illegalWaterUse }}</span>
-          <span style="width: 6.2vw">{{ item.abnormalWaterPressure }}</span>
-          <span style="width: 6.2vw">{{ item.abnormalVoltage }}</span>
-          <span style="width: 6.2vw">{{ item.eventTime }}</span>
+          <span style="width: 13.8vw">{{ item.isonline }}</span>
+          <span style="width: 13.8vw">{{ item.status }}</span>
+          <span style="width: 13.8vw">{{ item.created_at }}</span>
           <span style="width: 5.7vw">{{ item.press }}</span>
           <span style="width: 5.4vw">{{ item.pressureCollectionCycle }}</span>
           <span style="width: 5.1vw">{{ item.maxPressureAlarm }}</span>
@@ -322,6 +321,15 @@ export default {
         }
         &:nth-child(3) {
           width: 14.8vw;
+        }
+        &:nth-child(4) {
+          width: 13.8vw;
+        }
+        &:nth-child(5) {
+          width: 13.8vw;
+        }
+        &:nth-child(6) {
+          width: 13.8vw;
         }
       }
     }

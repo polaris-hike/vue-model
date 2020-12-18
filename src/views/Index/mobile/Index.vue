@@ -3,102 +3,142 @@
         <header>
             <div class="center">
                 <i class="search-icon"></i>
-                <input class="search" type="text" placeholder="请输入关键字"/>
+                <input v-model="search" class="search" type="text" placeholder="请输入关键字"/>
             </div>
-            <div class="right">
+            <div class="right" @click="handleSearchClick">
                 <img src="@/assets/index/search.png" alt="">
             </div>
         </header>
 
+        <!-- 首页 -->
         <main v-show="!isSecondShow" id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
               :style="{bottom:bottom+'vh',overflow:overflow}">
             <div class="line" @click="handleLineClick"></div>
-            <section class="top">
-                <ul>
-                    <li v-for="(item,index) in numList"
-                        :key="index">
-                        <div class="logo">
-                            <img :src="item.img"
-                                 alt="">
-                        </div>
-                        <span class="name">{{item.name}}</span>
-                        <span class="value">{{item.num}}</span>
-                    </li>
-                </ul>
-            </section>
-            <section class="chart-wrapper">
-                <header>报警占比分析</header>
-                <div class="pie-wrapper">
-                    <customizedPie
-                            class="pie"
-                            :options="pieOption">
-                        <template v-slot:label="labelData">
+            <div class="index" v-show="!searchContentShow">
+                <section class="top">
+                    <ul>
+                        <li v-for="(item,index) in numList"
+                            :key="index">
+                            <div class="logo">
+                                <img :src="item.img"
+                                     alt="">
+                            </div>
+                            <span class="name">{{item.name}}</span>
+                            <span class="value">{{item.num}}</span>
+                        </li>
+                    </ul>
+                </section>
+                <section class="chart-wrapper">
+                    <header>报警占比分析</header>
+                    <div class="pie-wrapper">
+                        <customizedPie
+                                class="pie"
+                                :options="pieOption">
+                            <template v-slot:label="labelData">
                          <span class="label allCenter2">
                             <span class="percent DM">{{labelData.labelPercent}}</span>
                             <span class="labelName">{{labelData.labelName}}</span>
                         </span>
-                        </template>
-                    </customizedPie>
-                    <div class="legend">
-                        <div class="list" v-for="(item,index) in legendList" :key="index">
-                            <div class="square"></div>
-                            <span class="name">{{item.name}}</span>
-                            <span class="percent">{{item.percent}}</span>
-                            <span class="value">{{item.value}}</span>
+                            </template>
+                        </customizedPie>
+                        <div class="legend">
+                            <div class="list" v-for="(item,index) in legendList" :key="index">
+                                <div class="square"></div>
+                                <span class="name">{{item.name}}</span>
+                                <span class="percent">{{item.percent}}</span>
+                                <span class="value">{{item.value}}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section class="bottom">
-                <h2>实时报警</h2>
-                <div class="warning-wrapper">
-                    <header>
-                        <span>挂牌编号</span>
-                        <span>报警描述</span>
-                        <span>报警时间</span>
-                    </header>
-                    <div class="list-wrapper">
-                        <vueSeamless :data="warningList"
-                                     :class-option="seamlessOptions">
-                            <div class="list"
-                                 v-for="(list,index) in warningList"
-                                 :key="index">
-                                <span>{{list.listing_number}}</span>
-                                <span>{{list.describe}}</span>
-                                <span>{{list.created_at}}</span>
-                                <span v-if="list.state ===1">未处理</span>
-                                <span v-if="list.state ===2">已处理</span>
-                            </div>
-                        </vueSeamless>
+                </section>
+                <section class="bottom">
+                    <h2>实时报警</h2>
+                    <div class="warning-wrapper">
+                        <header>
+                            <span>挂牌编号</span>
+                            <span>报警描述</span>
+                            <span>报警时间</span>
+                        </header>
+                        <div class="list-wrapper">
+                            <vueSeamless :data="warningList"
+                                         :class-option="seamlessOptions">
+                                <div class="list"
+                                     v-for="(list,index) in warningList"
+                                     :key="index">
+                                    <span>{{list.listing_number}}</span>
+                                    <span>{{list.describe}}</span>
+                                    <span>{{list.created_at}}</span>
+                                    <span v-if="list.state ===1">未处理</span>
+                                    <span v-if="list.state ===2">已处理</span>
+                                </div>
+                            </vueSeamless>
 
+                        </div>
                     </div>
-                </div>
-            </section>
-            <section class="warning bottom">
-                <header>离线列表</header>
-                <div class="warning-wrapper">
-                    <header>
-                        <span>挂牌编号</span>
-                        <span>报警描述</span>
-                        <span>地址</span>
-                        <span>联系人</span>
-                    </header>
-                    <div class="list-wrapper">
-                        <vueSeamless :class-option="seamlessOptions"
-                                     :data="warningList">
-                            <div :key="index"
-                                 class="list"
-                                 v-for="(list,index) in errorList">
-                                <span>{{ list.listing_number }}</span>
-                                <span>{{ list.describe }}</span>
-                                <span>{{ list.address }}</span>
-                                <span>{{ list.name }}</span>
-                            </div>
-                        </vueSeamless>
+                </section>
+                <section class="warning bottom">
+                    <header>离线列表</header>
+                    <div class="warning-wrapper">
+                        <header>
+                            <span>挂牌编号</span>
+                            <span>报警描述</span>
+                            <span>地址</span>
+                            <span>联系人</span>
+                        </header>
+                        <div class="list-wrapper">
+                            <vueSeamless :class-option="seamlessOptions"
+                                         :data="warningList">
+                                <div :key="index"
+                                     class="list"
+                                     v-for="(list,index) in errorList">
+                                    <span>{{ list.listing_number }}</span>
+                                    <span>{{ list.describe }}</span>
+                                    <span>{{ list.address }}</span>
+                                    <span>{{ list.name }}</span>
+                                </div>
+                            </vueSeamless>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+            <div class="search-content" v-show="searchContentShow">
+                <h1>搜索结果</h1>
+                <section class="bottom percentAnalyse" >
+                    <ul>
+                        <li v-for="(item,index) in percentList" :key="index">
+                            <span>{{item.name}}:</span>
+                            <span>{{mapPointDetail[item.key]}}</span>
+                        </li>
+                    </ul>
+                </section>
+                <section class="bottom percentAnalyse" >
+                    <ul>
+                        <li v-for="(item,index) in percentList" :key="index">
+                            <span>{{item.name}}:</span>
+                            <span>{{mapPointDetail[item.key]}}</span>
+                        </li>
+                    </ul>
+                </section>
+                <section class="bottom percentAnalyse" >
+                    <ul>
+                        <li v-for="(item,index) in percentList" :key="index">
+                            <span>{{item.name}}:</span>
+                            <span>{{mapPointDetail[item.key]}}</span>
+                        </li>
+                    </ul>
+                </section>
+                <section class="bottom percentAnalyse" >
+                    <ul>
+                        <li v-for="(item,index) in percentList" :key="index">
+                            <span>{{item.name}}:</span>
+                            <span>{{mapPointDetail[item.key]}}</span>
+                        </li>
+                    </ul>
+                </section>
+            </div>
         </main>
+
+        <!-- 点击地图点时出现 -->
         <v-touch @swipeup="swipeup" @swipedown="swipedown">
             <main v-show="isSecondShow" :style="{bottom:bottom1+'vh'}">
                 <div class="second-wrapper"  >
@@ -115,7 +155,6 @@
                             <span>{{mapPointDetail[item.key]}}</span>
                         </li>
                     </ul>
-
                 </section>
                 <section class="warning errorList bottom">
                     <header>离线列表</header>
@@ -179,6 +218,8 @@
         },
         data() {
             return {
+              search:'',
+              searchContentShow:false,
               secondList: [
                 {
                   name: "正常",
@@ -219,7 +260,7 @@
                     }
                 ],
                 bottom: -146,
-                bottom1: -145,
+                bottom1: -99,
                 percentList: [
                     {
                         name: '非法用水',
@@ -331,10 +372,13 @@
           this.getHomeFault()
         },
         methods: {
+          handleSearchClick(){
+            this.isSecondShow = false;
+                this.searchContentShow = true
+          },
           getHomeFault(){
             this.$get('/api/v1/homeFault').then(res=>{
               this.errorList = res.data
-              console.log(this.errorList);
             })
           },
           getHomeCallThePolice(){
@@ -385,7 +429,6 @@
                     main.scrollTop = main.scrollTop - Math.abs(this.Y)/10
                 }
                 if (Math.abs(this.Y) > Math.abs(this.X) && this.Y < 0) {// 上滑
-                    console.log(this.Y);
                     main.scrollTop = main.scrollTop + Math.abs(this.Y)/10
                 }
             },
@@ -395,11 +438,9 @@
                     this.startY = e.changedTouches[0].pageY;
             },
             swipeup(e) {
-                console.log('swipeup');
                 this.bottom1 = -99
             },
             swipedown(e) {
-                console.log('swipedown');
                 this.bottom1 = -145
             },
             handleLineClick() {
@@ -529,6 +570,12 @@
                 height: 1.3vw;
                 margin-bottom: 1.3vh;
                 background-color: #3b5157;
+            }
+            .search-content {
+                h1 {
+                    padding-left: 6.1vw;
+                    margin-bottom: 1vh;
+                }
             }
 
             section {
