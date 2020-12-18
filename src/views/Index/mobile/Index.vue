@@ -11,8 +11,8 @@
         </header>
 
         <!-- 首页 -->
-      <!--  <main v-show="!isSecondShow" id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
-              :style="{bottom:bottom+'vh',overflow:overflow}"> -->		<main v-show="!isSecondShow" id="myMain" @panup="panup"  @pandown="pandown"		      :style="{bottom:bottom+'vh',overflow:overflow}">
+       <main v-show="!isSecondShow" id="myMain" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
+              :style="{bottom:bottom+'vh',overflow:overflow}">
             <div class="line" @click="handleLineClick"></div>
             <div class="index" v-show="!searchContentShow">
                 <section class="top">
@@ -473,7 +473,7 @@
         e.preventDefault();
         this.startX = e.changedTouches[0].pageX;
         this.startY = e.changedTouches[0].pageY;
-      },	  panup(e){		this.bottom1+=2	  },	  pandown(e){		this.bottom1-=2	  },
+      },
       swipeup(e) {		 alert(e)
         this.bottom1 = -99;
       },
