@@ -1,6 +1,6 @@
 <template>
     <div class="mobile">
-        <header>
+        <header>			<div class="left">			    <img src="@/assets/index/home.png" alt="">			</div>
             <div class="center">
                 <i class="search-icon"></i>
                 <input v-model="search" class="search" type="text" placeholder="请输入关键字"/>
@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <section class="bottom percentAnalyse">
-                    <header>报警占比分析</header>
+                    <header>设备信息</header>
                     <ul>
                         <li v-for="(item,index) in percentList" :key="index">
                             <span>{{item.name}}:</span>
@@ -157,7 +157,7 @@
                     </ul>
                 </section>
                 <section class="warning errorList bottom">
-                    <header>离线列表</header>
+                    <header>报警记录</header>
                     <div class="warning-wrapper">
                         <header>
                             <span>挂牌编号</span>
@@ -412,7 +412,7 @@
         }).catch(err => {
           console.log(err);
         });
-      },
+      },	  handleHomeClick(){		  this.searchContentShow=false;		  this.isSecondShow=true;	  },
       getHomeFault() {
         this.$get('/api/v1/homeFault').then(res => {
           this.errorList = res.data;
@@ -511,7 +511,7 @@
                 height: 9.8vw;
                 background-color: #064653;
                 border-radius: 1vw;
-                margin-right: 1.4vw;
+                margin-right: 1.4vw;				text-align: center;				img {				    width: 6.4vw;				    height: 6.4vw;					margin-top:1.7vw;				}
             }
             .center {
                 position: relative;
