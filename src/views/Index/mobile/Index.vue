@@ -139,7 +139,7 @@
         </main>
 
         <!-- 点击地图点时出现 -->
-        <v-touch @swipeup="swipeup" @swipedown="swipedown" @panmove="panmove">
+        <v-touch @swipeup="swipeup" @swipedown="swipedown">
             <main v-show="isSecondShow" :style="{bottom:bottom1+'vh'}">
                 <div class="second-wrapper">
                     <div class="list" v-for="(item, index) in secondList" :key="index">
