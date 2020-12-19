@@ -10,7 +10,8 @@
             <div class="right">
                 <div class="input-wrapper">
                     <i class="search-icon"></i>
-                    <input class="search" type="text" v-model="search" placeholder="请输入关键字"/>
+                    <input class="search" type="text" @keyup.enter="searchDevice" v-model="search"
+                           placeholder="请输入关键字"/>
                 </div>
                 <div class="confirm" @click="searchDevice">确认</div>
             </div>
@@ -40,19 +41,23 @@
                     <span>{{ item.address }}</span>
                     <!-- 0 正常-->
                     <span style="width: 9.8vw">
-                        <img v-show="item.isonline === 0" src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/normal1.png" alt="">
+                        <img v-show="item.isonline === 0"
+                             src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/normal1.png" alt="">
                     </span>
                     <!-- 2 停用-->
                     <span style="width: 9.8vw">
-                        <img v-show="item.isonline === 2"  src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/stop.png" alt="">
+                        <img v-show="item.isonline === 2"
+                             src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/stop.png" alt="">
                     </span>
                     <!-- 1 离线-->
                     <span style="width: 9.8vw">
-                        <img v-show="item.isonline === 1"  src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/warn.png" alt="">
+                        <img v-show="item.isonline === 1"
+                             src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/warn.png" alt="">
                     </span>
                     <!-- 3 报警-->
                     <span style="width: 9.8vw">
-                        <img v-show="item.isonline === 3"  src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/error.png" alt="">
+                        <img v-show="item.isonline === 3"
+                             src="https://wedge.oss-cn-shenzhen.aliyuncs.com/static/icon/error.png" alt="">
                     </span>
                     <span style="width: 6.8vw">{{item.name}}</span>
                     <span style="width: 6.8vw">{{ item.phone }}</span>
@@ -151,7 +156,15 @@
                 </li>
                 <li>
                     <span>责任人</span>
-                    <input type="text" v-model.trim="createObj.responsible" placeholder="请输入内容">
+                    <el-select popper-class="select" v-model="createObj.responsible">
+                        <el-option
+                                v-for="item in responsibleList"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id"
+                        >
+                        </el-option>
+                    </el-select>
                 </li>
                 <li>
                     <span>详细地址</span>
@@ -243,435 +256,449 @@
 </template>
 
 <script>
-  import chinaArea from '../../components/chinaArea';
-  import axios from 'axios';
-  import arrAll from '../../components/proviceData';
-  import AMapLoader from '@amap/amap-jsapi-loader';
-  import echarts from 'echarts';
+    import chinaArea from '../../components/chinaArea';
+    import axios from 'axios';
+    import arrAll from '../../components/proviceData';
+    import AMapLoader from '@amap/amap-jsapi-loader';
+    import echarts from 'echarts';
 
-  export default {
-    name: 'Device',
-    data() {
-      return {
-        arr: arrAll,
-        cityArr: [],
-        districtArr: [],
-        statusList: [
-          {
-            name: '在线',
-            id: 0
-          },
-          {
-            name: '离线',
-            id: 1
-          },
-          {
-            name: '停用',
-            id: 2
-          },
-          {
-            name: '报警',
-            id: 3
-          },
-        ],
-        createList: [
-          {
-            name: '挂牌编号',
-            value: '',
-          },
-          {
-            name: 'SN码',
-            value: '',
-          },
-          {
-            name: '状态',
-            value: '',
-          },
-          {
-            name: '省份',
-            value: '',
-          },
-          {
-            name: '城市',
-            value: '',
-          },
-          {
-            name: '区域',
-            value: '',
-          },
-          {
-            name: '责任人',
-            value: '',
-          },
-          {
-            name: '经度',
-            value: '',
-          },
-          {
-            name: '维度',
-            value: '',
-          },
-        ],
-        options: {
-          amap: {
-            viewMode: '3D',
-            center: [114.05571, 22.52245],
-            zoom: 12,
-            resizeEnable: true,
-            mapStyle: 'amap://styles/a16a47c4d16c0ba993e9d72f6a46b8b9',
-            renderOnMoving: true,
-            echartsLayerZIndex: 2019,
-          },
-          tooltip: {
-            trigger: 'item',
-          },
-          animation: false,
-          series: [],
-        },
-        search: '',
-        equipment_id: '',
-        isModifyParamShow: false,
-        paramList: [
-          {
-            label: '电压上限',
-            value: 'voltage_uper'
-          },
-          {
-            label: '电压下限',
-            value: 'voltage_lower'
-          },
-          {
-            label: '水压上限',
-            value: 'water_uper'
-          },
-          {
-            label: '水压下限',
-            value: 'water_lower'
-          },
-          {
-            label: '瞬时流量上限',
-            value: 'curflow'
-          },
-          {
-            label: '累计流量',
-            value: 'accflow'
-          },
-          {
-            label: '开关量',
-            value: 'switch_val'
-          },
-          {
-            label: '休眠周期',
-            value: 'sleep_cycle'
-          },
-          {
-            label: '采集周期',
-            value: 'collection_cycle'
-          },
-
-        ],
-        parameter: '',
-        parameter_value: '',
-        singleParamList: {
-          voltage_uper: '',
-          voltage_lower: '',
-          water_uper: '',
-          water_lower: '',
-          curflow: '',
-          accflow: '',
-          switch_val: '',
-          sleep_cycle: '',
-          collection_cycle: '',
-        },
-        currentModifyId: '',
-        title: '新建',
-        canAdd: true,
-        isModify: false,
-        pageSize: 15,
-        total: 0,
-        currentPage: 1,
-        data: [],
-        value: [],
-        isImportShow: false,
-        isCreateShow: false,
-        isSleepShow: false,
-        alarmList: [],
-        addArr: [],
-        chart: null,
-        mapInstance: null,
-        createObj: {
-          province: '',
-          city: '',
-          area: '',
-          listing_number: '',
-          sn: '',
-          status: '',
-          responsible: '',
-          longitude: '',
-          latitude: '',
-          address: ''
-        }
-      };
-    },
-    components: {
-      chinaArea
-    },
-    methods: {
-      updateCity() {
-        for (var i in this.arr) {
-          var obj = this.arr[i];
-          if (obj.name == this.createObj.province) {
-            this.cityArr = obj.sub;
-            break;
-          }
-        }
-        if (this.cityArr.length !== 0) {
-          this.city = this.cityArr[1].name;
-        }
-      },
-      updateDistrict() {
-        for (var i in this.cityArr) {
-          var obj = this.cityArr[i];
-          if (obj.name == this.createObj.city) {
-            this.districtArr = obj.sub;
-            break;
-          }
-        }
-        if (this.districtArr && this.districtArr.length > 0 && this.districtArr[1].name) {
-          this.district = this.districtArr[1].name;
-        } else {
-          this.district = '';
-        }
-      },
-      handleCreateClick() {
-        this.isCreateShow = true;
-       this.setMap()
-      },
-        setMap(lngLat){
-            AMapLoader.load({
-                'key': '852b4331fa1629f5c4722b5cab98a8c6', // 申请好的Web端开发者Key，首次调用 load 时必填
-                'version': '2.0', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-                'plugins': [], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-                'AMapUI': { // 是否加载 AMapUI，缺省不加载
-                    'version': '1.1', // AMapUI 缺省 1.1
-                    'plugins': [], // 需要加载的 AMapUI ui插件
+    export default {
+        name: 'Device',
+        data() {
+            return {
+                arr: arrAll,
+                cityArr: [],
+                districtArr: [],
+                responsibleList: [],
+                statusList: [
+                    {
+                        name: '在线',
+                        id: 0
+                    },
+                    {
+                        name: '离线',
+                        id: 1
+                    },
+                    {
+                        name: '停用',
+                        id: 2
+                    },
+                    {
+                        name: '报警',
+                        id: 3
+                    },
+                ],
+                createList: [
+                    {
+                        name: '挂牌编号',
+                        value: '',
+                    },
+                    {
+                        name: 'SN码',
+                        value: '',
+                    },
+                    {
+                        name: '状态',
+                        value: '',
+                    },
+                    {
+                        name: '省份',
+                        value: '',
+                    },
+                    {
+                        name: '城市',
+                        value: '',
+                    },
+                    {
+                        name: '区域',
+                        value: '',
+                    },
+                    {
+                        name: '责任人',
+                        value: '',
+                    },
+                    {
+                        name: '经度',
+                        value: '',
+                    },
+                    {
+                        name: '维度',
+                        value: '',
+                    },
+                ],
+                options: {
+                    amap: {
+                        viewMode: '3D',
+                        center: [114.05571, 22.52245],
+                        zoom: 12,
+                        resizeEnable: true,
+                        mapStyle: 'amap://styles/a16a47c4d16c0ba993e9d72f6a46b8b9',
+                        renderOnMoving: true,
+                        echartsLayerZIndex: 2019,
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                    },
+                    animation: false,
+                    series: [],
                 },
-            }).then((AMap) => {
-                if(lngLat){
-                    this.options.amap.center = lngLat
+                search: '',
+                equipment_id: '',
+                isModifyParamShow: false,
+                paramList: [
+                    {
+                        label: '电压上限',
+                        value: 'voltage_uper'
+                    },
+                    {
+                        label: '电压下限',
+                        value: 'voltage_lower'
+                    },
+                    {
+                        label: '水压上限',
+                        value: 'water_uper'
+                    },
+                    {
+                        label: '水压下限',
+                        value: 'water_lower'
+                    },
+                    {
+                        label: '瞬时流量上限',
+                        value: 'curflow'
+                    },
+                    {
+                        label: '累计流量',
+                        value: 'accflow'
+                    },
+                    {
+                        label: '开关量',
+                        value: 'switch_val'
+                    },
+                    {
+                        label: '休眠周期',
+                        value: 'sleep_cycle'
+                    },
+                    {
+                        label: '采集周期',
+                        value: 'collection_cycle'
+                    },
+
+                ],
+                parameter: '',
+                parameter_value: '',
+                singleParamList: {
+                    voltage_uper: '',
+                    voltage_lower: '',
+                    water_uper: '',
+                    water_lower: '',
+                    curflow: '',
+                    accflow: '',
+                    switch_val: '',
+                    sleep_cycle: '',
+                    collection_cycle: '',
+                },
+                currentModifyId: '',
+                title: '新建',
+                canAdd: true,
+                isModify: false,
+                pageSize: 15,
+                total: 0,
+                currentPage: 1,
+                data: [],
+                value: [],
+                isImportShow: false,
+                isCreateShow: false,
+                isSleepShow: false,
+                alarmList: [],
+                addArr: [],
+                chart: null,
+                mapInstance: null,
+                createObj: {
+                    province: '',
+                    city: '',
+                    area: '',
+                    listing_number: '',
+                    sn: '',
+                    status: '',
+                    responsible: '',
+                    longitude: '',
+                    latitude: '',
+                    address: ''
                 }
-                this.chart = echarts.init(document.getElementById('amap'));
-                this.chart.setOption(this.options);
-                this.mapInstance = this.chart.getModel().getComponent('amap').getAMap();
-                this.mapInstance.on('click', (e) => {
-                    this.createObj.latitude = e.lnglat.lat;
-                    this.createObj.longitude = e.lnglat.lng;
-                });
-            }).catch(e => {
-                console.log(e);
-            });
+            };
         },
-      handleSetParamClick() {
-        this.isSleepShow = true;
-        this.$get('/api/v1/equipmentSelect').then(res => {
-          res.data.forEach(item => {
-            item.key = item.id;
-            item.label = item.sn;
-          });
-          this.data = res.data;
-        });
-      },
-      searchDevice() {
-        this.$get('/api/v1/equipment', {
-          screen: this.search
-        }).then((res) => {
-          this.alarmList = res.data;
-          const data = [];
-          res.data.forEach((item) => {
-            const obj = {
-              key: item.id,
-              label: item.sn
-            };
-            data.push(obj);
-          });
-          this.data = data;
-        });
-      },
-      uploadFile() {
-        const formData = new FormData();
-        formData.append('file', document.querySelector('input[type=file]').files[0]);
-        this.$post('/api/v1/equipmentImport', formData).then(res => {
-          if (res.code === 200) {
-            this.isImportShow = false;
-            this.getDeviceList();
-          }
-        });
-      },
-      getFile(event) {
-        var file = event.target.files;
-        for (var i = 0; i < file.length; i++) {
-          //    上传类型判断
-          var imgName = file[i].name;
-          var idx = imgName.lastIndexOf('.');
-          if (idx !== -1) {
-            var ext = imgName.substr(idx + 1).toUpperCase();
-            ext = ext.toLowerCase();
-            if (ext !== 'pdf' && ext !== 'doc' && ext !== 'docx') {
+        components: {
+            chinaArea
+        },
+        methods: {
+            updateCity() {
+                for (var i in this.arr) {
+                    var obj = this.arr[i];
+                    if (obj.name == this.createObj.province) {
+                        this.cityArr = obj.sub;
+                        break;
+                    }
+                }
+                if (this.cityArr.length !== 0) {
+                    this.city = this.cityArr[1].name;
+                }
+            },
+            updateDistrict() {
+                for (var i in this.cityArr) {
+                    var obj = this.cityArr[i];
+                    if (obj.name == this.createObj.city) {
+                        this.districtArr = obj.sub;
+                        break;
+                    }
+                }
+                if (this.districtArr && this.districtArr.length > 0 && this.districtArr[1].name) {
+                    this.district = this.districtArr[1].name;
+                } else {
+                    this.district = '';
+                }
+            },
+            handleCreateClick() {
+                this.isCreateShow = true;
+                this.getResponsible()
+                this.setMap()
+            },
+            getResponsible() {
+                this.$get('/api/v1/userSelect').then(res => {
+                    this.responsibleList = res.data
+                }).catch(err => {
+                    console.log(err);
+                })
+            },
+            setMap(lngLat) {
+                AMapLoader.load({
+                    'key': '852b4331fa1629f5c4722b5cab98a8c6', // 申请好的Web端开发者Key，首次调用 load 时必填
+                    'version': '2.0', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+                    'plugins': [], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+                    'AMapUI': { // 是否加载 AMapUI，缺省不加载
+                        'version': '1.1', // AMapUI 缺省 1.1
+                        'plugins': [], // 需要加载的 AMapUI ui插件
+                    },
+                }).then((AMap) => {
+                    if (lngLat) {
+                        this.options.amap.center = lngLat
+                    }
+                    this.chart = echarts.init(document.getElementById('amap'));
+                    this.chart.setOption(this.options);
+                    this.mapInstance = this.chart.getModel().getComponent('amap').getAMap();
+                    this.mapInstance.on('click', (e) => {
+                        this.createObj.latitude = e.lnglat.lat;
+                        this.createObj.longitude = e.lnglat.lng;
+                    });
+                }).catch(e => {
+                    console.log(e);
+                });
+            },
+            handleSetParamClick() {
+                this.isSleepShow = true;
+                this.$get('/api/v1/equipmentSelect').then(res => {
+                    res.data.forEach(item => {
+                        item.key = item.id;
+                        item.label = item.sn;
+                    });
+                    this.data = res.data;
+                });
+            },
+            searchDevice() {
+                this.$get('/api/v1/equipment', {
+                    screen: this.search
+                }).then((res) => {
+                    this.alarmList = res.data;
+                    const data = [];
+                    res.data.forEach((item) => {
+                        const obj = {
+                            key: item.id,
+                            label: item.sn
+                        };
+                        data.push(obj);
+                    });
+                    this.data = data;
+                });
+            },
+            uploadFile() {
+                const formData = new FormData();
+                formData.append('file', document.querySelector('input[type=file]').files[0]);
+                this.$post('/api/v1/equipmentImport', formData).then(res => {
+                    if (res.code === 200) {
+                        this.isImportShow = false;
+                        this.getDeviceList();
+                    }
+                });
+            },
+            getFile(event) {
+                var file = event.target.files;
+                for (var i = 0; i < file.length; i++) {
+                    //    上传类型判断
+                    var imgName = file[i].name;
+                    var idx = imgName.lastIndexOf('.');
+                    if (idx !== -1) {
+                        var ext = imgName.substr(idx + 1).toUpperCase();
+                        ext = ext.toLowerCase();
+                        if (ext !== 'pdf' && ext !== 'doc' && ext !== 'docx') {
 
-            } else {
-              this.addArr.push(file[i]);
+                        } else {
+                            this.addArr.push(file[i]);
+                        }
+                    } else {
+
+                    }
+                }
+            },
+            handCloseParam() {
+                for (let i in this.singleParamList) {
+                    this.singleParamList[i] = '';
+                }
+            },
+            clearInput() {
+                this.isCreateShow = false;
+                this.isModify = false;
+                this.name = '';
+                this.value = '';
+                this.remarks = '';
+            },
+            handleParamClick(id) {
+                this.equipment_id = id;
+                this.isModifyParamShow = true;
+                this.$get('/api/v1/equipmentAlarmSettings', {
+                    equipment_id: id
+                }).then(res => {
+                    const keys = Object.keys(this.singleParamList);
+                    keys.forEach((item) => {
+                        if (item in res.data) {
+                            this.singleParamList[item] = res.data[item];
+                        }
+                    });
+                });
+            },
+            modifyParam() {
+                this.$put('/api/v1/equipmentAlarmSettings', {
+                    equipment_id: this.equipment_id,
+                    voltage_uper: this.singleParamList.voltage_uper,
+                    voltage_lower: this.singleParamList.voltage_lower,
+                    water_uper: this.singleParamList.water_uper,
+                    water_lower: this.singleParamList.water_lower,
+                    curflow: this.singleParamList.curflow,
+                    accflow: this.singleParamList.accflow,
+                    switch_val: this.singleParamList.switch_val,
+                    sleep_cycle: this.singleParamList.sleep_cycle,
+                    collection_cycle: this.singleParamList.collection_cycle,
+                }).then(res => {
+                    this.isModifyParamShow = false;
+                });
+
+            },
+            setParams() {
+                this.$post('/api/v1/equipmentAlarmSettingsAll', {
+                    parameter: this.parameter,
+                    parameter_value: this.parameter_value,
+                    equipment_id: this.value
+                }).then(res => {
+                    this.isSleepShow = false;
+                });
+            },
+            handClose() {
+                this.title = '新建';
+                this.isModify = false;
+                for (let i in this.createObj) {
+                    this.createObj[i] = '';
+                }
+            },
+            handleModifyClick(item) {
+                console.log(item);
+                this.getResponsible()
+                this.currentModifyId = item.id;
+                for (let i in item) {
+                    if (i in this.createObj) {
+                        this.createObj[i] = item[i]
+                    }
+                }
+                this.createObj.responsible = item.name
+                this.title = '修改';
+                this.isModify = true;
+                this.isCreateShow = true;
+                this.setMap([Number(item.longitude), Number(item.latitude)])
+            },
+            modifyDevice() {
+                this.$put('/api/v1/equipment', {
+                    ...this.createObj,
+                    id: this.currentModifyId
+                })
+                    .then((res) => {
+                        this.isCreateShow = false;
+                        this.getDeviceList();
+                    })
+                    .catch((err) => {
+                        this.isCreateShow = false;
+                    });
+            },
+            handleCurrentChange(val) {
+                this.getDeviceList(val);
+            },
+            addDevice() {
+                if (this.isModify) {
+                    this.modifyDevice();
+                } else {
+                    if (!this.canAdd) return;
+                    this.canAdd = false;
+                    this.$post('/api/v1/equipment', {
+                        ...this.createObj
+                    })
+                        .then((res) => {
+                            this.canAdd = true;
+                            this.isCreateShow = false;
+                            this.getDeviceList()
+                        })
+                        .catch((err) => {
+                            this.canAdd = true;
+                            this.isCreateShow = false;
+                        });
+                }
+            },
+            getDeviceList(page, equipment_id) {
+                let url = '/api/v1/equipment';
+                if (page) {
+                    url = url + `?page=${page}`;
+                }
+                this.$get(url, {
+                    equipment_id
+                }).then((res) => {
+                    this.alarmList = res.data;
+                    const data = [];
+                    res.data.forEach((item) => {
+                        const obj = {
+                            key: item.id,
+                            label: item.sn
+                        };
+                        data.push(obj);
+                    });
+                    this.data = data;
+                });
+            },
+        },
+        watch: {
+            'createObj.province': {
+                handler() {
+                    this.updateCity();
+                    this.updateDistrict();
+                }
+            },
+            'createObj.city': {
+                handler() {
+                    this.updateDistrict();
+                }
             }
-          } else {
-
-          }
-        }
-      },
-      handCloseParam() {
-        for (let i in this.singleParamList) {
-          this.singleParamList[i] = '';
-        }
-      },
-      clearInput() {
-        this.isCreateShow = false;
-        this.isModify = false;
-        this.name = '';
-        this.value = '';
-        this.remarks = '';
-      },
-      handleParamClick(id) {
-        this.equipment_id = id;
-        this.isModifyParamShow = true;
-        this.$get('/api/v1/equipmentAlarmSettings', {
-          equipment_id: id
-        }).then(res => {
-          const keys = Object.keys(this.singleParamList);
-          keys.forEach((item) => {
-            if (item in res.data) {
-              this.singleParamList[item] = res.data[item];
-            }
-          });
-        });
-      },
-      modifyParam() {
-        this.$put('/api/v1/equipmentAlarmSettings', {
-          equipment_id: this.equipment_id,
-          voltage_uper: this.singleParamList.voltage_uper,
-          voltage_lower: this.singleParamList.voltage_lower,
-          water_uper: this.singleParamList.water_uper,
-          water_lower: this.singleParamList.water_lower,
-          curflow: this.singleParamList.curflow,
-          accflow: this.singleParamList.accflow,
-          switch_val: this.singleParamList.switch_val,
-          sleep_cycle: this.singleParamList.sleep_cycle,
-          collection_cycle: this.singleParamList.collection_cycle,
-        }).then(res => {
-          this.isModifyParamShow = false;
-        });
-
-      },
-      setParams() {
-        this.$post('/api/v1/equipmentAlarmSettingsAll', {
-          parameter: this.parameter,
-          parameter_value: this.parameter_value,
-          equipment_id: this.value
-        }).then(res => {
-          this.isSleepShow = false;
-        });
-      },
-      handClose() {
-        this.title = '新建';
-        this.isModify = false;
-        for (let i in this.createObj) {
-          this.createObj[i] = '';
-        }
-      },
-      handleModifyClick(item) {
-        this.currentModifyId = item.id;
-        for(let i in item){
-          if(i in this.createObj){
-            this.createObj[i] = item[i]
-          }
-        }
-        this.title = '修改';
-        this.isModify = true;
-        this.isCreateShow = true;
-        this.setMap([Number(item.longitude),Number(item.latitude)])
-      },
-      modifyDevice() {
-        this.$put('/api/v1/equipment', {
-          ...this.createObj,
-          id: this.currentModifyId
-        })
-          .then((res) => {
-            this.isCreateShow = false;
-            this.getDeviceList();
-          })
-          .catch((err) => {
-            this.isCreateShow = false;
-          });
-      },
-      handleCurrentChange(val) {
-        this.getDeviceList(val);
-      },
-      addDevice() {
-        if (this.isModify) {
-          this.modifyDevice();
-        } else {
-          if (!this.canAdd) return;
-          this.canAdd = false;
-          this.$post('/api/v1/equipment', {
-            ...this.createObj
-          })
-            .then((res) => {
-              this.canAdd = true;
-              this.isCreateShow = false;
-              this.getDeviceList()
-            })
-            .catch((err) => {
-              this.canAdd = true;
-              this.isCreateShow = false;
-            });
-        }
-      },
-      getDeviceList(page, search) {
-        let url = '/api/v1/equipment';
-        if (page) {
-          url = url + `?page=${page}`;
-        }
-        this.$get(url).then((res) => {
-          this.alarmList = res.data;
-          const data = [];
-          res.data.forEach((item) => {
-            const obj = {
-              key: item.id,
-              label: item.sn
-            };
-            data.push(obj);
-          });
-          this.data = data;
-        });
-      },
-    },
-    watch: {
-      'createObj.province': {
-        handler() {
-          this.updateCity();
-          this.updateDistrict();
-        }
-      },
-      'createObj.city': {
-        handler() {
-          this.updateDistrict();
-        }
-      }
-    },
-    mounted() {
-      this.getDeviceList();
-    },
-    destroyed() {
-        this.mapInstance && this.mapInstance.destroy();
-    },
-  };
+        },
+        mounted() {
+            this.getDeviceList(1, this.$route.query.id);
+        },
+        destroyed() {
+            this.mapInstance && this.mapInstance.destroy();
+        },
+    };
 </script>
 
 <style lang="scss" scoped>
@@ -679,14 +706,17 @@
         position: relative;
         padding: 3.2vh 2.4vw 0 2.4vw;
         height: 92.9vh;
+
         > header {
             display: flex;
             margin-bottom: 2.4vh;
             font-size: 0.7vw;
             justify-content: space-between;
+
             .left {
                 display: flex;
                 margin-bottom: 1.6vh;
+
                 > div {
                     height: 3.7vh;
                     line-height: 3.7vh;
@@ -697,6 +727,7 @@
                     margin-right: 0.4vw;
                     cursor: pointer;
                 }
+
                 .export {
                     height: 3.7vh;
                     line-height: 3.7vh;
@@ -707,20 +738,25 @@
                     margin-right: 0.4vw;
                     cursor: pointer;
                 }
+
                 .small {
                     width: 6.5vw;
                 }
+
                 .big {
                     width: 8.3vw;
                 }
             }
+
             .right {
                 display: flex;
+
                 .input-wrapper {
                     position: relative;
                     width: 12.4vw;
                     height: 3.7vh;
                     margin-right: 0.8vw;
+
                     input {
                         color: #b3b3b3;
                         background-color: #0f1f24;
@@ -730,6 +766,7 @@
                         border: 1px solid #1e6f85;
                         height: 3.7vh;
                     }
+
                     .search-icon {
                         position: absolute;
                         background-image: url("~@/assets/alarm/search.png");
@@ -741,6 +778,7 @@
                         height: 0.9vw;
                     }
                 }
+
                 .confirm {
                     width: 5.9vw;
                     height: 3.7vh;
@@ -753,24 +791,29 @@
                 }
             }
         }
+
         main {
             > header {
                 display: flex;
                 font-size: 0.9vw;
                 height: 7.5vh;
+
                 .state {
                     width: 39vw;
                     border-right: 1px solid #303f42;
+
                     .top {
                         text-align: center;
                         border-bottom: 1px solid #303f42;
                         height: 50%;
                     }
+
                     .bottom {
                         display: flex;
                         justify-content: space-between;
                         font-size: 0.7vw;
                         height: 50%;
+
                         > span {
                             text-align: center;
                             border-right: 1px solid #303f42;
@@ -778,94 +821,117 @@
                             flex: 1;
                             align-items: center;
                             justify-content: center;
+
                             &:last-child {
                                 border: none;
                             }
                         }
                     }
                 }
+
                 .water-gage {
                     border-right: 1px solid #303f42;
+
                     .top {
                         text-align: center;
                         border-bottom: 1px solid #303f42;
                         height: 50%;
                     }
+
                     .bottom {
                         display: flex;
                         justify-content: space-between;
                         height: 50%;
                         font-size: 0.7vw;
+
                         > span {
                             text-align: center;
                             border-right: 1px solid #303f42;
                             display: flex;
                             align-items: center;
                             justify-content: center;
+
                             &:last-child {
                                 border: none;
                             }
                         }
                     }
                 }
+
                 > span {
                     border-right: 1px solid #303f42;
                     text-align: center;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+
                     &:last-child {
                         border: none;
                     }
+
                     &:nth-child(1) {
                         width: 6.6vw;
                     }
+
                     &:nth-child(2) {
                         width: 6.6vw;
                     }
+
                     &:nth-child(3) {
                         width: 14.8vw;
                     }
+
                     &.people {
                         width: 6.8vw;
                     }
+
                     &.operation {
                         width: 14.4vw;
                     }
                 }
             }
+
             .alarmList-wrapper {
                 font-size: 0.7vw;
+
                 > li {
                     display: flex;
                     align-items: center;
                     height: 4.2vh;
+
                     &:nth-child(even) {
                         background-color: #29393e;
                     }
+
                     span {
                         display: inline-block;
                         text-align: center;
+
                         &:nth-child(1) {
                             width: 6.6vw;
                         }
+
                         &:nth-child(2) {
                             width: 6.6vw;
                         }
+
                         &:nth-child(3) {
                             width: 14.8vw;
                         }
+
                         img {
                             width: 1.1vw;
                             height: 1.2vw;
                         }
                     }
+
                     .operation {
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         width: 14.4vw;
                         font-size: 0.6vw;
+
                         .modify {
                             cursor: pointer;
                             width: 4.5vw;
@@ -876,6 +942,7 @@
                             border-radius: 0.1vw;
                             margin-right: 0.5vw;
                         }
+
                         .alarm-modify {
                             cursor: pointer;
                             width: 7.5vw;
@@ -889,32 +956,39 @@
                 }
             }
         }
+
         .pagination {
             position: absolute;
             bottom: 9vh;
             left: 50%;
             transform: translateX(-50%);
         }
+
         .sleep-wrapper {
             .el-dialog__body {
                 padding-top: 0;
                 padding-right: 0;
+
                 .param {
                     display: flex;
                     align-items: center;
                     color: #fff;
                     margin-bottom: 1vh;
+
                     .el-select {
                         width: 14.8vw;
                         margin-left: 0.8vw;
                         border-radius: 0;
+
                         input {
                             border-radius: 0;
                         }
                     }
+
                     span {
                         margin-right: 0.6vw;
                     }
+
                     input {
                         width: 14.8vw;
                         height: 3.7vh;
@@ -925,10 +999,12 @@
                         outline: none;
                     }
                 }
+
                 .permission-wrapper {
                     color: #fff;
                     margin-bottom: 2.3vh;
                 }
+
                 .confirm {
                     width: 4.7vw;
                     height: 3.7vh;
@@ -942,6 +1018,7 @@
                 }
             }
         }
+
         .create-wrapper {
             .el-dialog__body {
                 ul {
@@ -949,23 +1026,30 @@
                     flex-wrap: wrap;
                     font-size: 0.7vw;
                     margin-bottom: 1.8vh;
+
                     > li {
                         display: flex;
                         flex-direction: column;
                         margin-right: 2vw;
                         margin-bottom: 1.2vh;
+
                         .el-select {
                             width: 14.8vw;
+
                             input {
                                 border-radius: 0;
                             }
+
                             ::v-deep .el-input__inner {
+                                color: #fff;
                                 border-radius: 0;
                             }
                         }
+
                         span {
                             color: #fff;
                         }
+
                         input {
                             margin-top: 0.5vh;
                             width: 14.8vw;
@@ -978,11 +1062,13 @@
                             outline: none;
                         }
                     }
+
                     .map {
                         width: 31.8vw;
                         height: 11.9vw;
                     }
                 }
+
                 .confirm {
                     width: 4.7vw;
                     height: 3.7vh;
@@ -996,16 +1082,19 @@
                 }
             }
         }
+
         .params-wrapper {
             .el-dialog__body {
                 ul {
                     font-size: 0.7vw;
                     margin-bottom: 1.8vh;
+
                     > li {
                         position: relative;
                         display: flex;
                         align-items: center;
                         margin-bottom: 3.2vh;
+
                         input {
                             margin-top: 0.5vh;
                             width: 18vw;
@@ -1016,25 +1105,30 @@
                             border: 1px solid #134a55;
                             outline: none;
                         }
+
                         &.two {
                             .right {
                                 display: flex;
                                 justify-content: space-between;
                                 width: 18vw;
                             }
+
                             input {
                                 width: 8.5vw;
                             }
                         }
+
                         span {
                             color: #fff;
                         }
+
                         .right {
                             position: absolute;
                             left: 7vw;
                         }
                     }
                 }
+
                 .confirm {
                     width: 4.7vw;
                     height: 3.7vh;
@@ -1048,16 +1142,19 @@
                 }
             }
         }
+
         .import-wrapper {
             .el-dialog__body {
                 main {
                     margin-bottom: 2vh;
+
                     .input-wrapper {
                         width: 15.2vw;
                         height: 10.4vw;
                         position: relative;
                         margin: 0 auto;
                         border: 1px solid #1e6f85;
+
                         input {
                             opacity: 0;
                             width: 100%;
@@ -1066,6 +1163,7 @@
                             left: 0;
                             cursor: pointer;
                         }
+
                         .mask {
                             display: flex;
                             align-items: center;
@@ -1074,6 +1172,7 @@
                             height: 100%;
                         }
                     }
+
                     .download-model {
                         cursor: pointer;
                         color: #fff;
@@ -1082,11 +1181,13 @@
                         margin-left: 2vw;
                         display: inline-flex;
                         align-items: center;
+
                         .download {
                             margin-right: 0.6vw;
                         }
                     }
                 }
+
                 .confirm {
                     width: 4.7vw;
                     height: 3.7vh;

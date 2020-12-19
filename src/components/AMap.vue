@@ -2,7 +2,7 @@
     <div>
         <div id="echarts-amap">
         </div>
-        <div class="second-wrapper" v-show="isSecondShow">
+        <div class="second-wrapper" v-show="isSecondShow && !isMobile">
             <div class="list" v-for="(item, index) in secondList" :key="index">
                 <img :src="item.img" alt=""/>
                 <span>{{ item.name }}</span>
@@ -130,7 +130,8 @@
                 left:'',
                 top:'',
                 isMobile:false,
-                currentBoxType:''
+                currentBoxType:'',
+                id:''
             };
         },
         mounted() {
@@ -161,13 +162,19 @@
                 this.boxInfo.city = city || ''  ;
                 this.boxInfo.name = data.responsible;
                 this.boxInfo.phone = data.phone;
+                this.id = data.id;
                   this.boxShow = true;
               }).catch(err=>{
                 console.log(err);
               })
             },
             toDevice(){
-                this.$router.push('/device')
+                this.$router.push({
+                    path:'/device',
+                    query: {
+                        id: this.id
+                    }
+                })
             },
             handleMapClick(zoom) {
               this.$store.commit('setZoom', zoom)
